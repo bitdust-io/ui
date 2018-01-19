@@ -1,14 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <title>Hello World!</title>
+      <meta charset="utf-8">
+      <meta name=viewport content="width=device-width,initial-scale=1">
+      <link rel="stylesheet" href="styles.css" media="all">
+      <title>BitDust Web</title>
+      <meta name="description" content="bit-dust web"/>
   </head>
   <body>
+
     <h1>Hello World!</h1>
-    <script src="index.js"></script>
-    We are using node <script>document.write(process.versions.node)</script>,
-    Chrome <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
+
+    <form onsubmit="">
+        <input>
+        <button>create</button>
+    </form>
+
+
+    <form onsubmit="">
+        <input type="file">
+        <button>create</button>
+    </form>
+
+    <script src="./src/index.js"></script>
+
   </body>
 </html>

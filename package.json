@@ -1,8 +1,8 @@
 {
-  "name": "your-app",
+  "name": "bitdust-web",
   "version": "0.1.0",
   "main": "main.js",
-  "dependencies": {
-    "lodash": "^4.17.4"
+  "scripts": {
+    "dev": "electron ."
   }
 }
