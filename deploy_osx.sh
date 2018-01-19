@@ -13,6 +13,17 @@ BITDUST_COMMAND_FILE="${ROOT_DIR}/bitdust"
 GLOBAL_COMMAND_FILE="/usr/local/bin/bitdust"
 
 
+which -s brew
+if [[ $? != 0 ]] ; then
+    echo ''
+    echo '##### Installing Homebrew...'
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+else
+    echo ''
+    echo '##### Homebrew already installed'
+fi
+
+
 if [[ ! $pythonok ]]; then
     echo ''
     echo '##### Installing Formula Python...'
