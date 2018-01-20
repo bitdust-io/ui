@@ -1,4 +1,4 @@
-const exec = require('child_process').exec
+const exec = require('child_process').exec;
 
 const runBash = () => {
     const dir = exec("ls -la", function(err, stdout, stderr) {
@@ -11,6 +11,6 @@ const runBash = () => {
     dir.on('exit', function (code) {
         return 0
     });
-}
+};
 
-module.exports = runBash
+module.exports = runBash;

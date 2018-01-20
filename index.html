@@ -1,28 +1,32 @@
 <!DOCTYPE html>
-<html>
-  <head>
-      <meta charset="utf-8">
-      <meta name=viewport content="width=device-width,initial-scale=1">
-      <link rel="stylesheet" href="styles.css" media="all">
-      <title>BitDust Web</title>
-      <meta name="description" content="bit-dust web"/>
-  </head>
-  <body>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name=viewport content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="statics/styles.css" media="all">
+    <title>BitDust Web</title>
+    <meta name="description" content="bit-dust web"/>
+</head>
+<body>
 
-    <h1>Hello World!</h1>
+<h1>Blockchain</h1>
 
-    <form onsubmit="">
-        <input>
-        <button>create</button>
-    </form>
+<fieldset>
+    <h2>Create file</h2>
 
+    <div>
+        <input type="file" id="fileUpload" value="">
+        <button onclick="app.createFile()">create</button>
+    </div>
+</fieldset>
 
-    <form onsubmit="">
-        <input type="file">
-        <button>create</button>
-    </form>
+<fieldset>
+    <h2>My files</h2>
+    <div id="alertFile"></div>
+    <ul id="fileList"></ul>
+</fieldset>
 
-    <script src="./src/index.js"></script>
+<script src="./src/index.js"></script>
 
-  </body>
+</body>
 </html>
