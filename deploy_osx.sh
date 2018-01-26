@@ -9,8 +9,34 @@ BITDUST_COMMAND_FILE="${ROOT_DIR}/bitdust"
 GLOBAL_COMMAND_FILE="/usr/local/bin/bitdust"
 
 
+gitok=`brew list | grep git`
+
+if [[ $gitok ]]; then
+    echo ''
+    echo '##### Installing Git...'
+    tempd=$(mktemp -d)
+    curl -L "https://sourceforge.net/projects/git-osx-installer/files/git-2.15.1-intel-universal-mavericks.dmg/download" > $tempd/pkg.dmg
+    listing=$(sudo hdiutil attach $tempd/pkg.dmg | grep Volumes)
+    volume=$(echo "$listing" | cut -f 3)
+    echo $volume
+    if [ -e "$volume"/*.app ]; then
+        sudo cp -rf "$volume"/*.app /Applications
+    elif [ -e "$volume"/*.pkg ]; then
+        package=$(ls -1 "$volume/" | grep ".pkg" | head -1)
+        echo $package
+        sudo installer -verbose -pkg "$volume/$package" -target /
+    fi
+    sudo hdiutil detach "$volume"
+    rm -rf $tempd
+
+else
+    echo ''
+    echo '##### Git already installed'
+fi
+
+
 which -s brew
-if [[ $? != 0 ]] ; then
+if [[ $? != 0 ]]; then
     echo ''
     echo '##### Installing Homebrew...'
     echo | ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -21,7 +47,6 @@ fi
 
 
 pythonok=`brew list | grep python`
-gitok=`brew list | grep git`
 pipok=`which pip`
 
 
@@ -32,16 +57,6 @@ if [[ ! $pythonok ]]; then
 else
     echo ''
     echo '##### Python already installed'
-fi
-
-
-if [[ ! $gitok ]]; then
-    echo ''
-    echo '##### Installing Formula Git...'
-    brew install git
-else
-    echo ''
-    echo '##### Git already installed'
 fi
 
 
