@@ -87,5 +87,10 @@ fi
 
 
 echo ''
+echo '##### Starting BitDust as a daemon pocess'
+$GLOBAL_COMMAND_FILE daemon
+
+
+echo ''
 echo '##### DONE!!!'
 
