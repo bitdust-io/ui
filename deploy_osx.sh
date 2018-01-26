@@ -54,7 +54,6 @@ if [[ ! $pipok ]]; then
     echo ''
     echo '##### Installing virtualenv for current user'
     pip install virtualenv --user
-    pip install virtualenvwrapper --user
 else
     echo ''
     echo '##### PIP already installed'
