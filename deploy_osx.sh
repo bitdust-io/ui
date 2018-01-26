@@ -1,10 +1,6 @@
 #!/bin/bash
 
 
-pythonok=`brew list | grep python`
-gitok=`brew list | grep git`
-pipok=`which pip`
-
 ROOT_DIR="$HOME/.bitdust"
 SOURCE_DIR="${ROOT_DIR}/src"
 VENV_DIR="${ROOT_DIR}/venv"
@@ -17,11 +13,16 @@ which -s brew
 if [[ $? != 0 ]] ; then
     echo ''
     echo '##### Installing Homebrew...'
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    echo | ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 else
     echo ''
     echo '##### Homebrew already installed'
 fi
+
+
+pythonok=`brew list | grep python`
+gitok=`brew list | grep git`
+pipok=`which pip`
 
 
 if [[ ! $pythonok ]]; then
@@ -53,7 +54,6 @@ if [[ ! $pipok ]]; then
     echo ''
     echo '##### Installing virtualenv for current user'
     pip install virtualenv --user
-    pip install virtualenvwrapper --user
 else
     echo ''
     echo '##### PIP already installed'
