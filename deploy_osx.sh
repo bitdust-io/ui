@@ -9,9 +9,9 @@ BITDUST_COMMAND_FILE="${ROOT_DIR}/bitdust"
 GLOBAL_COMMAND_FILE="/usr/local/bin/bitdust"
 
 
-gitok=`brew list | grep git`
+gitok=`which git`
 
-if [[ $gitok ]]; then
+if [[ ! $gitok ]]; then
     echo ''
     echo '##### Installing Git...'
     tempd=$(mktemp -d)
