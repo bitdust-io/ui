@@ -1,16 +1,10 @@
-const exec = require('child_process').exec;
+const path = require('path')
+const exec = require('child_process').exec
+const pathPrefix = process.env.ELECTRON_ENV === 'development' ? '' : process.resourcesPath
 
-const runBash = () => {
-    const dir = exec("ls -la", function(err, stdout, stderr) {
-        if (err) {
-            // should have err.code here?  
-        }
-        console.log(stdout);
-    });
-    
-    dir.on('exit', function (code) {
-        return 0
-    });
-};
+const scriptPath = path.resolve(pathPrefix, './scripts/deploy_osx.sh')
+const runBash = (cb) => exec(scriptPath, cb)
 
-module.exports = runBash;
+
+
+module.exports = runBash
