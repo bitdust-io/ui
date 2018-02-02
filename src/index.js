@@ -1,5 +1,4 @@
 const Api = require("./src/api.service");
-const runBash = require('./node/bash');
 
 class App {
 
