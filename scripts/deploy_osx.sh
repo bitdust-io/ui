@@ -9,8 +9,29 @@ BITDUST_COMMAND_FILE="${ROOT_DIR}/bitdust"
 GLOBAL_COMMAND_FILE="/usr/local/bin/bitdust"
 
 
+gitok=`which git`
+
+if [[ ! $gitok ]]; then
+    echo ''
+    echo '##### Installing Git...'
+    tempd=$(mktemp -d)
+    curl -L "https://sourceforge.net/projects/git-osx-installer/files/git-2.15.1-intel-universal-mavericks.dmg/download" > $tempd/pkg.dmg
+    listing=$(sudo hdiutil attach $tempd/pkg.dmg | grep Volumes)
+    volume=$(echo "$listing" | cut -f 3)
+    echo $volume
+    package=$(ls -1 "$volume/" | grep ".pkg" | head -1)
+    echo $package
+    sudo installer -verbose -pkg "$volume/$package" -target /
+    sudo hdiutil detach "$volume"
+    rm -rf $tempd
+else
+    echo ''
+    echo '##### Git already installed'
+fi
+
+
 which -s brew
-if [[ $? != 0 ]] ; then
+if [[ $? != 0 ]]; then
     echo ''
     echo '##### Installing Homebrew...'
     echo | ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -21,7 +42,6 @@ fi
 
 
 pythonok=`brew list | grep python`
-gitok=`brew list | grep git`
 pipok=`which pip`
 
 
@@ -32,16 +52,6 @@ if [[ ! $pythonok ]]; then
 else
     echo ''
     echo '##### Python already installed'
-fi
-
-
-if [[ ! $gitok ]]; then
-    echo ''
-    echo '##### Installing Formula Git...'
-    brew install git
-else
-    echo ''
-    echo '##### Git already installed'
 fi
 
 
@@ -76,7 +86,7 @@ if [[ ! -e $VENV_DIR ]]; then
     echo ''
     echo '##### Building BitDust virtual environment...'
     python $BITDUST_PY install
-    
+
     ln -s -f $BITDUST_COMMAND_FILE $GLOBAL_COMMAND_FILE
     echo ''
     echo '##### System-wide shell command for BitDust created in ${GLOBAL_COMMAND_FILE}'
@@ -93,4 +103,3 @@ $GLOBAL_COMMAND_FILE daemon
 
 echo ''
 echo '##### DONE!!!'
-
