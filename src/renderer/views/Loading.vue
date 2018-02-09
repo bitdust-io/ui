@@ -1,19 +1,27 @@
 <template>
-    <div id="wrapper">
-        <main>
-            BitDust is Loading...
-        </main>
+    <div>
+        <div v-if="!error">
+            <h1>
+                BitDust is Loading...
+            </h1>
+        </div>
+        <div v-if="error">
+            <h1>
+                Ooops, something went wrong, can you please restart Bitdust
+            </h1>
+        </div>
     </div>
 </template>
 
 <script>
     import store from '../store/';
-    // import runBash from '../../../node/bash';
 
     export default {
-        name: 'landing-page',
+        name: 'loading',
         data() {
-            return {};
+            return {
+                error: false
+            };
         },
         computed: {
             isLoaded() {
@@ -28,27 +36,18 @@
                 if (stderr) {
                     console.error(stderr);
                 }
-                console.log('re');
                 store.commit('UPDATE_IS_LOADED', true);
             }
         },
-        beforeCreate: function () {
-        },
-        created() {
-            // console.log('re');
-            // runBash(this.shellCallback);
-        },
         watch: {
-            'isLoaded': function (id) {
-                if (id) {
-                    console.log(id);
-                    // this.$router.push('home');
+            'isLoaded': function (response) {
+                if (response) {
+                    this.$router.push('home');
+                } else {
+                    this.error = true;
                 }
             }
         }
     };
 </script>
 
-<style lang="scss">
-    @import '../../../static/css/styles.scss';
-</style>
