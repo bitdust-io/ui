@@ -1,18 +1,28 @@
-# BitDust web
-Electron application for BitDust UI
+# bitdust-web
 
+> An electron-vue project
 
-#Fork the repo
-git@github.com:bitdust-io/web.git
+#### Build Setup
 
-## On your fork set the upstream
-git remote add upstream git@github.com:bitdust-io/web.git
-
-#Installing
+``` bash
+# install dependencies
 npm install
 
-#Running
+# serve with hot reload at localhost:9080
 npm run dev
 
-#Build (for mac)
-./node_modules/.bin/electron-builder
+# build electron application for production
+npm run build
+
+# run unit tests
+npm test
+
+
+# lint all JS/Vue component files in `src/`
+npm run lint
+
+```
+
+---
+
+This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue)@[1c165f7](https://github.com/SimulatedGREG/electron-vue/tree/1c165f7c5e56edaf48be0fbb70838a1af26bb015) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
