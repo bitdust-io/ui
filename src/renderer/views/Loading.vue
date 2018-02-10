@@ -15,6 +15,7 @@
 
 <script>
     import store from '../store/';
+    import Api from '../services/api';
 
     export default {
         name: 'loading',
@@ -42,7 +43,15 @@
         watch: {
             'isLoaded': function (response) {
                 if (response) {
-                    this.$router.push('home');
+                    setTimeout(() => {
+                        Api.getIdentity().then(resp => {
+                            if (resp.status === 'OK') {
+                                this.$router.push('home');
+                            } else {
+                                this.$router.push('create-identity');
+                            }
+                        });
+                    }, 1000);
                 } else {
                     this.error = true;
                 }

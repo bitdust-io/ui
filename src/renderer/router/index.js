@@ -12,8 +12,13 @@ export default new Router({
         },
         {
             path: '/home',
-            name: 'home-page',
-            component: require('@/views/HomePage').default
+            name: 'home',
+            component: require('@/views/Home').default
+        },
+        {
+            path: '/create-identity',
+            name: 'create-identity',
+            component: require('@/views/CreateIdentity').default
         },
         {
             path: '*',
