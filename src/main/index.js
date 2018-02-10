@@ -29,6 +29,10 @@ function createWindow() {
 
     mainWindow.webContents.openDevTools();
 
+    mainWindow.webContents.on('will-navigate', ev => {
+        ev.preventDefault();
+    });
+
     mainWindow.on('closed', () => {
         mainWindow = null;
     });
@@ -47,6 +51,11 @@ app.on('activate', () => {
         createWindow();
     }
 });
+
+// document.addEventListener('drop', function (e) {
+//     e.preventDefault();
+//     e.stopPropagation();
+// });
 
 /**
  * Auto Updater
