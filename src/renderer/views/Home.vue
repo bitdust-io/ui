@@ -18,8 +18,6 @@
     import filesUpload from '../components/FileUpload';
     import fileOpen from '../components/FileOpen';
 
-    import {mapGetters, mapActions} from 'vuex';
-
     export default {
         name: 'home-page',
         components: {
@@ -27,27 +25,9 @@
             filesUpload,
             fileOpen
         },
-        data() {
-            return {
-                fileList: {}
-            };
-        },
-        methods: {
-            ...mapActions([
-                'increment',
-                'decrement'
-            ])
-        },
-        computed: {
-            ...mapGetters([
-                'getMain'
-            ])
-        },
         beforeCreate: function () {
             Api.eventsListen().then(data => {
             });
-        },
-        created() {
         }
     };
 </script>

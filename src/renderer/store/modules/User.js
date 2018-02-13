@@ -56,9 +56,9 @@ const actions = {
         let filePath = file.files[0].path;
         let fileName = filePath.match(/\/([^/]*)$/)[1];
         Api.createPath(fileName).then(data => {
-            if (data.ok) {
+            if (data.status === 'OK') {
                 Api.createFile(fileName, filePath).then(data => {
-                    if (data.ok) {
+                    if (data.status === 'OK') {
                         console.log('file: ', fileName, 'Created');
                     }
                 }).catch(err => {

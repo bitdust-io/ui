@@ -62,7 +62,7 @@ const Api = {
         return fetch('http://localhost:8180/file/create/v1', {
             method: 'POST',
             body: JSON.stringify({'remote_path': pathName})
-        });
+        }).then(res => res.json());
     },
 
     createFile(fileName, filePath) {
@@ -72,7 +72,7 @@ const Api = {
                 'remote_path': fileName,
                 'local_path': filePath
             })
-        });
+        }).then(res => res.json());
     },
 
     deleteFile(filePath) {
