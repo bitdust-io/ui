@@ -1,5 +1,10 @@
 const Api = {
 
+    networkConnected() {
+        return fetch('http://localhost:8180/network/connected/v1')
+            .then(res => res.json());
+    },
+
     serviceStop(serviceId) {
         return fetch('http://localhost:8180/service/stop/' + serviceId + '/v1', {
             method: 'POST'
