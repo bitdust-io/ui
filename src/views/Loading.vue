@@ -56,6 +56,11 @@
                     this.error = true;
                 }
             }
+        },
+        created() {
+            setTimeout(() => {
+                store.commit('UPDATE_IS_LOADED', true);
+            }, 1500);
         }
     };
 </script>
