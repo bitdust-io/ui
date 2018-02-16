@@ -1,7 +1,7 @@
 {
-    "name": "bitdust-vue-cli",
+    "name": "bitdust-web",
     "version": "1.0.0",
-    "description": "A Vue.js project",
+    "description": "Bitdust Web",
     "author": "Renato Cardoso <re2005@gmail.com>",
     "private": true,
     "scripts": {
