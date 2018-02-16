@@ -4,13 +4,17 @@
             BitDust - Create Identity
         </h1>
 
-        <div>
+        <div v-bind:class="{'is-loading' : isLoading}">
             <h2>
                 Create Identity
             </h2>
-            <input v-model="identity"
+            <input v-model="identityName"
                    name="identity"/>
-            <button class="alt" @click="createIdentity()">create</button>
+            <button class="alt"
+                    @click="createIdentity">create
+            </button>
+            <br/>
+            {{errorMessage}}
         </div>
         <hr>
         <div>
@@ -20,9 +24,7 @@
             <input @change="upload($event)"
                    type="file"
                    name="file"/>
-            <button class="alt" @click="restoreIdentity()">create</button>
-
-            {{error}}
+            <button class="alt" @click="restoreIdentity">create</button>
         </div>
     </div>
 </template>
@@ -35,13 +37,24 @@
         components: {},
         data() {
             return {
-                identity: '',
-                error: ''
+                identityName: '',
+                error: '',
+                errorMessage: '',
+                isLoading: false
             };
         },
         methods: {
             createIdentity() {
-                console.log('create');
+                console.log('creating idendity', this.identityName);
+                this.isLoading = true;
+                Api.createIdentity(this.identityName).then(resp => {
+                    this.isLoading = false;
+                    if (resp.status === 'OK') {
+                        this.$router.push('home');
+                    } else {
+                        this.errorMessage = resp.errors[0];
+                    }
+                });
             },
             restoreIdentity() {
                 console.log(this.file);
@@ -72,5 +85,9 @@
 <style scoped>
     div {
         margin: 20px;
+    }
+
+    .is-loading {
+        background: red;
     }
 </style>

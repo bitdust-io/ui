@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Upload a file</h1>
+        <h2>Upload a file</h2>
         <div class="dropbox">
             drag any file here
             <input type="file"

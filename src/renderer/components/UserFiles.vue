@@ -1,6 +1,6 @@
 <template>
     <div class="user-files">
-        <h1>files</h1>
+        <h3>file list</h3>
 
         <ul>
             <li v-for="item in getFiles">

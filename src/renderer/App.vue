@@ -5,16 +5,22 @@
 </template>
 
 <script>
+    import Application from './services/application';
+
     export default {
         name: 'bitdust-web',
-        methods: {
-            re() {
-                console.log('re');
-            }
+        created() {
+            Application.keepConnection();
+            Application.eventsListen();
         }
     };
 </script>
 
 <style lang="scss">
     @import "../../static/css/styles";
+
+    #app {
+        max-width: 90%;
+        margin: auto;
+    }
 </style>
