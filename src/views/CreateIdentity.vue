@@ -21,10 +21,9 @@
             <h2>
                 Recover Identity
             </h2>
-            <input @change="upload($event)"
+            <input @change="restoreIdentity($event)"
                    type="file"
                    name="file"/>
-            <button class="alt" @click="restoreIdentity">create</button>
         </div>
     </div>
 </template>
@@ -50,29 +49,18 @@
                 Api.createIdentity(this.identityName).then(resp => {
                     this.isLoading = false;
                     if (resp.status === 'OK') {
-                        this.$router.push('home');
+                        this.$router.push('loading-identity');
                     } else {
                         this.errorMessage = resp.errors[0];
                     }
                 });
             },
-            restoreIdentity() {
-                console.log(this.file);
-            },
-            upload(e) {
+            restoreIdentity(e) {
                 e.preventDefault();
                 let file = event.target.files[0].path;
                 Api.recoverIdentityFile(file).then(resp => {
                     if (resp.status === 'OK') {
-                        Api.serviceStop('gateway').then(stopResp => {
-                            // if (stopResp.status === 'OK') {
-                            Api.serviceStop('gateway').then(startResp => {
-                                // if (startResp === 'OK') {
-                                this.$router.push('home');
-                                // }
-                            });
-                            // }
-                        });
+                        this.$router.push('loading-identity');
                     } else {
                         this.error = true;
                     }
