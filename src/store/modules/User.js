@@ -12,7 +12,10 @@ const state = {
 const getters = {
     getFiles: state => state.fileList,
     isFileOpen: state => state.isFileOpen,
-    currentFile: state => state.currentFile
+    currentFile: state => state.currentFile,
+    hasFilePath(path) {
+        return state.fileList.filter(file => file.path === path);
+    }
 };
 
 const mutations = {
@@ -55,20 +58,34 @@ const actions = {
         if (!file) return false;
         let filePath = file.files[0].path;
         let fileName = filePath.match(/\/([^/]*)$/)[1];
-        Api.createPath(fileName).then(data => {
-            if (data.status === 'OK') {
-                Api.createFile(fileName, filePath).then(data => {
-                    if (data.status === 'OK') {
-                        console.log('file: ', fileName, 'Created');
-                    }
-                }).catch(err => {
-                    console.log('error: ', err);
-                });
-                setTimeout(() => {
-                    store.dispatch('getApiFiles');
-                }, 500);
-            }
-        });
+
+        if (getters.hasFilePath(fileName).length === 0) {
+            Api.createPath(fileName).then(data => {
+                if (data.status === 'OK') {
+                    Api.createFile(fileName, filePath).then(data => {
+                        if (data.status === 'OK') {
+                            console.log('file: ', fileName, 'Created');
+                        }
+                    }).catch(err => {
+                        console.log('error: ', err);
+                    });
+                    setTimeout(() => {
+                        store.dispatch('getApiFiles');
+                    }, 500);
+                }
+            });
+        } else {
+            Api.createFile(fileName, filePath).then(data => {
+                if (data.status === 'OK') {
+                    console.log('file: ', fileName, 'Created');
+                }
+            }).catch(err => {
+                console.log('error: ', err);
+            });
+            setTimeout(() => {
+                store.dispatch('getApiFiles');
+            }, 500);
+        }
     }
 };
 
