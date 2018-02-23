@@ -1,6 +1,6 @@
 import Api from './api';
 import store from '../store/';
-import Router from '../router';
+// import Router from '../router';
 
 const Application = {
 
@@ -10,8 +10,9 @@ const Application = {
             setTimeout(() => {
                 this.keepConnection();
             }, 5000);
-        }).catch(() => {
-            Router.push('dead');
+        }).catch(err => {
+            console.log(err);
+            // Router.push('dead');
         });
     },
 
