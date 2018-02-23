@@ -36,6 +36,11 @@ export default new Router({
             component: require('@/views/Dead').default
         },
         {
+            path: '/loading-identity',
+            name: 'loading-identity',
+            component: require('@/views/LoadingIdentity').default
+        },
+        {
             path: '*',
             redirect: '/'
         }

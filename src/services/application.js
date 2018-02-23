@@ -2,6 +2,8 @@ import Api from './api';
 import store from '../store/';
 // import Router from '../router';
 
+let connectionAttempts = 0;
+
 const Application = {
 
     keepConnection() {
@@ -10,9 +12,14 @@ const Application = {
             setTimeout(() => {
                 this.keepConnection();
             }, 5000);
-        }).catch(err => {
-            console.log(err);
-            // Router.push('dead');
+        }).catch(() => {
+            connectionAttempts += 1;
+            if (connectionAttempts > 5) {
+                alert('you fucked, should do something');
+            }
+            setTimeout(() => {
+                this.keepConnection();
+            }, 1000);
         });
     },
 
