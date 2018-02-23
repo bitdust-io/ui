@@ -31,6 +31,11 @@ export default new Router({
             component: require('@/views/Settings').default
         },
         {
+            path: '/dead',
+            name: 'dead',
+            component: require('@/views/Dead').default
+        },
+        {
             path: '*',
             redirect: '/'
         }

@@ -2,9 +2,9 @@
     <header>
         <h1>Bitdust</h1>
         <div>
-            {{connectionStatus}}
-            {{getLastEvent}}
-            User Status
+            <h3>User Status: {{connectionStatus}}
+            </h3>
+            <h4>Last Event: {{getLastEvent}}</h4>
         </div>
     </header>
 </template>

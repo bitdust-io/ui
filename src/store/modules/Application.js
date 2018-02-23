@@ -1,3 +1,5 @@
+import store from '../../store';
+
 const constants = {};
 
 const state = {
@@ -25,7 +27,7 @@ const mutations = {
     },
     UPDATE_LAST_EVENT(state, value) {
         state.lastEvent = value;
-        state.commit('UPDATE_EVENTS', value);
+        store.commit('UPDATE_EVENTS', value);
     },
     UPDATE_EVENTS(state, value) {
         state.events.push(value);

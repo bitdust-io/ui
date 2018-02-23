@@ -1,12 +1,17 @@
 import Api from './api';
 import store from '../store/';
+import Router from '../router';
 
 const Application = {
 
     keepConnection() {
         Api.networkConnected().then(resp => {
             store.commit('UPDATE_IS_CONNECTED', resp.status);
-            // this.keepConnection();
+            setTimeout(() => {
+                this.keepConnection();
+            }, 5000);
+        }).catch(() => {
+            Router.push('dead');
         });
     },
 
