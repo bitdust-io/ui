@@ -43,15 +43,15 @@
         watch: {
             'isLoaded': function (response) {
                 if (response) {
-                    setTimeout(() => {
-                        Api.getIdentity().then(resp => {
-                            if (resp.status === 'OK') {
-                                this.$router.push('home');
-                            } else {
-                                this.$router.push('create-identity');
-                            }
-                        });
-                    }, 1000);
+                    Api.getIdentity().then(resp => {
+                        if (resp.status === 'OK') {
+                            this.$router.push('home');
+                        } else {
+                            this.$router.push('create-identity');
+                        }
+                    }).catch(err => {
+                        console.log(err);
+                    });
                 } else {
                     this.error = true;
                 }
