@@ -49,4 +49,7 @@
 </script>
 
 <style>
+    .content {
+        margin-left: 220px;
+    }
 </style>

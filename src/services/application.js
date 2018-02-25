@@ -1,6 +1,6 @@
 import Api from './api';
 import store from '../store/';
-// import Router from '../router';
+import Router from '../router';
 
 let connectionAttempts = 0;
 
@@ -11,11 +11,11 @@ const Application = {
             store.commit('UPDATE_IS_CONNECTED', resp.status);
             setTimeout(() => {
                 this.keepConnection();
-            }, 5000);
+            }, 2000);
         }).catch(() => {
             connectionAttempts += 1;
             if (connectionAttempts > 5) {
-                alert('you fucked, should do something');
+                Router.push('dead');
             }
             setTimeout(() => {
                 this.keepConnection();
