@@ -4,7 +4,7 @@
         <div>
             <h3>User Status: {{connectionStatus}}
             </h3>
-            <h4>Last Event: {{getLastEvent}}</h4>
+            <h4>Last Event: {{getLastEvent.status}}</h4>
         </div>
     </header>
 </template>

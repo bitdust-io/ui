@@ -7,12 +7,15 @@ const state = {
     hasIdentity: false,
     connectionStatus: undefined,
     events: [],
-    lastEvent: undefined
+    lastEvent: {
+        status: undefined
+    }
 };
 
 const getters = {
     connectionStatus: state => state.connectionStatus,
-    getLastEvent: state => state.lastEvent
+    getLastEvent: state => state.lastEvent,
+    getEvents: state => state.events
 };
 
 const mutations = {
@@ -30,7 +33,7 @@ const mutations = {
         store.commit('UPDATE_EVENTS', value);
     },
     UPDATE_EVENTS(state, value) {
-        state.events.push(value);
+        state.events.unshift(value);
     }
 };
 
