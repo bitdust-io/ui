@@ -87,6 +87,15 @@ const Api = {
                 'remote_path': filePath
             })
         });
+    },
+
+    downoloadFile(filePath) {
+        return fetch('http://localhost:8180/file/download/v1', {
+            method: 'get',
+            body: JSON.stringify({
+                'remote_path': filePath
+            })
+        });
     }
 };
 
