@@ -24,6 +24,12 @@
 </script>
 
 <style scoped lang="scss">
+    nav {
+        position: absolute;
+        width: 200px;
+        margin-top: -100px;
+        top: 50%;
+    }
     ul {
         list-style: none;
         width: 200px;
