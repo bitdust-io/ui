@@ -16,6 +16,9 @@
 <script>
     import store from '../store/';
     import Api from '../services/api';
+    import {mapGetters} from 'vuex';
+
+    let tryReconnect = 0;
 
     export default {
         name: 'loading',
@@ -25,9 +28,9 @@
             };
         },
         computed: {
-            isLoaded() {
-                return store.state['Application'].isLoaded;
-            }
+            ...mapGetters([
+                'connectionStatus'
+            ])
         },
         methods: {
             shellCallback(error, stdout, stderr) {
@@ -41,8 +44,8 @@
             }
         },
         watch: {
-            'isLoaded': function (response) {
-                if (response) {
+            'connectionStatus': function (response) {
+                if (response === 'OK') {
                     Api.getIdentity().then(resp => {
                         if (resp.status === 'OK') {
                             this.$router.push('home');
@@ -53,14 +56,12 @@
                         console.log(err);
                     });
                 } else {
-                    this.error = true;
+                    tryReconnect += 1;
+                    if (tryReconnect > 2) {
+                        this.error = true;
+                    }
                 }
             }
-        },
-        created() {
-            setTimeout(() => {
-                store.commit('UPDATE_IS_LOADED', true);
-            }, 1500);
         }
     };
 </script>

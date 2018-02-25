@@ -6,7 +6,6 @@
 
 <script>
     import Application from './services/application';
-    // import store from './store';
 
     export default {
         name: 'bitdust-web',
@@ -19,9 +18,4 @@
 
 <style lang="scss">
     @import "../static/css/styles";
-
-    #app {
-        max-width: 90%;
-        margin: auto;
-    }
 </style>
