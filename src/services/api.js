@@ -89,11 +89,12 @@ const Api = {
         });
     },
 
-    downoloadFile(filePath) {
-        return fetch('http://localhost:8180/file/download/v1', {
-            method: 'get',
+    downloadFile(filePath) {
+        return fetch('http://localhost:8180/file/download/start/v1', {
+            method: 'POST',
             body: JSON.stringify({
-                'remote_path': filePath
+                'remote_path': filePath,
+                'destination_folder': '~/Users/renatocardoso/repos/bitDust-web/'
             })
         });
     }
