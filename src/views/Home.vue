@@ -4,9 +4,7 @@
         <div class="container">
             <navigation/>
             <div class="content">
-                <h1 class="title">
-                    My files
-                </h1>
+                <h1 class="title">My files</h1>
 
                 <div class="flex">
                     <files-upload/>
