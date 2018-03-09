@@ -7,9 +7,6 @@
                 <h1 class="title" @click="setMenuActive('myFiles')">My files</h1>
                 <h1 class="title" @click="setMenuActive('myShares')">Shared with me</h1>
 
-                <input type="file" accept="image/*;capture=camera">
-
-
                 <div class="flex">
                     <div v-show="this.activeTab === 'myFiles'">
                         <files-upload/>
