@@ -1,10 +1,10 @@
 <template>
     <header>
-        <h1>Bitdust</h1>
+        <h1>bitDust</h1>
         <div>
-            <h3>User Status: {{connectionStatus}}
+            <h3>
+                User Status: {{connectionStatus}}
             </h3>
-            <h4>Last Event: {{getLastEvent.status}}</h4>
         </div>
     </header>
 </template>
@@ -15,21 +15,21 @@
     export default {
         computed: {
             ...mapGetters([
-                'connectionStatus',
-                'getLastEvent'
+                'connectionStatus'
             ])
         }
     };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
     header {
-        background: #ccc;
         height: 100px;
         display: flex;
+        z-index: 2;
 
         h1 {
             flex: 1;
+            margin: 30px 0 0 50px;
         }
     }
 </style>

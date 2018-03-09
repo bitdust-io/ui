@@ -2,6 +2,12 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
 }
 
+html, body {
+    height: 100%;
+    background-color: $color-blue;
+    overflow: hidden;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -10,8 +16,23 @@ body {
 
 .container {
     display: flex;
+    height: 100%;
+    overflow: scroll;
+}
+
+#app {
+    height: 100%;
 }
 
 .content {
     flex: 1;
+    height: 100%;
+}
+
+.wave-bg {
+    background: url("./assets/wave-bg.svg") bottom center no-repeat;
+}
+
+.slide-left {
+    transform: translate3d(-100px, 0, 0);
 }

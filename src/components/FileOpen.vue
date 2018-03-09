@@ -1,6 +1,6 @@
 <template>
     <div class="user-files" v-bind:class="{open: isFileOpen}">
-        <span @click="closeFile()">close</span>
+        <span @click="closeFile">close</span>
         <h1>{{currentFile.name}}</h1>
         <button @click="downloadFile">download</button>
         <div v-if="downloadIsLoading">
@@ -47,6 +47,11 @@
                     }
                     this.downloadIsLoading = false;
                 });
+            },
+            resetOpenFile() {
+                this.downloadSuccess = false;
+                this.downloadSuccess = false;
+                this.downloadError = false;
             }
         },
         computed: {
@@ -59,11 +64,21 @@
         watch: {
             'currentFile': function (response) {
                 if (response) {
-                    this.downloadSuccess = false;
-                    this.downloadSuccess = false;
-                    this.downloadError = false;
+                    this.resetOpenFile();
+                }
+            },
+            'isFileOpen': function (response) {
+                if (!response) {
+                    this.resetOpenFile();
                 }
             }
+        },
+        mounted() {
+            window.addEventListener('keyup', (ev) => {
+                if (ev.code === 'Escape') {
+                    this.closeFile();
+                }
+            });
         }
     };
 </script>
@@ -76,10 +91,11 @@
         right: -201px;
         width: 200px;
         top: 0;
+        bottom: 0;
         transition: all .3s ease-in-out;
 
         &.open {
-            right: 0;
+            transform: translate3d(-100px, 0, 0);
         }
 
         h1 {
