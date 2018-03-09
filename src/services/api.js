@@ -94,7 +94,7 @@ const Api = {
             method: 'POST',
             body: JSON.stringify({
                 'remote_path': filePath,
-                'destination_folder': '~/Users/renatocardoso/repos/bitDust-web/'
+                'destination_folder': '/Users/renatocardoso/repos/bitDust-web/'
             })
         });
     }
