@@ -26,7 +26,7 @@
     import userFiles from '../components/UserFiles';
     import filesUpload from '../components/FileUpload';
     import fileOpen from '../components/FileOpen';
-    import {mapGetters, mapActions} from 'vuex';
+    import {mapGetters} from 'vuex';
     import navigation from '@/components/Navigation';
     import bitHeader from '@/components/BitHeader';
 
