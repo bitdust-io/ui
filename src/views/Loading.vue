@@ -18,8 +18,6 @@
     import Api from '../services/api';
     import {mapGetters} from 'vuex';
 
-    let tryReconnect = 0;
-
     export default {
         name: 'loading',
         data() {
