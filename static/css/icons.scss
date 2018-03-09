@@ -1,0 +1,17 @@
+.icon-user {
+    background: url("./assets/user-icon.svg") no-repeat;
+}
+
+.icon-file {
+    background: url("./assets/file-icon.svg") no-repeat center left;
+}
+
+.icon-settings {
+    background: url("./assets/settings-icon.svg") no-repeat;
+}
+
+div[class^="icon-"], div[class*=" icon-"] {
+    content: '';
+    width: 40px;
+    height: 30px;
+}

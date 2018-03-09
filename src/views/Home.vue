@@ -1,11 +1,17 @@
 <template>
-    <div>
+    <div class="home">
         <bit-header/>
         <div class="container">
-            <navigation/>
-            <div class="content">
-                <h1 class="title" @click="setMenuActive('myFiles')">My files</h1>
-                <h1 class="title" @click="setMenuActive('myShares')">Shared with me</h1>
+            <navigation v-bind:class="{'slide-left':isFileOpen}"/>
+            <div class="content" v-bind:class="{'slide-left':isFileOpen}">
+                <ul class="sub-menu">
+                    <li class="title" v-bind:class="{'active': (activeTab ==='myFiles')}"
+                        @click="setMenuActive('myFiles')">My files
+                    </li>
+                    <li class="title" v-bind:class="{'active': (activeTab ==='myShares')}"
+                        @click=" setMenuActive('myShares')">Shared with me
+                    </li>
+                </ul>
 
                 <div class="flex">
                     <div v-show="this.activeTab === 'myFiles'">
@@ -51,14 +57,42 @@
         },
         computed: {
             ...mapGetters([
-                'connectionStatus'
+                'connectionStatus',
+                'isFileOpen'
             ])
         }
     };
 </script>
 
-<style>
+<style lang="scss">
+    @import "../../static/css/variables.scss";
+
+    .home {
+        height: 100%;
+    }
     .content {
         margin-left: 220px;
+        transition: all .3s ease-in-out;
     }
+
+    .container {
+    }
+
+    .sub-menu {
+
+        li {
+            color: $color-blue-3;
+            padding: 10px 0;
+            margin: 0 10px 0 0;
+            cursor: pointer;
+            display: inline-block;
+
+            &.active {
+                color: $color-gray;
+                font-weight: bold;
+            }
+        }
+    }
+
+
 </style>
