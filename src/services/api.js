@@ -94,8 +94,7 @@ const Api = {
             return fetch('http://localhost:8180/file/download/start/v1', {
                 method: 'POST',
                 body: JSON.stringify({
-                    'remote_path': filePath,
-                    'destination_folder': response.value
+                    'remote_path': filePath
                 })
             });
         });
