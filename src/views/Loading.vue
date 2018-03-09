@@ -43,6 +43,7 @@
         },
         watch: {
             'connectionStatus': function (response) {
+                console.log(response);
                 Api.getIdentity().then(resp => {
                     if (resp.status === 'OK') {
                         this.$router.push('home');

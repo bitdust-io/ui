@@ -1,24 +1,23 @@
 const Api = {
 
     networkConnected() {
-        return fetch('http://localhost:8180/network/connected/v1')
-            .then(res => res.json());
+        return fetch(this.makeApiEndpoint('network/connected')).then(res => res.json());
     },
 
     serviceStop(serviceId) {
-        return fetch('http://localhost:8180/service/stop/' + serviceId + '/v1', {
+        return fetch(this.makeApiEndpoint('service/stop' + serviceId), {
             method: 'POST'
         }).then(res => res.json());
     },
 
     serviceStart(serviceId) {
-        return fetch('http://localhost:8180/service/start/' + serviceId + '/v1', {
+        return fetch(this.makeApiEndpoint('service/start' + serviceId), {
             method: 'POST'
         }).then(res => res.json());
     },
 
     recoverIdentityFile(file) {
-        return fetch('http://localhost:8180/identity/recover/v1', {
+        return fetch(this.makeApiEndpoint('identity/recover'), {
             method: 'POST',
             body: JSON.stringify({
                 'private_key_local_file': file
@@ -27,7 +26,7 @@ const Api = {
     },
 
     recoverIdentityKey(key) {
-        return fetch('http://localhost:8180/identity/recover/v1', {
+        return fetch(this.makeApiEndpoint('identity/recover'), {
             method: 'POST',
             body: JSON.stringify({
                 'private_key_source': key
@@ -36,18 +35,18 @@ const Api = {
     },
 
     createIdentity(username) {
-        return fetch('http://localhost:8180/identity/create/v1', {
+        return fetch(this.makeApiEndpoint('identity/create'), {
             method: 'POST',
             body: JSON.stringify({'username': username})
         }).then(res => res.json());
     },
 
     getIdentity() {
-        return fetch('http://localhost:8180/identity/get/v1').then(res => res.json());
+        return fetch(this.makeApiEndpoint('identity/get')).then(res => res.json());
     },
 
     eventsSend(eventId) {
-        return fetch('http://localhost:8180/event/send/' + eventId + '/v1', {
+        return fetch(this.makeApiEndpoint('event/send' + eventId), {
             method: 'POST',
             body: JSON.stringify({
                 'request': 'hello'
@@ -56,22 +55,22 @@ const Api = {
     },
 
     eventsListen() {
-        return fetch('http://localhost:8180/event/listen/electron/v1').then(res => res.json());
+        return fetch(this.makeApiEndpoint('event/listen/electron')).then(res => res.json());
     },
 
     getFiles() {
-        return fetch('http://localhost:8180/file/list/v1').then(res => res.json());
+        return fetch(this.makeApiEndpoint('file/list')).then(res => res.json());
     },
 
     createPath(pathName) {
-        return fetch('http://localhost:8180/file/create/v1', {
+        return fetch(this.makeApiEndpoint('file/create'), {
             method: 'POST',
             body: JSON.stringify({'remote_path': pathName})
         }).then(res => res.json());
     },
 
     createFile(fileName, filePath) {
-        return fetch('http://localhost:8180/file/upload/start/v1', {
+        return fetch(this.makeApiEndpoint('file/upload/start'), {
             method: 'POST',
             body: JSON.stringify({
                 'remote_path': fileName,
@@ -81,7 +80,7 @@ const Api = {
     },
 
     deleteFile(filePath) {
-        return fetch('http://localhost:8180/file/delete/v1', {
+        return fetch(this.makeApiEndpoint('file/delete'), {
             method: 'delete',
             body: JSON.stringify({
                 'remote_path': filePath
@@ -91,7 +90,7 @@ const Api = {
 
     downloadFile(filePath) {
         return this.getPath().then(response => {
-            return fetch('http://localhost:8180/file/download/start/v1', {
+            return fetch(this.makeApiEndpoint('file/download/start'), {
                 method: 'POST',
                 body: JSON.stringify({
                     'remote_path': filePath
@@ -101,19 +100,30 @@ const Api = {
     },
 
     getPath() {
-        return fetch('localhost:8180/config/get/paths/restore/v1', {
+        return fetch(this.makeApiEndpoint('config/get/paths/restore'), {
             method: 'GET'
         });
     },
 
     setPath(filePath) {
-        return fetch('localhost:8180/config/set/paths/restore/v1', {
+        return fetch(this.makeApiEndpoint('config/set/paths/restore'), {
             method: 'POST',
             body: JSON.stringify({
                 'value': filePath
             })
         });
+    },
+
+    makeApiEndpoint(service) {
+        if (!service) return;
+        return this.constants.API_URL + ':' + this.constants.PORT + '/' + service + '/' + this.constants.API_VERSION;
     }
+};
+
+Api.constants = {
+    PORT: '8180',
+    API_URL: 'http://localhost',
+    API_VERSION: 'v1'
 };
 
 export default Api;
