@@ -45,22 +45,15 @@
         },
         watch: {
             'connectionStatus': function (response) {
-                if (response === 'OK') {
-                    Api.getIdentity().then(resp => {
-                        if (resp.status === 'OK') {
-                            this.$router.push('home');
-                        } else {
-                            this.$router.push('create-identity');
-                        }
-                    }).catch(err => {
-                        console.log(err);
-                    });
-                } else {
-                    tryReconnect += 1;
-                    if (tryReconnect > 2) {
-                        this.error = true;
+                Api.getIdentity().then(resp => {
+                    if (resp.status === 'OK') {
+                        this.$router.push('home');
+                    } else {
+                        this.$router.push('create-identity');
                     }
-                }
+                }).catch(err => {
+                    console.log(err);
+                });
             }
         }
     };
