@@ -40,7 +40,7 @@
                 this.downloadSuccess = false;
                 this.downloadError = false;
                 Api.downloadFile(this.currentFile.path).then(resp => {
-                    if (resp.status === 'OK') {
+                    if (resp.ok) {
                         this.downloadSuccess = true;
                     } else {
                         this.downloadError = true;
