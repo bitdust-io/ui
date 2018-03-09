@@ -2,20 +2,52 @@
     <div class="user-files" v-bind:class="{open: isFileOpen}">
         <span @click="closeFile()">close</span>
         <h1>{{currentFile.name}}</h1>
-        {{currentFile}}
+        <button @click="downloadFile">download</button>
+        <div v-if="downloadIsLoading">
+            Loading
+        </div>
+        <div v-if="downloadSuccess">
+            Download {{currentFile.path}} Success
+        </div>
+        <div v-if="downloadError">
+            Download {{currentFile.path}} Error
+        </div>
+
     </div>
 </template>
 
 <script>
     import {mapGetters, mapActions} from 'vuex';
+    import Api from '../services/api';
 
     export default {
+        data() {
+            return {
+                downloadSuccess: false,
+                downloadError: false,
+                downloadIsLoading: false
+
+            };
+        },
         methods: {
             ...mapActions([
                 'getApiFiles',
                 'deleteFile',
                 'closeFile'
-            ])
+            ]),
+            downloadFile() {
+                this.downloadIsLoading = true;
+                this.downloadSuccess = false;
+                this.downloadError = false;
+                Api.downloadFile(this.currentFile.path).then(resp => {
+                    if (resp.ok) {
+                        this.downloadSuccess = true;
+                    } else {
+                        this.downloadError = true;
+                    }
+                    this.downloadIsLoading = false;
+                });
+            }
         },
         computed: {
             ...mapGetters([
@@ -23,6 +55,15 @@
                 'isFileOpen',
                 'currentFile'
             ])
+        },
+        watch: {
+            'currentFile': function (response) {
+                if (response) {
+                    this.downloadSuccess = false;
+                    this.downloadSuccess = false;
+                    this.downloadError = false;
+                }
+            }
         }
     };
 </script>

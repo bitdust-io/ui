@@ -4,13 +4,20 @@
         <div class="container">
             <navigation/>
             <div class="content">
-                <h1 class="title">
-                    My files
-                </h1>
+                <h1 class="title" @click="setMenuActive('myFiles')">My files</h1>
+                <h1 class="title" @click="setMenuActive('myShares')">Shared with me</h1>
+
+                <input type="file" accept="image/*;capture=camera">
+
 
                 <div class="flex">
-                    <files-upload/>
-                    <user-files/>
+                    <div v-show="this.activeTab === 'myFiles'">
+                        <files-upload/>
+                        <user-files/>
+                    </div>
+                    <div v-show="this.activeTab === 'myShares'">
+                        my shares content
+                    </div>
                     <file-open/>
                 </div>
             </div>
@@ -28,6 +35,11 @@
 
     export default {
         name: 'home',
+        data() {
+            return {
+                activeTab: 'myFiles'
+            };
+        },
         components: {
             userFiles,
             filesUpload,
@@ -36,9 +48,9 @@
             bitHeader
         },
         methods: {
-            ...mapActions([
-                'getIsConnected'
-            ])
+            setMenuActive(menu) {
+                this.activeTab = menu;
+            }
         },
         computed: {
             ...mapGetters([
