@@ -29,12 +29,6 @@
             ...mapGetters([
                 'getFiles'
             ])
-        },
-        beforeCreate() {
-
-        },
-        created() {
-            this.getApiFiles();
         }
     };
 </script>
