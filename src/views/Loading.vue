@@ -14,7 +14,6 @@
 </template>
 
 <script>
-    import store from '../store/';
     import Api from '../services/api';
     import {mapGetters} from 'vuex';
 
@@ -30,20 +29,10 @@
                 'connectionStatus'
             ])
         },
-        methods: {
-            shellCallback(error, stdout, stderr) {
-                if (error) {
-                    console.error(error);
-                }
-                if (stderr) {
-                    console.error(stderr);
-                }
-                store.commit('UPDATE_IS_LOADED', true);
-            }
-        },
         watch: {
             'connectionStatus': function (response) {
                 console.log(response);
+                if (response.status === 'ERROR') return;
                 Api.getIdentity().then(resp => {
                     if (resp.status === 'OK') {
                         this.$router.push('home');
