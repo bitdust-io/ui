@@ -32,9 +32,9 @@
         },
         methods: {
             ...mapActions([
-                'getApiFiles',
                 'deleteFile',
-                'openFile'
+                'openFile',
+                'getApiFiles'
             ])
         },
         computed: {
@@ -42,10 +42,14 @@
                 'getFiles'
             ]),
             filteredList() {
+                if (!this.getFiles) return;
                 return this.getFiles.filter(file => {
                     return file.name.toLowerCase().includes(this.search.toLowerCase());
                 });
             }
+        },
+        created() {
+            this.getApiFiles();
         }
     };
 </script>
