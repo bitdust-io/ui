@@ -1,5 +1,32 @@
 const Api = {
 
+    removeFriend(id) {
+        return fetch(this.makeApiEndpoint('friends/add'), {
+            method: 'POST',
+            body: JSON.stringify({
+                'customer_idurl': id
+            })
+        }).then(res => res.json());
+    },
+
+    addFriend(id) {
+        return fetch(this.makeApiEndpoint('friends/add'), {
+            method: 'POST',
+            body: JSON.stringify({
+                'idurl': id
+            })
+        }).then(res => res.json());
+    },
+
+    searchUser(user) {
+        return fetch(this.makeApiEndpoint('user/search/' + user)).then(res => res.json());
+    },
+
+    userList() {
+        console.log(this.makeApiEndpoint('friend/list'));
+        return fetch(this.makeApiEndpoint('friend/list')).then(res => res.json());
+    },
+
     networkConnected() {
         return fetch(this.makeApiEndpoint('network/connected')).then(res => res.json());
     },
@@ -100,9 +127,7 @@ const Api = {
     },
 
     getPath() {
-        return fetch(this.makeApiEndpoint('config/get/paths/restore'), {
-            method: 'GET'
-        });
+        return fetch(this.makeApiEndpoint('config/get/paths/restore')).then(res => res.json());
     },
 
     setPath(filePath) {
@@ -111,7 +136,7 @@ const Api = {
             body: JSON.stringify({
                 'value': filePath
             })
-        });
+        }).then(res => res.json());
     },
 
     makeApiEndpoint(service) {
