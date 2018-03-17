@@ -7,11 +7,13 @@
                 <h1 class="title">
                     Settings
                 </h1>
-                <ul>
-                    <li>Set 01</li>
-                    <li>Set 02</li>
-                    <li>Set 03</li>
-                </ul>
+
+                <h2>Local path</h2>
+                {{localPath}}
+                <h2>
+                    Set new path <input v-model="downloadPath"/>
+                    <button @click="setDownloadPath">ok</button>
+                </h2>
 
                 <h2>Events - {{getEvents.length}}</h2>
                 <ul>
@@ -29,6 +31,7 @@
 </template>
 
 <script>
+    import api from '@/services/api';
     import navigation from '@/components/Navigation';
     import bitHeader from '@/components/BitHeader';
     import {mapGetters} from 'vuex';
@@ -36,14 +39,36 @@
 
     export default {
         name: 'users',
+        data() {
+            return {
+                localPath: '',
+                downloadPath: ''
+            };
+        },
         components: {
             navigation,
             bitHeader
+        },
+        methods: {
+            setDownloadPath() {
+                api.setPath(this.downloadPath).then(resp => {
+                    if (resp.status !== 'OK') return;
+                    this.getPath();
+                });
+            },
+            getPath() {
+                api.getPath().then(resp => {
+                    this.localPath = resp.result[0].value;
+                });
+            }
         },
         computed: {
             ...mapGetters([
                 'getEvents'
             ])
+        },
+        created() {
+            this.getPath();
         }
     };
 
