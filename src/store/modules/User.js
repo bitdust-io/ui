@@ -1,4 +1,4 @@
-import Api from '../../services/api';
+import api from '../../services/api';
 import store from '../../store';
 
 const constants = {};
@@ -42,7 +42,7 @@ const actions = {
         store.commit('UPDATE_IS_FILE_OPEN', value);
     },
     deleteFile(store, path) {
-        Api.deleteFile(path).then(data => {
+        api.deleteFile(path).then(data => {
             console.log('file removed', data);
             if (data.ok) {
                 store.dispatch('getApiFiles');
@@ -50,7 +50,7 @@ const actions = {
         });
     },
     getApiFiles() {
-        Api.getFiles().then(data => {
+        api.getFiles().then(data => {
             store.commit('UPDATE_FILE_LIST', data.result);
         });
     },
@@ -60,9 +60,9 @@ const actions = {
         let fileName = filePath.match(/\/([^/]*)$/)[1];
 
         if (getters.hasFilePath(fileName).length === 0) {
-            Api.createPath(fileName).then(data => {
+            api.createPath(fileName).then(data => {
                 if (data.status === 'OK') {
-                    Api.createFile(fileName, filePath).then(data => {
+                    api.createFile(fileName, filePath).then(data => {
                         if (data.status === 'OK') {
                             console.log('file: ', fileName, 'Created');
                         }
@@ -75,7 +75,7 @@ const actions = {
                 }
             });
         } else {
-            Api.createFile(fileName, filePath).then(data => {
+            api.createFile(fileName, filePath).then(data => {
                 if (data.status === 'OK') {
                     console.log('file: ', fileName, 'Created');
                 }
