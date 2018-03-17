@@ -66,18 +66,6 @@
 
 <style lang="scss">
     @import "../../static/css/variables.scss";
-
-    .home {
-        height: 100%;
-    }
-    .content {
-        margin-left: 220px;
-        transition: all .3s ease-in-out;
-    }
-
-    .container {
-    }
-
     .sub-menu {
 
         li {
