@@ -8,8 +8,8 @@
                     My friends
                 </h1>
                 <ul>
-                    <li v-for="friend in friends">
-                        {{friend}}
+                    <li v-for="friend in getFriends">
+                        {{friend.username}}
                     </li>
                 </ul>
 
@@ -17,7 +17,6 @@
 
                 <h2>Search</h2>
                 <input v-model="search"/>
-                <button @click="searchUser">go!</button>
 
                 <ul class="user-list">
                     <li v-for="result in searchResults">
@@ -46,6 +45,7 @@
 </template>
 
 <script>
+    import {mapGetters, mapActions} from 'vuex';
     import api from '../services/api';
     import navigation from '@/components/Navigation';
     import bitHeader from '@/components/BitHeader';
@@ -64,11 +64,14 @@
             bitHeader
         },
         computed: {
-            friends() {
-                return api.userList();
-            }
+            ...mapGetters([
+                'getFriends'
+            ])
         },
         methods: {
+            ...mapActions([
+                'getApiFriends'
+            ]),
             searchUser() {
                 api.searchUser(this.search).then(resp => {
                     this.searchResults = resp.result;
@@ -77,8 +80,19 @@
             addFriend(id) {
                 api.addFriend(id).then(resp => {
                     this.addFriendResponse = resp;
+                    this.getApiFriends();
                 });
             }
+        },
+        watch: {
+            'search': function (resp) {
+                if (resp.length > 3) {
+                    this.searchUser();
+                }
+            }
+        },
+        created() {
+            this.getApiFriends();
         }
     };
 </script>
