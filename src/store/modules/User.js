@@ -6,10 +6,12 @@ const constants = {};
 const state = {
     fileList: [],
     isFileOpen: false,
-    currentFile: {}
+    currentFile: {},
+    friends: []
 };
 
 const getters = {
+    getFriends: state => state.friends,
     getFiles: state => state.fileList,
     isFileOpen: state => state.isFileOpen,
     currentFile: state => state.currentFile,
@@ -27,10 +29,18 @@ const mutations = {
     },
     UPDATE_CURRENT_FILE(state, file) {
         state.currentFile = state.fileList.filter(item => item.name === file)[0];
+    },
+    UPDATE_FRIENDS(state, friends) {
+        state.friends = friends;
     }
 };
 
 const actions = {
+    getApiFriends() {
+        api.userList().then(friends => {
+            store.commit('UPDATE_FRIENDS', friends.result);
+        });
+    },
     openFile(store, file) {
         store.commit('UPDATE_CURRENT_FILE', file);
         store.commit('UPDATE_IS_FILE_OPEN', true);
