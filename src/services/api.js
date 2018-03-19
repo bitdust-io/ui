@@ -1,7 +1,7 @@
 const Api = {
 
     removeFriend(id) {
-        return fetch(this.makeApiEndpoint('friends/add'), {
+        return fetch(this.makeApiEndpoint('friend/add'), {
             method: 'POST',
             body: JSON.stringify({
                 'customer_idurl': id
@@ -10,7 +10,7 @@ const Api = {
     },
 
     addFriend(id) {
-        return fetch(this.makeApiEndpoint('friends/add'), {
+        return fetch(this.makeApiEndpoint('friend/add'), {
             method: 'POST',
             body: JSON.stringify({
                 'idurl': id
@@ -23,7 +23,6 @@ const Api = {
     },
 
     userList() {
-        console.log(this.makeApiEndpoint('friend/list'));
         return fetch(this.makeApiEndpoint('friend/list')).then(res => res.json());
     },
 
