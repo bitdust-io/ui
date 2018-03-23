@@ -1,8 +1,10 @@
 <template>
     <div class="user-files" v-bind:class="{open: isFileOpen}">
-        <span @click="closeFile">close</span>
+        <span @click="closeFile"
+              class="close">close</span>
         <h1>{{currentFile.name}}</h1>
         <button @click="downloadFile">download</button>
+        <button @click="deleteFile(currentFile.path)">delete</button>
         <div v-if="downloadIsLoading">
             Loading
         </div>
@@ -95,7 +97,7 @@
         transition: all .3s ease-in-out;
 
         &.open {
-            transform: translate3d(-100px, 0, 0);
+            transform: translate3d(-200px, 0, 0);
         }
 
         h1 {
