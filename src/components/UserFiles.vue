@@ -8,10 +8,9 @@
                placeholder="Search file by name"
                id="search"/>
         <ul>
-            <li v-for="item in filteredList" @click="openFile(item.path)">
-                <span @click="deleteFile(item.path)"
-                      class="delete">x</span>
-                {{item.name}}
+            <li v-for="item in filteredList"
+                @click="openFile(item.path)">
+                <span class="file-name">{{item.name}}</span>
             </li>
         </ul>
         <div v-if="isFileOpen">
@@ -60,11 +59,10 @@
     ul {
         display: flex;
         flex-flow: row wrap;
-        align-content: space-between;
-        justify-content: space-between;
     }
 
     input {
+        border: 1px solid $color-gray-2;
         background: #FFFFFF;
         box-shadow: 0 4px 13px 0 rgba(0, 0, 0, 0.05);
         border-radius: 4px;
@@ -72,17 +70,20 @@
         font-size: .9rem;
     }
 
+    ul {
+        margin: 20px 0;
+    }
+
     li {
-        background: $color-white;
         cursor: pointer;
         height: 50px;
         border-radius: 20px;
         width: 160px;
         list-style: none;
-        margin: 10px;
-        overflow: hidden;
         font-size: .8rem;
-        padding-right: 10px;
+        padding: 10px;
+        margin: 10px;
+        background: $color-white;
 
         &:hover {
             opacity: .6;
@@ -90,21 +91,14 @@
 
         .delete {
             background: red;
+            height: 40px;
             color: white;
-            padding: 18px 10px;
+            padding: 10px;
             display: inline-block;
             cursor: pointer;
             &:hover {
-                opacity: .4;
+                opacity: .6;
             }
         }
-        .open {
-            background: green;
-            color: white;
-            padding: 5px;
-            display: inline-block;
-            cursor: pointer;
-        }
     }
-
 </style>
