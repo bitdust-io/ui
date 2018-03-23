@@ -1,10 +1,10 @@
 const Api = {
 
     removeFriend(id) {
-        return fetch(this.makeApiEndpoint('friend/add'), {
-            method: 'POST',
+        return fetch(this.makeApiEndpoint('friend/remove'), {
+            method: 'DELETE',
             body: JSON.stringify({
-                'customer_idurl': id
+                'global_id': id
             })
         }).then(res => res.json());
     },

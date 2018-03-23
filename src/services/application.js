@@ -1,4 +1,5 @@
-import Api from './api';
+import api from './api';
+import message from './message';
 import store from '../store/';
 import Router from '../router';
 
@@ -7,7 +8,7 @@ let connectionAttempts = 0;
 const Application = {
 
     keepConnection() {
-        Api.networkConnected().then(resp => {
+        api.networkConnected().then(resp => {
             store.commit('UPDATE_IS_CONNECTED', resp.status);
             setTimeout(() => {
                 this.keepConnection();
@@ -24,9 +25,16 @@ const Application = {
     },
 
     eventsListen() {
-        Api.eventsListen().then(resp => {
+        api.eventsListen().then(resp => {
             store.commit('UPDATE_LAST_EVENT', resp);
             this.eventsListen();
+        });
+    },
+
+    messagesListen() {
+        message.getMessages().then(resp => {
+            store.commit('UPDATE_MESSAGES', resp);
+            this.messagesListen();
         });
     }
 };

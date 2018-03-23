@@ -5,13 +5,14 @@
 </template>
 
 <script>
-    import Application from './services/application';
+    import application from './services/application';
 
     export default {
         name: 'bitdust-web',
         created() {
-            Application.keepConnection();
-            Application.eventsListen();
+            application.keepConnection();
+            application.eventsListen();
+            application.messagesListen();
         }
     };
 </script>

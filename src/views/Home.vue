@@ -2,8 +2,8 @@
     <div class="home">
         <bit-header/>
         <div class="container">
-            <navigation v-bind:class="{'slide-left':isFileOpen}"/>
-            <div class="content" v-bind:class="{'slide-left':isFileOpen}">
+            <navigation/>
+            <div class="content">
                 <ul class="sub-menu">
                     <li class="title" v-bind:class="{'active': (activeTab ==='myFiles')}"
                         @click="setMenuActive('myFiles')">My files
@@ -66,6 +66,7 @@
 
 <style lang="scss">
     @import "../../static/css/variables.scss";
+
     .sub-menu {
 
         li {

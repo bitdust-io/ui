@@ -10,7 +10,7 @@
             <li>
                 <router-link to="/users"
                              class="icon-user">
-                    Users
+                    Friends
                 </router-link>
             </li>
             <li>

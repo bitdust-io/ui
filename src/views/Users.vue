@@ -1,14 +1,17 @@
 <template>
-    <div>
+    <div class="friends">
         <bit-header/>
         <div class="container">
             <navigation/>
+            <friend-open/>
             <div class="content">
                 <h1 class="title">
                     My friends
                 </h1>
-                <ul>
-                    <li v-for="friend in getFriends">
+
+                <ul class="friends-list">
+                    <li v-for="friend in getFriends"
+                        @click="openFriend(friend)">
                         {{friend.username}}
                     </li>
                 </ul>
@@ -18,7 +21,7 @@
                 <h2>Search</h2>
                 <input v-model="search"/>
 
-                <ul class="user-list">
+                <ul class="friends-list">
                     <li v-for="result in searchResults">
                         <div v-if="result.result === 'exist'">
                             <span class="icon-add" @click="addFriend(result.idurl)"></span>
@@ -37,6 +40,14 @@
                 </ul>
                 <hr/>
 
+                <h2>
+                    Messages
+                </h2>
+                <pre>
+                    {{getMessages}}
+                </pre>
+
+
                 {{addFriendResponse}}
 
             </div>
@@ -49,6 +60,7 @@
     import api from '../services/api';
     import navigation from '@/components/Navigation';
     import bitHeader from '@/components/BitHeader';
+    import friendOpen from '../components/FriendOpen';
 
     export default {
         name: 'users',
@@ -61,16 +73,19 @@
         },
         components: {
             navigation,
-            bitHeader
+            bitHeader,
+            friendOpen
         },
         computed: {
             ...mapGetters([
-                'getFriends'
+                'getFriends',
+                'getMessages'
             ])
         },
         methods: {
             ...mapActions([
-                'getApiFriends'
+                'getApiFriends',
+                'openFriend'
             ]),
             searchUser() {
                 api.searchUser(this.search).then(resp => {
@@ -97,16 +112,25 @@
     };
 </script>
 
-<style lang="scss">
-    .user-list {
+<style lang="scss" scoped>
+
+    @import "../../static/css/variables.scss";
+
+    .friends-list {
         list-style: none;
         display: flex;
+        flex-flow: wrap;
 
         li {
             margin: 10px 0;
-            > div {
-                display: flex;
-                align-items: center;
+            background: $color-white;
+            padding: 10px;
+            border-radius: 20px;
+            margin-right: 10px;
+            cursor: pointer;
+
+            &:hover {
+                opacity: .6;
             }
         }
     }
