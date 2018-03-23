@@ -1,70 +1,96 @@
 import api from '../../services/api';
-import store from '../../store';
 
 const constants = {};
 
 const state = {
-    fileList: [],
+    filesList: [],
     isFileOpen: false,
+    isFriendOpen: false,
     currentFile: {},
-    friends: []
+    currentFriend: {},
+    friendsList: []
 };
 
 const getters = {
-    getFriends: state => state.friends,
-    getFiles: state => state.fileList,
+    getFriends: state => state.friendsList,
+    getFiles: state => state.filesList,
     isFileOpen: state => state.isFileOpen,
+    isFriendOpen: state => state.isFriendOpen,
     currentFile: state => state.currentFile,
+    currentFriend: state => state.currentFriend,
     hasFilePath(path) {
-        return state.fileList.filter(file => file.path === path);
+        return state.filesList.filter(file => file.path === path);
     }
 };
 
 const mutations = {
     UPDATE_FILE_LIST(state, value) {
-        state.fileList = value;
+        state.filesList = value;
     },
     UPDATE_IS_FILE_OPEN(state, value) {
         state.isFileOpen = value;
     },
     UPDATE_CURRENT_FILE(state, file) {
-        state.currentFile = state.fileList.filter(item => item.name === file)[0];
+        state.currentFile = state.filesList.filter(item => item.name === file)[0];
     },
-    UPDATE_FRIENDS(state, friends) {
-        state.friends = friends;
+    UPDATE_IS_FRIEND_OPEN(state, value) {
+        state.isFriendOpen = value;
+    },
+    UPDATE_CURRENT_FRIEND(state, friend) {
+        state.currentFriend = state.friendsList.filter(item => item.global_id === friend)[0];
+    },
+    UPDATE_FRIENDS(state, friendsList) {
+        state.friendsList = friendsList;
     }
 };
 
 const actions = {
-    getApiFriends() {
-        api.userList().then(friends => {
-            store.commit('UPDATE_FRIENDS', friends.result);
+    removeFriend({commit, dispatch}, id) {
+        api.removeFriend(id).then(resp => {
+            // TODO handle response
+            dispatch('getApiFriends');
+            dispatch('closeFriend');
         });
     },
-    openFile(store, file) {
-        store.commit('UPDATE_CURRENT_FILE', file);
-        store.commit('UPDATE_IS_FILE_OPEN', true);
-    },
-    closeFile() {
-        store.commit('UPDATE_IS_FILE_OPEN', false);
-    },
-    updateIsFileOpen(store, value) {
-        store.commit('UPDATE_IS_FILE_OPEN', value);
-    },
-    deleteFile(store, path) {
-        api.deleteFile(path).then(data => {
-            console.log('file removed', data);
-            if (data.ok) {
-                store.dispatch('getApiFiles');
-            }
+    getApiFriends({commit}) {
+        api.userList().then(friendsList => {
+            commit('UPDATE_FRIENDS', friendsList.result);
         });
     },
-    getApiFiles() {
+    openFile({commit}, file) {
+        commit('UPDATE_CURRENT_FILE', file);
+        commit('UPDATE_IS_FILE_OPEN', true);
+    },
+    openFriend({commit}, friend) {
+        commit('UPDATE_CURRENT_FRIEND', friend.global_id);
+        commit('UPDATE_IS_FRIEND_OPEN', true);
+    },
+    closeFriend({commit}) {
+        commit('UPDATE_IS_FRIEND_OPEN', false);
+    },
+    closeFile({commit}) {
+        commit('UPDATE_IS_FILE_OPEN', false);
+    },
+    updateIsFileOpen({commit}, value) {
+        commit('UPDATE_IS_FILE_OPEN', value);
+    },
+    deleteFile({commit, dispatch}, path) {
+        if (confirm('Are you sure ?')) {
+            api.deleteFile(path).then(data => {
+                console.log('file removed', data);
+                if (data.ok) {
+                    dispatch('getApiFiles');
+                    dispatch('closeFile');
+                }
+            });
+        }
+    },
+    getApiFiles({commit}) {
         api.getFiles().then(data => {
-            store.commit('UPDATE_FILE_LIST', data.result);
+            commit('UPDATE_FILE_LIST', data.result);
         });
     },
-    createFile(store, file) {
+    createFile({commit, dispatch}, file) {
         if (!file) return false;
         let filePath = file.files[0].path;
         let fileName = filePath.match(/\/([^/]*)$/)[1];
@@ -80,7 +106,7 @@ const actions = {
                         console.log('error: ', err);
                     });
                     setTimeout(() => {
-                        store.dispatch('getApiFiles');
+                        dispatch('getApiFiles');
                     }, 500);
                 }
             });
@@ -93,7 +119,7 @@ const actions = {
                 console.log('error: ', err);
             });
             setTimeout(() => {
-                store.dispatch('getApiFiles');
+                dispatch('getApiFiles');
             }, 500);
         }
     }

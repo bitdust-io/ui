@@ -45,3 +45,14 @@ html, body {
 .slide-left {
     transform: translate3d(-100px, 0, 0);
 }
+
+.close {
+    cursor: pointer;
+    background: red;
+    color: $color-white;
+    padding: 10px;
+
+    &:hover {
+        opacity: .6;
+    }
+}
