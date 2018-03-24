@@ -1,7 +1,14 @@
 <template>
-    <div class="friend" v-bind:class="{open: isFriendOpen}">
+    <div class="friend" v-bind:class="{open: isFriendDetailsOpen}">
         <span @click="closeFriend"
               class="close">close</span>
+
+        <div v-for="message in getCurrentFriendData">
+            <div v-for="item in message.messages">
+                {{item.data.anything}}
+            </div>
+        </div>
+
 
         <h1>{{currentFriend.alias}}</h1>
         <h2>{{currentFriend.global_id}}</h2>
@@ -13,15 +20,20 @@
 
         <button @click="sendMessage()">send</button>
 
+        <hr/>
+
+        <user-messages/>
+
     </div>
 </template>
 
 <script>
     import {mapGetters, mapActions} from 'vuex';
-
+    import userMessages from './UserMessages';
     import message from '../services/message';
 
     export default {
+        components: {userMessages},
         data() {
             return {
                 message: ''
@@ -47,7 +59,10 @@
         computed: {
             ...mapGetters([
                 'currentFriend',
-                'isFriendOpen'
+                'isFriendDetailsOpen',
+                'getCurrentFriendData',
+                'getFriends',
+                'getMessages'
             ])
         },
         watch: {
@@ -56,10 +71,12 @@
                     this.resetOpenFriend();
                 }
             },
-            'isFriendOpen': function (response) {
+            'isFriendDetailsOpen': function (response) {
                 if (!response) {
                     this.resetOpenFriend();
                 }
+            },
+            'getFriends': function (response) {
             }
         },
         mounted() {
@@ -68,7 +85,10 @@
                     this.closeFriend();
                 }
             });
-        }
+        },
+        comments: [
+            userMessages
+        ]
     };
 </script>
 
