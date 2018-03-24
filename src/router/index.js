@@ -24,7 +24,7 @@ export default new Router({
         {
             path: '/users',
             name: 'users',
-            component: require('@/views/Users').default
+            component: require('@/views/Friends').default
         },
         {
             path: '/settings',
