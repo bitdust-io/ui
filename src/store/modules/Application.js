@@ -7,7 +7,6 @@ const state = {
     hasIdentity: false,
     connectionStatus: undefined,
     events: [],
-    messages: [],
     lastEvent: {
         status: undefined
     }
@@ -16,8 +15,7 @@ const state = {
 const getters = {
     connectionStatus: state => state.connectionStatus,
     getLastEvent: state => state.lastEvent,
-    getEvents: state => state.events,
-    getMessages: state => state.messages
+    getEvents: state => state.events
 };
 
 const mutations = {
@@ -36,9 +34,6 @@ const mutations = {
     },
     UPDATE_EVENTS(state, value) {
         state.events.unshift(value);
-    },
-    UPDATE_MESSAGES(state, value) {
-        state.messages.unshift(value);
     }
 };
 
