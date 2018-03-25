@@ -3,16 +3,27 @@
         <bit-header/>
         <div class="container">
             <navigation/>
-            <friend-open/>
+            <friend-details/>
             <div class="content">
                 <h1 class="title">
                     My friends
                 </h1>
 
+                <!--{{getFriends}}-->
+
                 <ul class="friends-list">
                     <li v-for="friend in getFriends"
                         @click="openFriend(friend)">
+
                         {{friend.username}}
+
+                        <friend-message-counter v-bind:friend="friend"/>
+
+                        <div v-if="friend.unread"
+                             class="messages">
+                            {{friend.messages.length}}
+                        </div>
+
                     </li>
                 </ul>
 
@@ -40,14 +51,6 @@
                 </ul>
                 <hr/>
 
-                <h2>
-                    Messages
-                </h2>
-                <pre>
-                    {{getMessages}}
-                </pre>
-
-
                 {{addFriendResponse}}
 
             </div>
@@ -60,7 +63,8 @@
     import api from '../services/api';
     import navigation from '@/components/Navigation';
     import bitHeader from '@/components/BitHeader';
-    import friendOpen from '../components/FriendOpen';
+    import friendDetails from '../components/FriendDetails';
+    import friendMessageCounter from '../components/FriendMessagesCounter';
 
     export default {
         name: 'users',
@@ -74,7 +78,8 @@
         components: {
             navigation,
             bitHeader,
-            friendOpen
+            friendDetails,
+            friendMessageCounter
         },
         computed: {
             ...mapGetters([
