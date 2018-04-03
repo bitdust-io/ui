@@ -18,6 +18,10 @@ const Api = {
         }).then(res => res.json());
     },
 
+    observeUser(user) {
+        return fetch(this.makeApiEndpoint('user/observe/' + user, 'attempts=4')).then(res => res.json());
+    },
+
     searchUser(user) {
         return fetch(this.makeApiEndpoint('user/search/' + user)).then(res => res.json());
     },
@@ -138,8 +142,11 @@ const Api = {
         }).then(res => res.json());
     },
 
-    makeApiEndpoint(service) {
+    makeApiEndpoint(service, params) {
         if (!service) return;
+        if (params) {
+            return this.constants.API_URL + ':' + this.constants.PORT + '/' + service + '/' + this.constants.API_VERSION + '?' + params;
+        }
         return this.constants.API_URL + ':' + this.constants.PORT + '/' + service + '/' + this.constants.API_VERSION;
     }
 };

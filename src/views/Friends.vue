@@ -40,6 +40,8 @@
                                 <p>{{result.nickname}}</p>
                                 <p>{{result.idurl}}</p>
                             </div>
+
+                            {{addFriendResponse}}
                         </div>
                         <div v-if="result.result === 'not exist'">
                             <span class="icon-invite">invite</span>
@@ -51,7 +53,19 @@
                 </ul>
                 <hr/>
 
-                {{addFriendResponse}}
+
+                <div v-if="observeSearchAlias.length > 1">
+                    <h2>Other results</h2>
+                    <ul class="friends-list">
+                        <li v-for="result in searchResults">
+                            <span class="icon-add" @click="addFriend(result.idurl)"></span>
+                            <div>
+                                <p>{{result.nickname}}</p>
+                                <p>{{result.idurl}}</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
 
             </div>
         </div>
@@ -72,6 +86,7 @@
             return {
                 search: '',
                 searchResults: '',
+                observeSearchAlias: [],
                 addFriendResponse: ''
             };
         },
@@ -95,7 +110,18 @@
             searchUser() {
                 api.searchUser(this.search).then(resp => {
                     this.searchResults = resp.result;
+                    if (resp.result[0].result === 'exist') {
+                        this.observeSearchResult(resp.result[0].nickname);
+                    } else {
+                        this.observeSearchAlias = [];
+                    }
                 });
+            },
+            observeSearchResult(id) {
+                api.observeUser(id).then(data => {
+                        this.observeSearchAlias = data.result;
+                    }
+                );
             },
             addFriend(id) {
                 api.addFriend(id).then(resp => {
