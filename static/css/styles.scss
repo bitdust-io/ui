@@ -21,6 +21,7 @@ html, body {
 .content {
     margin-left: 220px;
     transition: all .3s ease-in-out;
+    overflow: scroll;
 }
 
 .container {
@@ -55,4 +56,8 @@ html, body {
     &:hover {
         opacity: .6;
     }
+}
+
+.page {
+    height: 100%;
 }

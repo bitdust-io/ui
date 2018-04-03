@@ -56,10 +56,10 @@
 
         &:before, &:after {
             content: '';
-            position: absolute;
+            position: fixed;
             width: 1px;
             bottom: -1000px;
-            top: 10px;
+            top: 0;
             z-index: 1;
 
         }
