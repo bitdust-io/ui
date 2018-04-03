@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="settings page">
         <bit-header/>
         <div class="container">
             <navigation/>
