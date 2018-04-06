@@ -5,6 +5,7 @@ const constants = {};
 const state = {
     isLoaded: false,
     hasIdentity: false,
+    identity: {},
     connectionStatus: undefined,
     events: [],
     lastEvent: {
@@ -15,14 +16,15 @@ const state = {
 const getters = {
     connectionStatus: state => state.connectionStatus,
     getLastEvent: state => state.lastEvent,
-    getEvents: state => state.events
+    getEvents: state => state.events,
+    getIdentity: state => state.identity
 };
 
 const mutations = {
     UPDATE_IS_LOADED(state, value) {
         state.isLoaded = value;
     },
-    UPDATE_IDENTITY(state, value) {
+    UPDATE_HAS_IDENTITY(state, value) {
         state.hasIdentity = value;
     },
     UPDATE_IS_CONNECTED(state, value) {
@@ -34,6 +36,15 @@ const mutations = {
     },
     UPDATE_EVENTS(state, value) {
         state.events.unshift(value);
+    },
+    UPDATE_IDENTITY(state, value) {
+        state.identity = value;
+    }
+};
+
+const actions = {
+    updateIdentity({commit}, value) {
+        commit('UPDATE_IDENTITY', value);
     }
 };
 
@@ -41,5 +52,6 @@ export default {
     state,
     mutations,
     getters,
+    actions,
     constants
 };

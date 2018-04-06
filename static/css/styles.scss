@@ -1,10 +1,10 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
+    background-color: $color-blue;
 }
 
 html, body {
     height: 100%;
-    background-color: $color-blue;
     overflow: hidden;
 }
 
@@ -19,7 +19,7 @@ html, body {
 }
 
 .content {
-    margin-left: 220px;
+    margin-left: 330px;
     transition: all .3s ease-in-out;
     overflow: scroll;
 }
@@ -60,4 +60,5 @@ html, body {
 
 .page {
     height: 100%;
+    background: url("./assets/corner-bg.svg") top right no-repeat;
 }

@@ -1,7 +1,8 @@
 const constants = {};
 
 const state = {
-    messages: []
+    messages: [],
+    userKeyMessage: {}
 };
 
 const getters = {
@@ -11,6 +12,11 @@ const getters = {
 const mutations = {
     UPDATE_MESSAGES(state, message) {
         state.messages.unshift(message);
+        if (state.userKeyMessage[message.result[0].sender] === undefined) {
+            state.userKeyMessage[message.result[0].sender] = [];
+        }
+        state.userKeyMessage[message.result[0].sender].push(message);
+        console.log(state.userKeyMessage);
     }
 };
 
