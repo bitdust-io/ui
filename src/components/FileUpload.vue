@@ -1,12 +1,10 @@
 <template>
-    <div>
-        <div class="dropbox">
-            drag any file here
-            <input type="file"
-                   :name="uploadFieldName"
-                   @change="createFile($event.target)"
-                   class="input-file">
-        </div>
+    <div class="dropbox">
+        UPLOAD FILE
+        <input type="file"
+               :name="uploadFieldName"
+               @change="createFile($event.target)"
+               class="input-file">
     </div>
 </template>
 
@@ -33,20 +31,17 @@
     };
 </script>
 
-<style scoped>
-    li {
-        list-style: none;
-        color: #888;
-        font-size: 18px;
-        margin-top: 10px;
-    }
+<style scoped lang="scss">
+    @import "../../static/css/imports";
 
     .dropbox {
-        outline: 2px dashed grey;
-        outline-offset: -10px;
-        background: #eee;
-        color: dimgray;
-        padding: 50px 30px;
+        float: right;
+        margin-right: 15px;
+        background: $color-blue-4;
+        box-shadow: 0 4px 13px 0 rgba(0, 0, 0, 0.05);
+        border-radius: 100px;
+        color: $color-white;
+        padding: 10px 20px;
         position: relative;
         cursor: pointer;
     }
@@ -60,11 +55,10 @@
         width: 100%;
         position: absolute;
         cursor: pointer;
-
     }
 
     .dropbox:hover {
-        background: #ccc;
+        background: $color-blue-3;
     }
 
     .dropbox p {
