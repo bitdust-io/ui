@@ -10,6 +10,7 @@
         <ul>
             <li v-for="item in filteredList"
                 @click="openFile(item.path)">
+                <span class="icon-file"></span>
                 <span class="file-name">{{item.name}}</span>
             </li>
         </ul>
@@ -54,7 +55,8 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../../static/css/variables";
+    @import "../../static/css/imports";
+
 
     ul {
         display: flex;
@@ -75,15 +77,20 @@
     }
 
     li {
+
         cursor: pointer;
-        height: 50px;
-        border-radius: 20px;
         width: 160px;
         list-style: none;
-        font-size: .8rem;
-        padding: 10px;
+        padding: 10px 10px 10px 40px;
+        height: 40px;
         margin: 10px;
-        background: $color-white;
+        background-color: $color-white;
+        box-shadow: 0 4px 13px 0 rgba(0, 0, 0, 0.05);
+        border-radius: 25px;
+        font-size: .8rem;
+
+        &:before {
+        }
 
         &:hover {
             opacity: .6;

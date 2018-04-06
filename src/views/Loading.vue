@@ -15,7 +15,7 @@
 
 <script>
     import Api from '../services/api';
-    import {mapGetters} from 'vuex';
+    import {mapGetters, mapActions} from 'vuex';
 
     export default {
         name: 'loading',
@@ -29,12 +29,17 @@
                 'connectionStatus'
             ])
         },
+        methods: {
+            ...mapActions([
+                'updateIdentity'
+            ])
+        },
         watch: {
             'connectionStatus': function (response) {
-                console.log(response);
-                if (response.status === 'ERROR') return;
+                if (response === 'ERROR') return;
                 Api.getIdentity().then(resp => {
                     if (resp.status === 'OK') {
+                        this.updateIdentity(resp.result[0]);
                         this.$router.push('home');
                     } else {
                         this.$router.push('create-identity');

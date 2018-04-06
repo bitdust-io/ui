@@ -36,41 +36,40 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../../static/css/variables";
+    @import "../../static/css/imports";
 
     nav {
         transition: all .3s ease-in-out;
         position: fixed;
-        width: 200px;
+        width: 300px;
         margin-top: -280px;
         top: 50%;
 
+        @include separator;
+
         &:before {
-            background: $color-white;
-            left: 201px;
+            left: 301px;
         }
+
         &:after {
-            background: $color-blue-2;
-            left: 200px;
+            left: 300px;
         }
 
         &:before, &:after {
-            content: '';
             position: fixed;
-            width: 1px;
             bottom: -1000px;
             top: 0;
-            z-index: 1;
-
         }
+
     }
 
     ul {
         list-style: none;
-        width: 200px;
+        width: 300px;
 
         li {
             a {
+                text-transform: uppercase;
                 text-decoration: none;
                 padding: 24px 0 24px 120px;
                 display: block;
