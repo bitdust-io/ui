@@ -14,6 +14,7 @@
         props: ['file'],
         methods: {
             getExtension() {
+                if (!this.file) return;
                 return this.makeUrl(this.file.match(/[^.]+$/));
             },
             makeUrl(extension) {
