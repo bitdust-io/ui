@@ -9,18 +9,20 @@
                 <file-extension :file="currentFile.path"/>
                 <h1>{{currentFile.name}}</h1>
             </div>
-            <button @click="downloadFile">download</button>
-            <button @click="deleteFile(currentFile.path)">delete</button>
-            <div v-if="downloadIsLoading">
-                Loading
+            <h3>File Information</h3>
+            <div>
+                <button @click="downloadFile">download</button>
+                <button @click="deleteFile(currentFile.path)">delete</button>
+                <div v-if="downloadIsLoading">
+                    Loading
+                </div>
+                <div v-if="downloadSuccess">
+                    Download {{currentFile.path}} Success
+                </div>
+                <div v-if="downloadError">
+                    Download {{currentFile.path}} Error
+                </div>
             </div>
-            <div v-if="downloadSuccess">
-                Download {{currentFile.path}} Success
-            </div>
-            <div v-if="downloadError">
-                Download {{currentFile.path}} Error
-            </div>
-
             <hr/>
 
             <div v-for="version in currentFile.versions">
