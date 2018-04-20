@@ -2,7 +2,7 @@
     <header>
         <div class="header-right">
             <user-identity/>
-            <div class="connection-status" :class="connectionStatus">
+            <div class="connection-status" :class="connectionStatus.status">
             </div>
         </div>
     </header>
