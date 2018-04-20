@@ -9,7 +9,7 @@ const Application = {
 
     keepConnection() {
         api.networkConnected().then(resp => {
-            store.commit('UPDATE_IS_CONNECTED', resp.status);
+            store.commit('UPDATE_IS_CONNECTED', resp);
             setTimeout(() => {
                 this.keepConnection();
             }, 2000);
