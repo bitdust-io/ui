@@ -14,6 +14,18 @@
     background: url("./assets/icons/icon-add.svg") no-repeat;
 }
 
+.icon-share-file {
+    background: url("./assets/icons/icon-share-file.svg") no-repeat;
+}
+
+.icon-download-file {
+    background: url("./assets/icons/icon-download-file.svg") no-repeat;
+}
+
+.icon-delete-file {
+    background: url("./assets/icons/icon-delete-file.svg") no-repeat;
+}
+
 div[class^="icon-"], div[class*=" icon-"] {
     content: '';
     width: 40px;
