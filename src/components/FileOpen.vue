@@ -40,7 +40,6 @@
         },
         methods: {
             ...mapActions([
-                'getApiFiles',
                 'deleteFile',
                 'closeFile'
             ]),
@@ -65,7 +64,6 @@
         },
         computed: {
             ...mapGetters([
-                'getFiles',
                 'isFileOpen',
                 'currentFile'
             ])
