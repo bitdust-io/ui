@@ -8,10 +8,11 @@
                placeholder="Search file by name"
                id="search"/>
         <ul>
-            <li v-for="item in filteredList"
-                @click="openFile(item.path)">
+            <li v-for="file in filteredList">
                 <span class="icon-file"></span>
-                <span class="file-name">{{item.name}}</span>
+                <span class="file-name"
+                      @click="openFile(file.path)">{{file.name}}</span>
+                <file-detail :file="file"/>
             </li>
         </ul>
         <div v-if="isFileOpen">
@@ -22,6 +23,7 @@
 
 <script>
     import {mapGetters, mapActions} from 'vuex';
+    import FileDetail from '../components/FileDetail';
 
     export default {
         data() {
@@ -29,6 +31,9 @@
                 isFileOpen: false,
                 search: ''
             };
+        },
+        components: {
+            FileDetail
         },
         methods: {
             ...mapActions([
@@ -58,10 +63,10 @@
 <style scoped lang="scss">
     @import "../../static/css/imports";
 
-
     ul {
         display: flex;
         flex-flow: row wrap;
+        margin: 20px 0;
     }
 
     input {
@@ -73,40 +78,41 @@
         font-size: .9rem;
     }
 
-    ul {
-        margin: 20px 0;
-    }
-
     li {
-
-        cursor: pointer;
-        width: 160px;
+        background: $color-white;
+        width: 190px;
         list-style: none;
-        padding: 10px 10px 10px 40px;
+        padding: 10px 4px 10px 14px;
         height: 40px;
         margin: 10px;
-        background-color: $color-white;
         box-shadow: 0 4px 13px 0 rgba(0, 0, 0, 0.05);
         border-radius: 25px;
         font-size: .8rem;
+        display: flex;
+        justify-content: space-around;
+    }
 
-        &:before {
-        }
+    .file-name {
+        overflow: hidden;
+        line-height: 22px;
+        max-width: 70%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        cursor: pointer;
+        padding-right: 10px;
 
         &:hover {
             opacity: .6;
         }
-
-        .delete {
-            background: red;
-            height: 40px;
-            color: white;
-            padding: 10px;
-            display: inline-block;
-            cursor: pointer;
-            &:hover {
-                opacity: .6;
-            }
-        }
     }
+
+    .icon-file {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        filter: grayscale(100%);
+        opacity: .5;
+        margin-right: 10px;
+    }
+
 </style>
