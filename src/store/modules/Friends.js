@@ -14,6 +14,7 @@ const getters = {
     isFriendDetailsOpen: state => state.isFriendDetailsOpen,
     currentFriend: state => state.currentFriend,
     getCurrentFriendData() {
+        if (!state.friendsList) return [];
         return state.friendsList.filter(friend => friend.global_id === state.currentFriend.global_id);
     }
 };
