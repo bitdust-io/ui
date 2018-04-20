@@ -9,7 +9,7 @@
                id="search"/>
         <ul>
             <li v-for="file in filteredList">
-                <span class="icon-file"></span>
+                <file-extension :file="file.path"/>
                 <span class="file-name"
                       @click="openFile(file.path)">{{file.name}}</span>
                 <file-detail :file="file"/>
@@ -24,6 +24,7 @@
 <script>
     import {mapGetters, mapActions} from 'vuex';
     import FileDetail from '../components/FileDetail';
+    import FileExtension from '../components/FileExtension';
 
     export default {
         data() {
@@ -33,7 +34,8 @@
             };
         },
         components: {
-            FileDetail
+            FileDetail,
+            FileExtension
         },
         methods: {
             ...mapActions([
@@ -80,7 +82,7 @@
 
     li {
         background: $color-white;
-        width: 190px;
+        width: 210px;
         list-style: none;
         padding: 10px 4px 10px 14px;
         height: 40px;
@@ -105,14 +107,4 @@
             opacity: .6;
         }
     }
-
-    .icon-file {
-        width: 20px;
-        height: 20px;
-        display: inline-block;
-        filter: grayscale(100%);
-        opacity: .5;
-        margin-right: 10px;
-    }
-
 </style>
