@@ -3,9 +3,16 @@
         <span class="icon-menu"></span>
         <div class="file-detail-content">
             <ul class="file-detail-list">
-                <li><i class="icon-share-file"></i>Share</li>
-                <li><i class="icon-download-file"></i>Download</li>
-                <li class="delete">
+                <li @click="shareFile()">
+                    <i class="icon-share-file"></i>
+                    Share
+                </li>
+                <li @click="downloadFile()">
+                    <i class="icon-download-file"></i>
+                    Download
+                    <i v-if="downloadSuccess"> ok</i>
+                </li>
+                <li @click="deleteFile(file.path)" class="delete">
                     <i class="icon-delete-file"></i>
                     Delete
                 </li>
@@ -15,13 +22,17 @@
 </template>
 
 <script>
-    import {mapGetters, mapActions} from 'vuex';
+    import {mapActions} from 'vuex';
     import Api from '../services/api';
 
     export default {
         name: 'fileDetail',
         data() {
-            return {};
+            return {
+                downloadSuccess: false,
+                downloadError: false,
+                downloadIsLoading: false
+            };
         },
         props: {
             file: {
@@ -34,11 +45,14 @@
                 'deleteFile',
                 'closeFile'
             ]),
+            shareFile() {
+                alert('Sharing this file: ' + this.file.name + '\n \n Wait, Vessel is working on it ;)');
+            },
             downloadFile() {
                 this.downloadIsLoading = true;
                 this.downloadSuccess = false;
                 this.downloadError = false;
-                Api.downloadFile(this.currentFile.path).then(resp => {
+                Api.downloadFile(this.file.path).then(resp => {
                     if (resp.ok) {
                         this.downloadSuccess = true;
                     } else {
@@ -52,32 +66,6 @@
                 this.downloadSuccess = false;
                 this.downloadError = false;
             }
-        },
-        computed: {
-            ...mapGetters([
-                'getFiles',
-                'isFileOpen',
-                'currentFile'
-            ])
-        },
-        watch: {
-            'currentFile': function (response) {
-                if (response) {
-                    this.resetOpenFile();
-                }
-            },
-            'isFileOpen': function (response) {
-                if (!response) {
-                    this.resetOpenFile();
-                }
-            }
-        },
-        mounted() {
-            window.addEventListener('keyup', (ev) => {
-                if (ev.code === 'Escape') {
-                    this.closeFile();
-                }
-            });
         }
     };
 </script>
@@ -101,7 +89,6 @@
         display: none;
         padding-left: 30px;
         margin: -42px 0 0 10px;
-
     }
 
     .file-detail-list {
