@@ -6,7 +6,8 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex';
+    import {mapGetters, mapActions} from 'vuex';
+    import Api from '../services/api';
 
     export default {
         computed: {
@@ -14,10 +15,28 @@
                 'getIdentity'
             ]),
             userFirstLetter() {
+                if (!this.checkIdentity()) return;
                 return this.getIdentity.name.substring(0, 1);
             }
         },
-        methods: {}
+        methods: {
+            ...mapActions([
+                'updateIdentity'
+            ]),
+            checkIdentity() {
+                return !!this.getIdentity.name;
+            }
+        },
+        created() {
+            if (this.checkIdentity()) return;
+            Api.getIdentity().then(resp => {
+                if (resp.status === 'OK') {
+                    this.updateIdentity(resp.result[0]);
+                }
+            }).catch(err => {
+                console.log(err);
+            });
+        }
     };
 </script>
 
@@ -32,6 +51,7 @@
     .user-name {
         text-transform: capitalize;
     }
+
     .avatar {
         width: 50px;
         height: 50px;

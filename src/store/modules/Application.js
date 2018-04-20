@@ -6,7 +6,9 @@ const state = {
     isLoaded: false,
     hasIdentity: false,
     identity: {},
-    connectionStatus: undefined,
+    connectionStatus: {
+        status: 'ERROR'
+    },
     events: [],
     lastEvent: {
         status: undefined
