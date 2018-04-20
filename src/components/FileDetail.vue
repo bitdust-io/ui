@@ -79,14 +79,18 @@
 
         &:hover {
             .file-detail-content {
-                display: block;
+                visibility: visible;
+                opacity: 1;
             }
         }
     }
 
     .file-detail-content {
+        display: block;
+        visibility: hidden;
+        opacity: 0;
+        transition: all .2s ease-in-out;
         position: absolute;
-        display: none;
         padding-left: 30px;
         margin: -42px 0 0 10px;
     }
