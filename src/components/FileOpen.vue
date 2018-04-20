@@ -15,6 +15,13 @@
             Download {{currentFile.path}} Error
         </div>
 
+        <hr/>
+
+        <div v-for="version in currentFile.versions">
+            reliable: {{version.reliable}}
+            delivered: {{version.delivered}}
+        </div>
+
     </div>
 </template>
 
@@ -121,4 +128,7 @@
         }
     }
 
+    hr {
+        margin: 10px 0;
+    }
 </style>
