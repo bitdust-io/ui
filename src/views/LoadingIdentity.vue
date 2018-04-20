@@ -19,7 +19,7 @@
         },
         watch: {
             'connectionStatus': function (response) {
-                if (response === 'OK') {
+                if (response.status === 'OK') {
                     this.$router.push('home');
                 }
             }
