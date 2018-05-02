@@ -1,16 +1,24 @@
 <template>
-    <div>
-        <div v-if="!error">
-            <h1>
-                BitDust is Loading...
-            </h1>
-        </div>
-        <div v-if="error">
-            <h1>
-                Ooops, something went wrong, can you please restart Bitdust
-            </h1>
-        </div>
-    </div>
+    <section class="bg-wave section-loading">
+        <article>
+            <header v-if="!error">
+                <h1 class="page-title">
+                    We are connecting you
+                </h1>
+                <h2 class="page-subtitle">
+                    One moment...
+                </h2>
+            </header>
+            <header v-if="error">
+                <h1 class="page-title">
+                    We are connecting you
+                </h1>
+                <h2 class="sub-title">
+                    Ooops, something went wrong, can you please restart Bitdust
+                </h2>
+            </header>
+        </article>
+    </section>
 </template>
 
 <script>
@@ -60,4 +68,17 @@
 
 <style scoped lang="scss">
 
+.section-loading {
+    justify-content: flex-start;
+
+    article {
+        margin-top: 7.7rem;
+    }
+
+    .page-subtitle {
+        text-align: center;
+        margin-top: 1rem;
+    }
+
+}
 </style>

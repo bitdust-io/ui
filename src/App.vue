@@ -16,9 +16,3 @@
         }
     };
 </script>
-
-<style lang="scss">
-    @import "../static/css/imports";
-    @import "../static/css/icons";
-    @import "../static/css/styles";
-</style>
