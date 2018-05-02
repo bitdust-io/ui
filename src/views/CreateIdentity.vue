@@ -1,31 +1,37 @@
 <template>
-    <div>
-        <h1>
-            BitDust - Create Identity
-        </h1>
+    <section class="bg-wave section-create-identity">
+        <article>
+            <header>
+                <h1 class="page-title">
+                    Welcome to BitDust
+                </h1>
+            </header>
 
-        <div v-bind:class="{'is-loading' : isLoading}">
-            <h2>
-                Create Identity
-            </h2>
-            <input v-model="identityName"
-                   name="identity"/>
-            <button class="alt"
-                    @click="createIdentity">create
-            </button>
-            <br/>
-            {{errorMessage}}
-        </div>
-        <hr>
-        <div>
-            <h2>
-                Recover Identity
-            </h2>
-            <input @change="restoreIdentity($event)"
-                   type="file"
-                   name="file"/>
-        </div>
-    </div>
+            <form class="form" v-bind:class="{'is-loading' : isLoading}">
+                <fieldset>
+                    <legend class="header">
+                        Type in the username you want...
+                    </legend>
+                    <input class="ui-input" type="text" v-model="identityName"
+                           name="identity" placeholder="Type your username" >
+                    <p>Note: only lowercase letters and numbers. Min 3 and max 20 characters</p>
+                    <button class="alt ui-button"
+                            @click="createIdentity">Create user
+                    </button>
+                    <br/>
+                    {{errorMessage}}
+                </fieldset>
+                <fieldset>
+                    <label class="ui-label ui-recover color-blue" for="recoverFile">Recover an existing identity</label>
+                    <input class="ui-input-recover transparent"
+                            @change="restoreIdentity($event)"
+                           type="file"
+                           name="recoverFile"
+                           id="recoverFile"/>
+                </fieldset>
+            </form>
+        </article>
+    </section>
 </template>
 
 <script>
@@ -70,12 +76,68 @@
     };
 </script>
 
-<style scoped>
-    div {
-        margin: 20px;
+<style scoped lang="scss">
+
+.section-create-identity {
+    header {
+        margin-bottom: 2em;
+    }
+
+    .form {
+        text-align: center;
+    }
+
+    .ui-input {
+        text-align: center;
+        width: 100%;
+        max-width: 580px;
+        height: 60px;
+        margin: 1.5rem 0 1rem;
+    }
+
+    .ui-button {
+        font-size: 2.2rem;
+        width: 100%;
+        max-width: 420px;
+        height: 65px;
+        margin: 6rem auto 2rem;
+    }
+
+    .ui-recover {
+        display: block;
+        font-size: 1.2rem;
+        padding: 10px;
+        margin: 0 auto;
+        width: 100%;
+        max-width: 420px;
+    }
+
+    .ui-input-recover {
+        width: 100%;
+        max-width: 422px;
+        margin: 0 auto;
+        height: 47px;
+        top: -48px;
+        display: block;
+        position: relative;
+        opacity: 0;
+    }
+
+    p {
+        font-size: 0.9rem;
+    }
+
+    legend.header {
+        font-size: 1.8rem;
+        font-weight: normal;
+        letter-spacing: 0.02rem;
+        width: 100%;
+        padding: 0px;
     }
 
     .is-loading {
         background: red;
     }
+}
+
 </style>
