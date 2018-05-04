@@ -85,10 +85,8 @@
 
             &.active {
                 color: $color-gray;
-                font-weight: bold;
             }
         }
-
     }
 
     li.separator {

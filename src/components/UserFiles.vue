@@ -8,10 +8,11 @@
                placeholder="Search file by name"
                id="search"/>
         <ul>
-            <li v-for="item in filteredList"
-                @click="openFile(item.path)">
-                <span class="icon-file"></span>
-                <span class="file-name">{{item.name}}</span>
+            <li v-for="file in filteredList">
+                <file-extension :file="file.path"/>
+                <span class="file-name"
+                      @click="openFile(file.path)">{{file.name}}</span>
+                <file-detail :file="file"/>
             </li>
         </ul>
         <div v-if="isFileOpen">
@@ -22,13 +23,18 @@
 
 <script>
     import {mapGetters, mapActions} from 'vuex';
-
+    import FileDetail from '../components/FileDetail';
+    import FileExtension from '../components/FileExtension';
     export default {
         data() {
             return {
                 isFileOpen: false,
                 search: ''
             };
+        },
+        components: {
+            FileDetail,
+            FileExtension
         },
         methods: {
             ...mapActions([
@@ -57,12 +63,11 @@
 
 <style scoped lang="scss">
     @import "../../src/assets/scss/colors";
-
     ul {
         display: flex;
         flex-flow: row wrap;
+        margin: 20px 0;
     }
-
     input {
         border: 1px solid $color-gray-2;
         background: #FFFFFF;
@@ -71,41 +76,29 @@
         padding: 10px;
         font-size: .9rem;
     }
-
-    ul {
-        margin: 20px 0;
-    }
-
     li {
-
-        cursor: pointer;
-        width: 160px;
+        background: $color-white;
+        width: 210px;
         list-style: none;
-        padding: 10px 10px 10px 40px;
+        padding: 10px 4px 10px 14px;
         height: 40px;
         margin: 10px;
-        background-color: $color-white;
         box-shadow: 0 4px 13px 0 rgba(0, 0, 0, 0.05);
         border-radius: 25px;
         font-size: .8rem;
-
-        &:before {
-        }
-
+        display: flex;
+        justify-content: space-around;
+    }
+    .file-name {
+        overflow: hidden;
+        line-height: 22px;
+        max-width: 70%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        cursor: pointer;
+        padding-right: 10px;
         &:hover {
             opacity: .6;
-        }
-
-        .delete {
-            background: red;
-            height: 40px;
-            color: white;
-            padding: 10px;
-            display: inline-block;
-            cursor: pointer;
-            &:hover {
-                opacity: .6;
-            }
         }
     }
 </style>
