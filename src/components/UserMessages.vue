@@ -1,37 +1,101 @@
 <template>
-    <div class="user-messages">
+    <div class="friend-messages">
 
         <ul>
-            <li v-for="item in userMessages">
-                <span class="message">{{item.result[0].data.message}}</span>
+            <li v-for="message in messages" :class="{'mine': message.sender === 'me'}">
+                <p class="message">{{message.message}}</p>
+
+                <div class="sender" v-if="message.sender !== 'me'">
+                    <user-first-letter :name="currentFriend.username"/>
+                </div>
             </li>
         </ul>
+
+        <!--<ul>-->
+        <!--<li v-for="item in userMessages">-->
+        <!--<span class="message">{{item.result[0].data.message}}</span>-->
+        <!--</li>-->
+        <!--</ul>-->
 
     </div>
 </template>
 
 <script>
     import {mapGetters} from 'vuex';
+    import userFirstLetter from './UserFirstLetter';
 
     export default {
         name: 'userMessages',
         data() {
             return {
-                search: ''
+                search: '',
+                messages: [
+                    {
+                        sender: 'me',
+                        message: 'Olá Veselin how are you ?',
+                        timestamp: ''
+                    },
+                    {
+                        sender: 'veselin@veselin-p2p.ru',
+                        message: 'Im doing great!!!',
+                        timestamp: ''
+                    },
+                    {
+                        sender: 'me',
+                        message: 'Olá Veselin how are you ?',
+                        timestamp: ''
+                    },
+                    {
+                        sender: 'veselin@veselin-p2p.ru',
+                        message: 'Lets do it!',
+                        timestamp: ''
+                    },
+                    {
+                        sender: 'me',
+                        message: 'Olá Veselin how are you ?',
+                        timestamp: ''
+                    },
+                    {
+                        sender: 'veselin@veselin-p2p.ru',
+                        message: 'Lets do it!',
+                        timestamp: ''
+                    },
+                    {
+                        sender: 'me',
+                        message: 'Olá Veselin how are you ?',
+                        timestamp: ''
+                    },
+                    {
+                        sender: 'veselin@veselin-p2p.ru',
+                        message: 'Lets do it!',
+                        timestamp: ''
+                    },
+                    {
+                        sender: 'me',
+                        message: 'Olá Veselin how are you ?',
+                        timestamp: ''
+                    },
+                    {
+                        sender: 'veselin@veselin-p2p.ru',
+                        message: 'Lets do it!',
+                        timestamp: ''
+                    }
+                ]
             };
         },
-        methods: {},
+        components: {userFirstLetter},
         computed: {
             ...mapGetters([
                 'getMessages',
                 'currentFriend'
             ]),
             userMessages() {
-                if (!this.getMessages) return;
-                return this.getMessages.filter(message => {
-                    if (!message.result || !message.result[0].sender) return;
-                    return message.result[0].sender.toLowerCase().includes(this.currentFriend.global_id.toLowerCase());
-                });
+                return this.messages;
+                // if (!this.getMessages) return;
+                // return this.getMessages.filter(message => {
+                //     if (!message.result || !message.result[0].sender) return;
+                //     return message.result[0].sender.toLowerCase().includes(this.currentFriend.global_id.toLowerCase());
+                // });
             },
             filteredList() {
                 if (!this.getMessages) return;
@@ -46,9 +110,15 @@
 <style scoped lang="scss">
     @import "../../static/css/variables";
 
+    .friend-messages {
+        height: 300px;
+        padding: 20px;
+    }
+
     ul {
-        display: flex;
-        flex-flow: row wrap;
+        height: 280px;
+        overflow: auto;
+        padding-bottom: 100px;
     }
 
     input {
@@ -60,23 +130,30 @@
         font-size: .9rem;
     }
 
-    ul {
-        margin: 20px 0;
+    li {
+        position: relative;
+        max-width: 70%;
+        border-radius: 20px;
+        list-style: none;
+        font-size: .9rem;
+        padding: 8px 20px;
+        margin: 10px 10px 20px 20px;
+        background: $color-white;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.20);
+
+        &.mine {
+            margin-left: auto;
+            background: $color-blue-5;
+            color: $color-white;
+        }
     }
 
-    li {
-        cursor: pointer;
-        border-radius: 20px;
-        width: 160px;
-        list-style: none;
-        font-size: .8rem;
-        padding: 10px;
-        margin: 10px;
-        background: $color-white;
-
-        &:hover {
-            opacity: .6;
-        }
-
+    .sender {
+        left: -30px;
+        top: 24px;
+        position: absolute;
+        transform: scale(.4);
+        opacity: .4;
+        filter: grayscale(100%);
     }
 </style>
