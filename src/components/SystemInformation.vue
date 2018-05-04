@@ -45,7 +45,9 @@
     };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    @import "../../src/assets/scss/colors";
+
     .title {
         color: #888;
         font-size: 18px;

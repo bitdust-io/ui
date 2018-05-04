@@ -1,0 +1,40 @@
+@import './colors';
+
+/* ------------------------------------------------------------------------------------------------------------
+* Form & UI-inputs
+*------------------------------------------------------------------------------------------------------------*/
+
+fieldset {
+    position: relative;
+}
+
+.ui-input {
+    color: $color-gray-2;
+    font-size: 1.2rem;
+    letter-spacing: 0.02rem;
+    border: 0;
+    border-radius: 2px;
+    background-color: $color-white;
+    max-width: 100%;
+    padding: 19px 20px 20px;
+    box-shadow: 0 0.3rem 1rem 0 rgba(0, 0, 0, 0.05);
+}
+
+.ui-button {
+    @extend .segoe_ui_bold;
+    font-weight: bold;
+    letter-spacing: 0.1rem;
+    color: $color-white;
+    border-radius: 5rem;
+    background-color: $color-blue-4;
+    max-width: 100%;
+    padding: 0px 0px 10px;
+    box-shadow: 0 2px 6.5px 0 rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+
+.ui-label {
+    @extend .segoe_ui_bold;
+    font-weight: bold;
+    letter-spacing: 0.1rem;
+}

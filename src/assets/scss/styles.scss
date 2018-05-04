@@ -1,0 +1,96 @@
+@import './fonts';
+@import './colors';
+@import './form';
+@import './mixins';
+@import './menu';
+@import './icons';
+
+
+html, body, #app {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    position: relative;
+    @extend .segoe_ui;
+    color: $color-gray;
+    background-color: $color-blue;
+    font-size: 1.5rem;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+*:focus {
+    outline: none;
+}
+
+fieldset, legend {
+    border: none;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-align: center;
+    min-height: 100%;
+}
+
+article {
+    flex: none;
+    max-width: 90%;
+}
+
+.page-title {
+    @extend .segoe_ui_bold;
+    font-size: 4.5rem;
+    font-weight: bold;
+    letter-spacing: 0.2rem;
+}
+
+.page-subtitle {
+    @extend .segoe_ui_bold;
+}
+
+.color-blue {
+    color: $color-blue-4;
+}
+
+.bg-wave {
+    background: url("./../images/wave-bg.svg") 50% 95% no-repeat;
+    position: relative;
+}
+
+.bg-wave::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 7%;
+    background-color: $color-white;
+    bottom: 0;
+}
+
+.bg-corner {
+    height: 100%;
+    background: url("./../images/corner-bg.svg") top right no-repeat;
+}
+
+
+.content {
+    margin-left: 330px;
+    transition: all .3s ease-in-out;
+    overflow: scroll;
+    flex: 1;
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    height: 100%;
+    overflow: scroll;
+}

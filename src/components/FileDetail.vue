@@ -71,7 +71,7 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../../static/css/imports";
+    @import "../../src/assets/scss/colors";
 
     .file-detail {
         position: relative;
@@ -130,7 +130,7 @@
     }
 
     .icon-menu {
-        background: url("../assets/icons/icon-file-detail.svg") no-repeat center;
+        background: url("../assets/images/icons/icon-file-detail.svg") no-repeat center;
         position: relative;
         padding: 10px;
         cursor: pointer;

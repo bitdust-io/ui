@@ -160,7 +160,7 @@
 
 <style lang="scss" scoped>
 
-    @import "../../static/css/variables.scss";
+    @import "../../src/assets/scss/colors";
 
     .friends-list {
         position: relative;
@@ -176,7 +176,9 @@
             padding: 10px;
             cursor: pointer;
             display: flex;
-            align-items: center;
+            text-transform: capitalize;
+            font-size: 1.2rem;
+            line-height: 2.4rem;
 
             &:hover {
                 opacity: .6;
