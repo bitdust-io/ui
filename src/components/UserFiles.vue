@@ -25,7 +25,6 @@
     import {mapGetters, mapActions} from 'vuex';
     import FileDetail from '../components/FileDetail';
     import FileExtension from '../components/FileExtension';
-
     export default {
         data() {
             return {
@@ -63,14 +62,12 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../../static/css/imports";
-
+    @import "../../src/assets/scss/colors";
     ul {
         display: flex;
         flex-flow: row wrap;
         margin: 20px 0;
     }
-
     input {
         border: 1px solid $color-gray-2;
         background: #FFFFFF;
@@ -79,7 +76,6 @@
         padding: 10px;
         font-size: .9rem;
     }
-
     li {
         background: $color-white;
         width: 210px;
@@ -93,7 +89,6 @@
         display: flex;
         justify-content: space-around;
     }
-
     .file-name {
         overflow: hidden;
         line-height: 22px;
@@ -102,7 +97,6 @@
         white-space: nowrap;
         cursor: pointer;
         padding-right: 10px;
-
         &:hover {
             opacity: .6;
         }
