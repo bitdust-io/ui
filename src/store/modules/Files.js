@@ -13,6 +13,7 @@ const getters = {
     isFileOpen: state => state.isFileOpen,
     currentFile: state => state.currentFile,
     hasFilePath(path) {
+        if (!state.filesList) return [];
         return state.filesList.filter(file => file.path === path);
     }
 };
