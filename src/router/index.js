@@ -21,6 +21,11 @@ export default new Router({
             component: require('@/views/CreateIdentity').default
         },
         {
+            path: '/recover-identity',
+            name: 'recover-identity',
+            component: require('@/views/RecoverIdentity').default
+        },
+        {
             path: '/users',
             name: 'users',
             component: require('@/views/Friends').default

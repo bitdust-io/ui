@@ -70,6 +70,7 @@
 
 .section-loading {
     justify-content: flex-start;
+    align-items: center;
 
     article {
         margin-top: 7.7rem;
