@@ -41,6 +41,7 @@
         box-shadow: 0 4px 13px 0 rgba(0, 0, 0, 0.05);
         border-radius: 100px;
         color: $color-white;
+        font-size: 1rem;
         padding: 10px 20px;
         position: relative;
         cursor: pointer;

@@ -70,6 +70,7 @@
 
         li {
             a {
+                font-size: 1.2rem;
                 text-transform: uppercase;
                 text-decoration: none;
                 padding: 24px 0 24px 120px;

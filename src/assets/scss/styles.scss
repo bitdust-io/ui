@@ -2,6 +2,8 @@
 @import './colors';
 @import './form';
 @import './mixins';
+@import './menu';
+@import './icons';
 
 
 html, body, #app {
@@ -76,4 +78,19 @@ article {
 .bg-corner {
     height: 100%;
     background: url("./../images/corner-bg.svg") top right no-repeat;
+}
+
+
+.content {
+    margin-left: 330px;
+    transition: all .3s ease-in-out;
+    overflow: scroll;
+    flex: 1;
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    height: 100%;
+    overflow: scroll;
 }
