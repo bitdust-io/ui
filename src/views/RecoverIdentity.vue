@@ -71,6 +71,8 @@
 
 <style scoped lang="scss">
 
+    @import "../../src/assets/scss/colors";
+
     .section-recover-identity {
         align-items: center;
         justify-content: center;

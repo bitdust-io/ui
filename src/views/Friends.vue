@@ -145,7 +145,7 @@
 
 <style lang="scss" scoped>
 
-    @import "../../static/css/variables.scss";
+    @import "../../src/assets/scss/colors";
 
     .friends-list {
         list-style: none;

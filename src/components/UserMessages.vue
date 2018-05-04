@@ -44,7 +44,7 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../../static/css/variables";
+    @import "../../src/assets/scss/colors";
 
     ul {
         display: flex;
