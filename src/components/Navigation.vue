@@ -36,7 +36,8 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../../static/css/imports";
+
+    @import "../../src/assets/scss/mixins";
 
     nav {
         transition: all .3s ease-in-out;

@@ -108,7 +108,7 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../../static/css/variables";
+    @import "../../src/assets/scss/colors";
 
     .friend-messages {
         height: 300px;
