@@ -22,12 +22,7 @@
                     {{errorMessage}}
                 </fieldset>
                 <fieldset>
-                    <label class="ui-label ui-recover color-blue" for="recoverFile">Recover an existing identity</label>
-                    <input class="ui-input-recover transparent"
-                            @change="restoreIdentity($event)"
-                           type="file"
-                           name="recoverFile"
-                           id="recoverFile"/>
+                    <router-link to="/recover-identity" class="anchor color-blue">Recover an existing identity</router-link>
                 </fieldset>
             </form>
         </article>
@@ -78,66 +73,58 @@
 
 <style scoped lang="scss">
 
-.section-create-identity {
-    header {
-        margin-bottom: 2em;
-    }
+    .section-create-identity {
+        align-items: center;
+        justify-content: center;
 
-    .form {
-        text-align: center;
-    }
+        header {
+            margin-bottom: 2em;
+        }
 
-    .ui-input {
-        text-align: center;
-        width: 100%;
-        max-width: 580px;
-        height: 60px;
-        margin: 1.5rem 0 1rem;
-    }
+        .form {
+            text-align: center;
+        }
 
-    .ui-button {
-        font-size: 2.2rem;
-        width: 100%;
-        max-width: 420px;
-        height: 65px;
-        margin: 6rem auto 2rem;
-    }
+        .ui-input {
+            text-align: center;
+            width: 100%;
+            max-width: 580px;
+            height: 60px;
+            margin: 1.5rem 0 1rem;
+        }
 
-    .ui-recover {
-        display: block;
-        font-size: 1.2rem;
-        padding: 10px;
-        margin: 0 auto;
-        width: 100%;
-        max-width: 420px;
-    }
+        .ui-button {
+            font-size: 2.2rem;
+            width: 100%;
+            max-width: 420px;
+            height: 65px;
+            margin: 6rem auto 2rem;
+        }
 
-    .ui-input-recover {
-        width: 100%;
-        max-width: 422px;
-        margin: 0 auto;
-        height: 47px;
-        top: -48px;
-        display: block;
-        position: relative;
-        opacity: 0;
-    }
+        .anchor {
+            display: block;
+            font-size: 1.2rem;
+            padding: 10px;
+            margin: 0 auto;
+            width: auto;
+            text-decoration: none;
+        }
 
-    p {
-        font-size: 0.9rem;
-    }
+        p {
+            font-size: 0.9rem;
+        }
 
-    legend.header {
-        font-size: 1.8rem;
-        font-weight: normal;
-        letter-spacing: 0.02rem;
-        width: 100%;
-        padding: 0px;
-    }
+        legend.header {
+            font-size: 1.8rem;
+            font-weight: normal;
+            letter-spacing: 0.02rem;
+            width: 100%;
+            padding: 0px;
+        }
 
-    .is-loading {
-        background: red;
+        .is-loading {
+            background: red;
+        }
     }
-}
 
 </style>

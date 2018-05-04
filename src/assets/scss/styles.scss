@@ -22,6 +22,10 @@ body {
     padding: 0;
 }
 
+*:focus {
+    outline: none;
+}
+
 fieldset, legend {
     border: none;
 }
@@ -30,8 +34,6 @@ section {
     display: flex;
     flex-direction: column;
     -webkit-box-align: center;
-    align-items: center;
-    justify-content: center;
     min-height: 100%;
 }
 
@@ -68,4 +70,9 @@ article {
     height: 7%;
     background-color: $color-white;
     bottom: 0;
+}
+
+.bg-corner {
+    height: 100%;
+    background: url("./../images/corner-bg.svg") top right no-repeat;
 }
