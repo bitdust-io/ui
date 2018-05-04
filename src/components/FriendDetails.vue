@@ -1,28 +1,23 @@
 <template>
-    <div class="friend" v-bind:class="{open: isFriendDetailsOpen}">
-        <span @click="closeFriend"
-              class="close">close</span>
+    <div class="friend"
+         :class="{open: isFriendDetailsOpen}">
 
-        <div v-for="message in getCurrentFriendData">
-            <div v-for="item in message.messages">
-                {{item.data.anything}}
+        <div class="friend-header">
+            <div>
+                <user-first-letter :name="currentFriend.username"/>
+                <h1>{{currentFriend.username}}</h1>
             </div>
+            <span @click="closeFriend"
+                  class="close">close</span>
         </div>
 
+        <!--<button @click="removeFriend(currentFriend.global_id)">remove friend</button>-->
 
-        <h1>{{currentFriend.alias}}</h1>
-        <h2>{{currentFriend.global_id}}</h2>
+        <user-messages :from="currentFriend"/>
 
-        <button @click="removeFriend(currentFriend.global_id)">remove friend</button>
-
-        <h2>Chat</h2>
-        <textarea v-model="message"/>
+        <textarea v-model="message"></textarea>
 
         <button @click="sendMessage()">send</button>
-
-        <hr/>
-
-        <user-messages/>
 
     </div>
 </template>
@@ -31,9 +26,12 @@
     import {mapGetters, mapActions} from 'vuex';
     import userMessages from './UserMessages';
     import message from '../services/message';
+    import userFirstLetter from './UserFirstLetter';
 
     export default {
-        components: {userMessages},
+        components: {
+            userMessages, userFirstLetter
+        },
         data() {
             return {
                 message: ''
@@ -75,8 +73,6 @@
                 if (!response) {
                     this.resetOpenFriend();
                 }
-            },
-            'getFriends': function (response) {
             }
         },
         mounted() {
@@ -93,23 +89,45 @@
 </script>
 
 <style scoped lang="scss">
+    @import "../../static/css/variables";
+
+    .friend-header {
+        background: $color-white;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        > div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+
+    .user-messages {
+        min-height: 300px;
+        padding: 10px 20px;
+    }
+
     .friend {
-        background: #ccc;
-        padding: 20px;
+        background: #F8F8F8;
         position: fixed;
-        right: -301px;
-        width: 300px;
-        top: 0;
-        bottom: 0;
-        transition: all .3s ease-in-out;
+        width: 400px;
+        right: 20px;
+        bottom: -610px;
+        transition: all .2s ease-in-out;
+        box-shadow: -2px 1px 2px 0 rgba(0, 0, 0, 0.09);
+        border-radius: 5px;
+        padding-bottom: 20px;
 
         &.open {
-            transform: translate3d(-300px, 0, 0);
+            transform: translate3d(0, -600px, 0);
         }
 
         h1 {
-            font-size: 16px;
-            margin: 20px 0;
+            font-size: 1rem;
+            text-transform: capitalize;
         }
     }
 
@@ -126,6 +144,10 @@
             display: inline-block;
             cursor: pointer;
         }
+    }
+
+    .close {
+        cursor: pointer;
     }
 
 </style>
