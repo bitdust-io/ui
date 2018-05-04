@@ -50,7 +50,7 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../../static/css/variables";
+    @import "../../src/assets/scss/colors";
 
     .messages {
         display: inline-block;

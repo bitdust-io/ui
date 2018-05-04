@@ -36,7 +36,8 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../../static/css/imports";
+
+    @import "../../src/assets/scss/mixins";
 
     nav {
         transition: all .3s ease-in-out;
@@ -69,6 +70,7 @@
 
         li {
             a {
+                font-size: 1.2rem;
                 text-transform: uppercase;
                 text-decoration: none;
                 padding: 24px 0 24px 120px;
