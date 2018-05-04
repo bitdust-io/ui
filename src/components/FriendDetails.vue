@@ -5,7 +5,7 @@
         <div class="friend-header">
             <div>
                 <user-first-letter :name="currentFriend.username"/>
-                <h1>{{currentFriend.username}}</h1>
+                <h2>{{currentFriend.username}}</h2>
             </div>
             <span @click="closeFriend"
                   class="close">close</span>
@@ -89,7 +89,8 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../../static/css/variables";
+    @import "../../src/assets/scss/colors";
+
 
     .friend-header {
         background: $color-white;
@@ -125,8 +126,8 @@
             transform: translate3d(0, -600px, 0);
         }
 
-        h1 {
-            font-size: 1rem;
+        h2 {
+            font-size: 1.4rem;
             text-transform: capitalize;
         }
     }
