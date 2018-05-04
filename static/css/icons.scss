@@ -26,6 +26,10 @@
     background: url("./assets/icons/icon-delete-file.svg") no-repeat;
 }
 
+.icon-chat {
+    background: url("./assets/icons/icon-chat.svg") no-repeat;
+}
+
 div[class^="icon-"], div[class*=" icon-"] {
     content: '';
     width: 40px;
