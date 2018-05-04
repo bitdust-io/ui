@@ -26,7 +26,7 @@
 
 <style lang="scss" scoped>
 
-    @import "../../static/css/variables";
+    @import "../../src/assets/scss/colors";
 
     header {
         height: 100px;

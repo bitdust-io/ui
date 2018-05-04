@@ -56,8 +56,7 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../../static/css/imports";
-
+    @import "../../src/assets/scss/colors";
 
     ul {
         display: flex;

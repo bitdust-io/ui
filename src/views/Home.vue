@@ -64,7 +64,8 @@
 </script>
 
 <style lang="scss">
-    @import "../../static/css/imports.scss";
+    @import "../../src/assets/scss/colors";
+    @import "../../src/assets/scss/mixins";
 
     .flex {
         display: flex;
