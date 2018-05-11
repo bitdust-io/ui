@@ -24,7 +24,7 @@
             ...mapGetters([
                 'getMessages',
                 'currentFriend',
-                'isFriendDetailsOpen'
+                'isFriendChatOpen'
             ]),
             userMessages() {
                 if (!this.getMessages) return;

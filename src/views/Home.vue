@@ -19,7 +19,7 @@
                     <user-files/>
                 </div>
                 <div v-show="this.activeTab === 'myShares'">
-                    my shares content
+                    My shares content
                 </div>
                 <file-open/>
             </div>

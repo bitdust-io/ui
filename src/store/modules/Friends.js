@@ -3,7 +3,7 @@ import api from '../../services/api';
 const constants = {};
 
 const state = {
-    isFriendDetailsOpen: false,
+    isFriendChatOpen: false,
     currentFriend: {},
     friendsList: [],
     friendsListClone: []
@@ -11,7 +11,7 @@ const state = {
 
 const getters = {
     getFriends: state => state.friendsList,
-    isFriendDetailsOpen: state => state.isFriendDetailsOpen,
+    isFriendChatOpen: state => state.isFriendChatOpen,
     currentFriend: state => state.currentFriend,
     getCurrentFriendData() {
         if (!state.friendsList) return [];
@@ -21,7 +21,7 @@ const getters = {
 
 const mutations = {
     UPDATE_IS_FRIEND_OPEN(state, value) {
-        state.isFriendDetailsOpen = value;
+        state.isFriendChatOpen = value;
     },
     UPDATE_CURRENT_FRIEND(state, friend) {
         state.currentFriend = state.friendsList.filter(item => item.global_id === friend)[0];
