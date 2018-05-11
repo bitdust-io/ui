@@ -19,6 +19,7 @@
                   rows="1"></textarea>
 
             <button @click="sendMessage()"
+                    :disabled="!isSending && this.message.length === 0"
                     class="send">Send
             </button>
         </div>
@@ -38,19 +39,24 @@
         },
         data() {
             return {
-                message: ''
+                message: '',
+                isSending: false
             };
         },
         methods: {
             ...mapActions([
                 'closeFriend',
-                'removeFriend'
+                'removeFriend',
+                'addMessage'
             ]),
             sendMessage() {
+                this.isSending = true;
+                if (!this.message) return;
                 message.sendMessage({
                     message: this.message,
                     user: this.currentFriend
                 }).then(resp => {
+                    this.isSending = false;
                     this.resetOpenFriend();
                 });
             },
@@ -62,9 +68,7 @@
             ...mapGetters([
                 'currentFriend',
                 'isFriendChatOpen',
-                'getCurrentFriendData',
-                'getFriends',
-                'getMessages'
+                'getIdentity'
             ])
         },
         watch: {
@@ -85,10 +89,7 @@
                     this.closeFriend();
                 }
             });
-        },
-        comments: [
-            userMessages
-        ]
+        }
     };
 </script>
 
@@ -165,7 +166,7 @@
 
     .flex {
         display: flex;
-        padding: 10px 30px 0 0 ;
+        padding: 10px 30px 0 0;
     }
 
     .send {

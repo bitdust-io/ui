@@ -1,21 +1,20 @@
 <template>
     <div class="friend-messages">
 
-        <ul>
-            <li v-for="message in messages" :class="{'mine': message.sender === 'me'}">
-                <p class="message">{{message.message}}</p>
+        <div v-if="userMessages.length === 0"
+             class="no-messages-here">
+            No messages here...
+        </div>
 
-                <div class="sender" v-if="message.sender !== 'me'">
+        <ul>
+            <li v-for="item in userMessages"
+                :class="{'mine': item.sender !== currentFriend.global_id}">
+                <p class="message">{{item.data.message}}</p>
+                <div class="sender" v-if="item.sender === currentFriend.global_id">
                     <user-first-letter :name="currentFriend.username"/>
                 </div>
             </li>
         </ul>
-
-        <!--<ul>-->
-        <!--<li v-for="item in userMessages">-->
-        <!--<span class="message">{{item.result[0].data.message}}</span>-->
-        <!--</li>-->
-        <!--</ul>-->
 
     </div>
 </template>
@@ -26,81 +25,18 @@
 
     export default {
         name: 'userMessages',
-        data() {
-            return {
-                search: '',
-                messages: [
-                    {
-                        sender: 'me',
-                        message: 'Olá Veselin how are you ?',
-                        timestamp: ''
-                    },
-                    {
-                        sender: 'veselin@veselin-p2p.ru',
-                        message: 'Im doing great!!!',
-                        timestamp: ''
-                    },
-                    {
-                        sender: 'me',
-                        message: 'Olá Veselin how are you ?',
-                        timestamp: ''
-                    },
-                    {
-                        sender: 'veselin@veselin-p2p.ru',
-                        message: 'Lets do it!',
-                        timestamp: ''
-                    },
-                    {
-                        sender: 'me',
-                        message: 'Olá Veselin how are you ?',
-                        timestamp: ''
-                    },
-                    {
-                        sender: 'veselin@veselin-p2p.ru',
-                        message: 'Lets do it!',
-                        timestamp: ''
-                    },
-                    {
-                        sender: 'me',
-                        message: 'Olá Veselin how are you ?',
-                        timestamp: ''
-                    },
-                    {
-                        sender: 'veselin@veselin-p2p.ru',
-                        message: 'Lets do it!',
-                        timestamp: ''
-                    },
-                    {
-                        sender: 'me',
-                        message: 'Olá Veselin how are you ?',
-                        timestamp: ''
-                    },
-                    {
-                        sender: 'veselin@veselin-p2p.ru',
-                        message: 'Lets do it!',
-                        timestamp: ''
-                    }
-                ]
-            };
-        },
         components: {userFirstLetter},
         computed: {
             ...mapGetters([
-                'getMessages',
-                'currentFriend'
+                'currentFriend',
+                'getMessages'
             ]),
             userMessages() {
-                return this.messages;
-                // if (!this.getMessages) return;
-                // return this.getMessages.filter(message => {
-                //     if (!message.result || !message.result[0].sender) return;
-                //     return message.result[0].sender.toLowerCase().includes(this.currentFriend.global_id.toLowerCase());
-                // });
-            },
-            filteredList() {
                 if (!this.getMessages) return;
                 return this.getMessages.filter(message => {
-                    return message.name.toLowerCase().includes(this.search.toLowerCase());
+                    if (!message) return;
+                    return message.sender.toLowerCase().includes(this.currentFriend.global_id.toLowerCase()) ||
+                        message.recipient.toLowerCase().includes(this.currentFriend.global_id.toLowerCase());
                 });
             }
         }
@@ -155,5 +91,9 @@
         transform: scale(.4);
         opacity: .4;
         filter: grayscale(100%);
+    }
+
+    .no-messages-here {
+        font-size: .8rem;
     }
 </style>
