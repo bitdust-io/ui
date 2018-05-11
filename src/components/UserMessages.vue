@@ -132,7 +132,7 @@
 
     li {
         position: relative;
-        max-width: 70%;
+        max-width: 80%;
         border-radius: 20px;
         list-style: none;
         font-size: .9rem;
