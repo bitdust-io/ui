@@ -1,6 +1,6 @@
 <template>
     <div class="friend"
-         :class="{open: isFriendDetailsOpen}">
+         :class="{open: isFriendChatOpen}">
 
         <div class="friend-header">
             <div>
@@ -11,13 +11,17 @@
                   class="close">close</span>
         </div>
 
-        <!--<button @click="removeFriend(currentFriend.global_id)">remove friend</button>-->
-
         <user-messages :from="currentFriend"/>
 
-        <textarea v-model="message"></textarea>
+        <div class="flex">
+        <textarea v-model="message"
+                  class="chat-input"
+                  rows="1"></textarea>
 
-        <button @click="sendMessage()">send</button>
+            <button @click="sendMessage()"
+                    class="send">Send
+            </button>
+        </div>
 
     </div>
 </template>
@@ -57,7 +61,7 @@
         computed: {
             ...mapGetters([
                 'currentFriend',
-                'isFriendDetailsOpen',
+                'isFriendChatOpen',
                 'getCurrentFriendData',
                 'getFriends',
                 'getMessages'
@@ -69,7 +73,7 @@
                     this.resetOpenFriend();
                 }
             },
-            'isFriendDetailsOpen': function (response) {
+            'isFriendChatOpen': function (response) {
                 if (!response) {
                     this.resetOpenFriend();
                 }
@@ -90,7 +94,6 @@
 
 <style scoped lang="scss">
     @import "../../src/assets/scss/colors";
-
 
     .friend-header {
         background: $color-white;
@@ -149,6 +152,47 @@
 
     .close {
         cursor: pointer;
+        font-size: .8rem;
     }
+
+    .chat-input {
+        border: none;
+        resize: none;
+        padding: 10px;
+        margin-left: 10px;
+        width: 280px;
+    }
+
+    .flex {
+        display: flex;
+        padding: 10px 30px 0 0 ;
+    }
+
+    .send {
+        border: none;
+        cursor: pointer;
+        position: relative;
+        font-size: .9rem;
+        color: $color-white;
+        background: $color-gray-3;
+        padding: 10px 20px 10px 40px;
+        border-bottom-right-radius: 20px;
+        border-top-right-radius: 20px;
+
+        &:hover {
+            opacity: .6;
+        }
+
+        &:before {
+            left: 10px;
+            top: 9px;
+            content: '';
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            background: url("../assets/images/icons/icon-send.svg") no-repeat center;
+        }
+    }
+
 
 </style>

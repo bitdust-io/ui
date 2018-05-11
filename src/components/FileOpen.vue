@@ -10,9 +10,15 @@
                 <h1>{{currentFile.name}}</h1>
             </div>
             <h3>File Information</h3>
-            <div>
-                <button @click="downloadFile">download</button>
-                <button @click="deleteFile(currentFile.path)">delete</button>
+            <div class="buttons">
+                <button @click="downloadFile"
+                        class="btn btn-primary">
+                    Download
+                </button>
+                <button @click="deleteFile(currentFile.path)"
+                        class="btn btn-secondary">
+                    Delete
+                </button>
                 <div v-if="downloadIsLoading">
                     Loading
                 </div>
@@ -109,8 +115,8 @@
 <style scoped lang="scss">
     @import "../../src/assets/scss/colors";
 
-    .file-open-container {
-        /*display: flex;*/
+    .buttons {
+        margin: 20px 0;
     }
 
     .flex {

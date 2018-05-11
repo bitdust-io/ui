@@ -3,7 +3,7 @@
         <bit-header/>
         <div class="container">
             <navigation/>
-            <friend-details/>
+            <friend-chat/>
             <div class="content">
 
                 <ul class="sub-menu">
@@ -85,7 +85,7 @@
     import api from '../services/api';
     import navigation from '@/components/Navigation';
     import bitHeader from '@/components/BitHeader';
-    import friendDetails from '../components/FriendDetails';
+    import FriendChat from '../components/FriendChat';
     import friendMessageCounter from '../components/FriendMessagesCounter';
     import userFirstLetter from '../components/UserFirstLetter';
 
@@ -103,7 +103,7 @@
         components: {
             navigation,
             bitHeader,
-            friendDetails,
+            FriendChat,
             friendMessageCounter,
             userFirstLetter
         },

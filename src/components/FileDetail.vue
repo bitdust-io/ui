@@ -10,7 +10,6 @@
                 <li @click="downloadFile()">
                     <i class="icon-download-file"></i>
                     Download
-                    <i v-if="downloadSuccess"> ok</i>
                 </li>
                 <li @click="deleteFile(file.path)" class="delete">
                     <i class="icon-delete-file"></i>
