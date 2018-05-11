@@ -29,7 +29,7 @@
             userMessages() {
                 if (!this.getMessages) return;
                 return this.getMessages.filter(message => {
-                    return message.result[0].sender.toLowerCase().includes(this.friend.global_id.toLowerCase());
+                    return message.sender.toLowerCase().includes(this.friend.global_id.toLowerCase());
                 });
             },
             filteredList() {

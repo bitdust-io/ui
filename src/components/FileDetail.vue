@@ -51,7 +51,7 @@
                 this.downloadIsLoading = true;
                 this.downloadSuccess = false;
                 this.downloadError = false;
-                Api.downloadFile(this.file.path).then(resp => {
+                Api.downloadFile(this.file.remote_path).then(resp => {
                     if (resp.ok) {
                         this.downloadSuccess = true;
                     } else {
