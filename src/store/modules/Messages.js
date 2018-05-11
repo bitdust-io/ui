@@ -1,8 +1,7 @@
 const constants = {};
 
 const state = {
-    messages: [],
-    userKeyMessage: {}
+    messages: []
 };
 
 const getters = {
@@ -12,12 +11,16 @@ const getters = {
 const mutations = {
     UPDATE_MESSAGES(state, message) {
         if (!message.result || !message.result.length) return;
-        state.messages.unshift(message);
-        if (state.userKeyMessage[message.result[0].sender] === undefined) {
-            state.userKeyMessage[message.result[0].sender] = [];
-        }
-        state.userKeyMessage[message.result[0].sender].push(message);
-        console.log(state.userKeyMessage);
+        state.messages.push(message.result[0]);
+    },
+    ADD_MESSAGE(state, message) {
+        state.messages.push(message);
+    }
+};
+
+const actions = {
+    addMessage({commit}, value) {
+        commit('ADD_MESSAGE', value);
     }
 };
 
@@ -25,5 +28,6 @@ export default {
     state,
     mutations,
     getters,
+    actions,
     constants
 };

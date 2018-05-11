@@ -19,7 +19,8 @@
                 <div v-show="this.activeTab === 'myFriends'">
                     <ul class="friends-list">
                         <li v-for="friend in getFriends"
-                            @click="openFriend(friend)">
+                            @click="openFriend(friend)"
+                            :class="{'online' : friend.contact_status === 'online'}">
 
                             <user-first-letter :name="friend.username"/>
 
@@ -173,7 +174,7 @@
             margin: 10px 10px;
             min-width: 260px;
             background: $color-white;
-            padding: 10px;
+            padding: 10px 10px 10px 30px;
             cursor: pointer;
             display: flex;
             text-transform: capitalize;
@@ -204,5 +205,20 @@
         top: 20px;
         position: absolute;
         opacity: 0.6;
+    }
+
+    .online {
+        position: relative;
+
+        &:before {
+            left: 10px;
+            top: 24px;
+            position: absolute;
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: $color-green;
+            border-radius: 100%;
+        }
     }
 </style>
