@@ -41,12 +41,12 @@
             ...mapActions([
                 'deleteFile',
                 'openFile',
-                'getApiFiles'
+                'getApiSharedFiles'
             ])
         },
         computed: {
             ...mapGetters([
-                'getFiles'
+                'getSharedFiles'
             ]),
             filteredList() {
                 if (!this.getFiles) return;
@@ -57,7 +57,7 @@
             }
         },
         created() {
-            this.getApiFiles();
+            this.getApiSharedFiles();
         }
     };
 </script>
@@ -87,7 +87,6 @@
             color: $color-gray-2;
         }
     }
-
 
     li {
         background: $color-white;
