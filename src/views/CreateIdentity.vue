@@ -10,19 +10,28 @@
             <form class="form" v-bind:class="{'is-loading' : isLoading}">
                 <fieldset>
                     <legend class="header">
-                        Type in the username you want...
+                        Please choose your username...
                     </legend>
-                    <input class="ui-input" type="text" v-model="identityName"
-                           name="identity" placeholder="Type your username" >
-                    <p>Note: only lowercase letters and numbers. Min 3 and max 20 characters</p>
-                    <button class="alt ui-button"
+                    <input class="ui-input"
+                           v-model="identityName"
+                           name="identity"
+                           placeholder="username">
+                    <p class="note">Note: only lowercase letters and numbers. Min 3 and max 20 characters</p>
+
+                    <div v-if="error"
+                         class="error">
+                        <p>{{errorMessage}}</p>
+                    </div>
+
+                    <button class="ui-button primary"
                             @click="createIdentity">Create user
                     </button>
-                    <br/>
-                    {{errorMessage}}
+
                 </fieldset>
                 <fieldset>
-                    <router-link to="/recover-identity" class="anchor color-blue">Recover an existing identity</router-link>
+                    <router-link to="/recover-identity"
+                                 class="anchor color-blue">Recover an existing identity
+                    </router-link>
                 </fieldset>
             </form>
         </article>
@@ -44,28 +53,28 @@
             };
         },
         methods: {
-            createIdentity() {
-                console.log('creating idendity', this.identityName);
-                this.isLoading = true;
-                Api.createIdentity(this.identityName).then(resp => {
-                    this.isLoading = false;
-                    if (resp.status === 'OK') {
-                        this.$router.push('loading-identity');
-                    } else {
-                        this.errorMessage = resp.errors[0];
-                    }
-                });
+            validateUserName(username) {
+                const REGEX = /^[a-z0-9]{2,20}$/;
+                return REGEX.test(username);
             },
-            restoreIdentity(e) {
+            createIdentity(e) {
                 e.preventDefault();
-                let file = event.target.files[0].path;
-                Api.recoverIdentityFile(file).then(resp => {
-                    if (resp.status === 'OK') {
-                        this.$router.push('loading-identity');
-                    } else {
-                        this.error = true;
-                    }
-                });
+                if (this.validateUserName(this.identityName)) {
+                    this.isLoading = true;
+                    console.log('creating idendity', this.identityName);
+                    Api.createIdentity(this.identityName).then(resp => {
+                        this.isLoading = false;
+                        if (resp.status === 'OK') {
+                            this.$router.push('loading-identity');
+                        } else {
+                            this.error = true;
+                            this.errorMessage = resp.errors[0];
+                        }
+                    });
+                } else {
+                    this.error = true;
+                    this.errorMessage = 'Please use a valid user name';
+                }
             }
         }
     };
@@ -73,58 +82,60 @@
 
 <style scoped lang="scss">
 
+    @import "../../src/assets/scss/colors";
+
     .section-create-identity {
         align-items: center;
         justify-content: center;
+    }
 
-        header {
-            margin-bottom: 2em;
-        }
+    header {
+        margin-bottom: 2em;
+    }
 
-        .form {
-            text-align: center;
-        }
+    .form {
+        text-align: center;
+    }
 
-        .ui-input {
-            text-align: center;
-            width: 100%;
-            max-width: 580px;
-            height: 60px;
-            margin: 1.5rem 0 1rem;
-        }
+    .ui-input {
+        text-align: center;
+        width: 100%;
+        max-width: 580px;
+        height: 60px;
+        margin: 1.5rem 0 1rem;
+        color: $color-gray;
 
-        .ui-button {
-            font-size: 2.2rem;
-            width: 100%;
-            max-width: 420px;
-            height: 65px;
-            margin: 6rem auto 2rem;
+        &::placeholder {
+            color: $color-gray-2;
         }
+    }
 
-        .anchor {
-            display: block;
-            font-size: 1.2rem;
-            padding: 10px;
-            margin: 0 auto;
-            width: auto;
-            text-decoration: none;
-        }
+    .ui-button {
+        font-size: 2.2rem;
+        width: 100%;
+        max-width: 420px;
+        height: 65px;
+        margin: 4rem auto 2rem;
+    }
 
-        p {
-            font-size: 0.9rem;
-        }
+    .note {
+        font-size: 0.9rem;
+    }
 
-        legend.header {
-            font-size: 1.8rem;
-            font-weight: normal;
-            letter-spacing: 0.02rem;
-            width: 100%;
-            padding: 0px;
-        }
+    legend.header {
+        font-size: 1.8rem;
+        font-weight: normal;
+        letter-spacing: 0.02rem;
+        width: 100%;
+        padding: 0px;
+    }
 
-        .is-loading {
-            background: red;
-        }
+    .is-loading {
+        opacity: 0.5;
+    }
+
+    .error {
+        margin-top: 40px;
     }
 
 </style>
