@@ -1,6 +1,6 @@
 <template>
     <div class="friend"
-         :class="{open: isFriendChatOpen}">
+         :class="{open: isFriendChatOpen, switch: isSwitched}">
 
         <div class="friend-header">
             <div>
@@ -40,7 +40,8 @@
         data() {
             return {
                 message: '',
-                isSending: false
+                isSending: false,
+                isSwitched: false
             };
         },
         methods: {
@@ -62,6 +63,12 @@
             },
             resetOpenFriend() {
                 this.message = '';
+            },
+            switchUserChat() {
+                this.isSwitched = true;
+                setTimeout(() => {
+                    this.isSwitched = false;
+                }, 500);
             }
         },
         computed: {
@@ -75,6 +82,7 @@
             'currentFriend': function (response) {
                 if (response) {
                     this.resetOpenFriend();
+                    this.switchUserChat();
                 }
             },
             'isFriendChatOpen': function (response) {
@@ -166,7 +174,7 @@
 
     .flex {
         display: flex;
-        padding: 10px 30px 0 0;
+        padding: 10px 20px 0 0;
     }
 
     .send {
@@ -195,5 +203,26 @@
         }
     }
 
+    .switch {
+        animation: shake 0.3s cubic-bezier(.36, .07, .19, .97) both;
+    }
+
+    @keyframes shake {
+        10%, 90% {
+            transform: translate3d(-1px, -600px, 0);
+        }
+
+        20%, 80% {
+            transform: translate3d(2px, -600px, 0);
+        }
+
+        30%, 50%, 70% {
+            transform: translate3d(-6px, -600px, 0);
+        }
+
+        40%, 60% {
+            transform: translate3d(6px, -600px, 0);
+        }
+    }
 
 </style>
