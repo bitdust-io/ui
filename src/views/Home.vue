@@ -19,7 +19,7 @@
                     <user-files/>
                 </div>
                 <div v-show="this.activeTab === 'myShares'">
-                    My shares content
+                    <user-shared-files/>
                 </div>
                 <file-open/>
             </div>
@@ -29,6 +29,7 @@
 
 <script>
     import userFiles from '../components/UserFiles';
+    import userSharedFiles from '../components/UserSharedFiles';
     import filesUpload from '../components/FileUpload';
     import fileOpen from '../components/FileOpen';
     import {mapGetters} from 'vuex';
@@ -44,6 +45,7 @@
         },
         components: {
             userFiles,
+            userSharedFiles,
             filesUpload,
             fileOpen,
             navigation,

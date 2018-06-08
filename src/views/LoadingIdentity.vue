@@ -23,8 +23,6 @@
                     this.$router.push('home');
                 }
             }
-        },
-        created() {
         }
     };
 </script>

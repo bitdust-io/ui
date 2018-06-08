@@ -4,6 +4,7 @@ const constants = {};
 
 const state = {
     filesList: [],
+    sharedFilesList: [],
     isFileOpen: false,
     currentFile: {}
 };
@@ -19,6 +20,9 @@ const getters = {
 };
 
 const mutations = {
+    UPDATE_SHARED_FILE_LIST(state, value) {
+        state.sharedFilesList = value;
+    },
     UPDATE_FILE_LIST(state, value) {
         state.filesList = value;
     },
@@ -48,6 +52,11 @@ const actions = {
                 }
             });
         }
+    },
+    getApiSharedFiles({commit}) {
+        api.getSharedFiles().then(data => {
+            commit('UPDATE_SHARED_FILE_LIST', data.result);
+        });
     },
     getApiFiles({commit}) {
         api.getFiles().then(data => {
