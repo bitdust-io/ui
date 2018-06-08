@@ -68,18 +68,18 @@
 
 <style scoped lang="scss">
 
-.section-loading {
-    justify-content: flex-start;
-    align-items: center;
+    .section-loading {
+        justify-content: flex-start;
+        align-items: center;
 
-    article {
-        margin-top: 7.7rem;
+        article {
+            margin-top: 7.7rem;
+        }
+
+        .page-subtitle {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
     }
-
-    .page-subtitle {
-        text-align: center;
-        margin-top: 1rem;
-    }
-
-}
 </style>
