@@ -40,7 +40,14 @@
                     </ul>
                 </div>
                 <div v-show="this.activeTab === 'addFriends'">
-                    <input v-model="search"/>
+
+                    <label for="search"
+                           class="search">
+                        Search by name:
+                    </label>
+
+                    <input v-model="search"
+                           id="search"/>
 
                     <ul class="friends-list">
                         <li v-for="result in searchResults">
@@ -61,21 +68,20 @@
                             </div>
                         </li>
                     </ul>
-                </div>
 
-                <div v-if="observeSearchAlias.length > 1">
-                    <h2>Other results</h2>
-                    <ul class="friends-list">
-                        <li v-for="result in searchResults">
-                            <span class="icon-add" @click="addFriend(result.idurl)"></span>
-                            <div>
-                                <p>{{result.nickname}}</p>
-                                <p>{{result.idurl}}</p>
-                            </div>
-                        </li>
-                    </ul>
+                    <div v-if="observeSearchAlias.length > 1">
+                        <h2>Other results</h2>
+                        <ul class="friends-list">
+                            <li v-for="result in searchResults">
+                                <span class="icon-add" @click="addFriend(result.idurl)"></span>
+                                <div>
+                                    <p>{{result.nickname}}</p>
+                                    <p>{{result.idurl}}</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -162,6 +168,23 @@
 <style lang="scss" scoped>
 
     @import "../../src/assets/scss/colors";
+
+    .search {
+        font-size: .9rem;
+    }
+
+    input {
+        border: 1px solid $color-gray-2;
+        background: #FFFFFF;
+        box-shadow: 0 4px 13px 0 rgba(0, 0, 0, 0.05);
+        border-radius: 4px;
+        padding: 6px;
+        font-size: .8rem;
+
+        &::placeholder {
+            color: $color-gray-2;
+        }
+    }
 
     .friends-list {
         position: relative;

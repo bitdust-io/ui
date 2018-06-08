@@ -1,5 +1,4 @@
 const Api = {
-
     removeFriend(id) {
         return fetch(this.makeApiEndpoint('friend/remove'), {
             method: 'DELETE',
@@ -86,6 +85,10 @@ const Api = {
 
     eventsListen() {
         return fetch(this.makeApiEndpoint('event/listen/electron')).then(res => res.json());
+    },
+
+    getSharedFiles() {
+        return fetch(this.makeApiEndpoint('share/list')).then(res => res.json());
     },
 
     getFiles() {
