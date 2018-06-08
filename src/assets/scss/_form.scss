@@ -26,15 +26,49 @@ fieldset {
     letter-spacing: 0.1rem;
     color: $color-white;
     border-radius: 5rem;
-    background-color: $color-blue-4;
+
     max-width: 100%;
-    padding: 0px 0px 10px;
+    padding: 0 0 10px;
     box-shadow: 0 2px 6.5px 0 rgba(0, 0, 0, 0.05);
     cursor: pointer;
+
+    &.primary {
+        background-color: $color-blue-4;
+    }
+
+    &.slim {
+        border: 1px solid $color-gray-2;
+    }
+
+    &:hover {
+        opacity: .8;
+    }
 }
 
 .ui-label {
     @extend .segoe_ui_bold;
     font-weight: bold;
     letter-spacing: 0.1rem;
+}
+
+.anchor {
+    display: block;
+    font-size: 1.2rem;
+    padding: 10px;
+    margin: 0 auto;
+    width: auto;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+
+.error {
+
+    p {
+        font-size: 1.2rem;
+        color: $color-red;
+    }
 }
