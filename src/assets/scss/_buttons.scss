@@ -11,6 +11,7 @@
     padding: 10px 20px;
     position: relative;
     cursor: pointer;
+    border: none;
 
     &:hover {
         opacity: .6;
@@ -23,4 +24,8 @@
 
 .btn-secondary {
     background: $color-red;
+}
+
+.btn-terciary {
+    background: $color-green;
 }
