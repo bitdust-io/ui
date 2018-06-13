@@ -87,18 +87,42 @@ const Api = {
         return fetch(this.makeApiEndpoint('event/listen/electron')).then(res => res.json());
     },
 
-    getSharedFiles() {
+    shareFile(file, friend) {
+        return fetch(this.makeApiEndpoint('share/grant'), {
+            method: 'PUT',
+            body: JSON.stringify(
+                {
+                    'trusted_global_id': friend.global_id,
+                    'key_id': file.key_id
+                }
+            )
+        }).then(res => res.json());
+    },
+
+    createFileShareKey() {
+        return fetch(this.makeApiEndpoint('share/create'), {
+            method: 'POST'
+        }).then(res => res.json());
+    },
+
+    getSharedKeys() {
         return fetch(this.makeApiEndpoint('share/list')).then(res => res.json());
+    },
+
+    getSharedFiles() {
+        return fetch(this.makeApiEndpoint('file/list', 'all_customers=1')).then(res => res.json());
     },
 
     getFiles() {
         return fetch(this.makeApiEndpoint('file/list')).then(res => res.json());
     },
 
-    createPath(pathName) {
+    createPath(pathName, keyId) {
         return fetch(this.makeApiEndpoint('file/create'), {
             method: 'POST',
-            body: JSON.stringify({'remote_path': pathName})
+            body: JSON.stringify(
+                {'remote_path': keyId + ':' + pathName}
+            )
         }).then(res => res.json());
     },
 

@@ -49,8 +49,8 @@
                 'getSharedFiles'
             ]),
             filteredList() {
-                if (!this.getFiles) return;
-                return this.getFiles.filter(file => {
+                if (!this.getSharedFiles) return;
+                return this.getSharedFiles.filter(file => {
                     if (file.name.charAt(0) === '.') return;
                     return file.name.toLowerCase().includes(this.search.toLowerCase());
                 });
