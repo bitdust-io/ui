@@ -11,6 +11,7 @@ const state = {
 
 const getters = {
     getFiles: state => state.filesList,
+    getSharedFiles: state => state.sharedFilesList,
     isFileOpen: state => state.isFileOpen,
     currentFile: state => state.currentFile,
     hasFilePath(path) {
@@ -30,7 +31,7 @@ const mutations = {
         state.isFileOpen = value;
     },
     UPDATE_CURRENT_FILE(state, file) {
-        state.currentFile = state.filesList.filter(item => item.name === file)[0];
+        state.currentFile = state.filesList.filter(item => item.name === file)[0] || state.sharedFilesList.filter(item => item.name === file)[0];
     }
 };
 
@@ -69,19 +70,24 @@ const actions = {
         let fileName = filePath.match(/\/([^/]*)$/)[1];
 
         if (getters.hasFilePath(fileName).length === 0) {
-            api.createPath(fileName).then(data => {
-                if (data.status === 'OK') {
-                    api.createFile(fileName, filePath).then(data => {
-                        if (data.status === 'OK') {
-                            console.log('file: ', fileName, 'Created');
-                        }
-                    }).catch(err => {
-                        console.log('error: ', err);
-                    });
-                    setTimeout(() => {
-                        dispatch('getApiFiles');
-                    }, 500);
-                }
+
+            api.createFileShareKey().then(data => {
+                if (!data.result && data.status !== 'OK') return false;
+
+                api.createPath(fileName, data.result[0].key_id).then(data => {
+                    if (data.status === 'OK') {
+                        api.createFile(fileName, filePath).then(data => {
+                            if (data.status === 'OK') {
+                                console.log('file: ', fileName, 'Created');
+                            }
+                        }).catch(err => {
+                            console.log('error: ', err);
+                        });
+                        setTimeout(() => {
+                            dispatch('getApiFiles');
+                        }, 500);
+                    }
+                });
             });
         } else {
             api.createFile(fileName, filePath).then(data => {
