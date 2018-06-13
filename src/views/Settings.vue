@@ -4,19 +4,23 @@
         <div class="container">
             <navigation/>
             <div class="content">
+
                 <h1 class="title">
-                    Settings
+                    SETTINGS
                 </h1>
 
-                <h2>Local path</h2>
-                {{localPath}}
-                <h2>
-                    Set new path <input v-model="downloadPath"/>
-                    <button @click="setDownloadPath">ok</button>
+                <h2 class="local-path">Local path: {{localPath}}</h2>
+
+                <h2 class="local-path">
+                    Set new path <input v-model="downloadPath"
+                                        class="ui-input"/>
+                    <button @click="setDownloadPath"
+                            class="btn btn-primary">ok
+                    </button>
                 </h2>
 
-                <h2>Events - {{getEvents.length}}</h2>
-                <ul>
+                <h2 class="events-title">Events - total ({{getEvents.length}})</h2>
+                <ul class="event-list">
                     <li v-for="event in getEvents">
                         {{event.status}}
                         <div v-for="item in event.result">
@@ -79,8 +83,43 @@
     });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    @import "../../src/assets/scss/colors";
+
+
+    .ui-input {
+        border: 1px solid $color-gray-2;
+
+        &::placeholder {
+            color: $color-gray-2;
+        }
+    }
+
     ul {
         list-style: none;
+    }
+
+    .title {
+        font-weight: normal;
+        padding: 10px 0;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 1.4rem;
+    }
+
+    .local-path {
+        font-size: 1rem;
+        margin: 10px 0;
+    }
+
+    .events-title {
+        margin-top: 50px;
+        font-size: .8rem;
+    }
+
+    .event-list {
+        font-size: .8rem;
+        height: 200px;
+        overflow: auto;
     }
 </style>
