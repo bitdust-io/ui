@@ -7,8 +7,10 @@
         <input v-model="search"
                placeholder="type a file name"
                id="search"/>
+
+
         <ul>
-            <li v-for="file in filteredList">
+            <li v-for="file in filteredList" v-if="">
                 <file-extension :file="file.path"/>
                 <span class="file-name"
                       @click="openFile(file.path)">{{file.name}}</span>
@@ -46,13 +48,15 @@
         },
         computed: {
             ...mapGetters([
-                'getSharedFiles'
+                'getSharedFiles',
+                'getIdentity'
             ]),
             filteredList() {
                 if (!this.getSharedFiles) return;
                 return this.getSharedFiles.filter(file => {
                     if (file.name.charAt(0) === '.') return;
-                    return file.name.toLowerCase().includes(this.search.toLowerCase());
+                    return file.name.toLowerCase().includes(this.search.toLowerCase()) &&
+                        file.key_id.indexOf(this.getIdentity.global_id) === -1;
                 });
             }
         },
