@@ -70,7 +70,6 @@ const actions = {
         let fileName = filePath.match(/\/([^/]*)$/)[1];
 
         if (getters.hasFilePath(fileName).length === 0) {
-
             api.createFileShareKey().then(data => {
                 if (!data.result && data.status !== 'OK') return false;
 

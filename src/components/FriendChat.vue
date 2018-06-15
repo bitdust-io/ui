@@ -7,6 +7,8 @@
                 <user-first-letter :name="currentFriend.username"/>
                 <h2>{{currentFriend.username}}</h2>
             </div>
+            <span @click="removeFriend(currentFriend.global_id)"
+                  class="remove">remove</span>
             <span @click="closeFriend"
                   class="close">close</span>
         </div>
@@ -159,9 +161,16 @@
         }
     }
 
+    .remove {
+        cursor: pointer;
+        color: $color-red;
+        font-size: .8rem;
+    }
+
     .close {
         cursor: pointer;
         font-size: .8rem;
+        color: $color-blue-4;
     }
 
     .chat-input {
