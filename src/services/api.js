@@ -126,21 +126,22 @@ const Api = {
         }).then(res => res.json());
     },
 
-    createFile(fileName, filePath) {
+    createFile(remotePath, filePath) {
         return fetch(this.makeApiEndpoint('file/upload/start'), {
             method: 'POST',
             body: JSON.stringify({
-                'remote_path': fileName,
+                'remote_path': remotePath,
                 'local_path': filePath
             })
         }).then(res => res.json());
     },
 
-    deleteFile(filePath) {
+    deleteFile(remotePath) {
+        debugger
         return fetch(this.makeApiEndpoint('file/delete'), {
             method: 'delete',
             body: JSON.stringify({
-                'remote_path': filePath
+                'remote_path': remotePath
             })
         });
     },

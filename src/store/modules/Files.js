@@ -43,9 +43,9 @@ const actions = {
     closeFile({commit}) {
         commit('UPDATE_IS_FILE_OPEN', false);
     },
-    deleteFile({commit, dispatch}, path) {
+    deleteFile({commit, dispatch}, currentFile) {
         if (confirm('Are you sure ?')) {
-            api.deleteFile(path).then(data => {
+            api.deleteFile(currentFile.key_id + ':' + currentFile.path).then(data => {
                 console.log('file removed', data);
                 if (data.ok) {
                     dispatch('getApiFiles');
@@ -68,15 +68,16 @@ const actions = {
         if (!file) return false;
         let filePath = file.files[0].path;
         let fileName = filePath.match(/\/([^/]*)$/)[1];
+        // TODO Cleanup file name ot avoid
 
         if (getters.hasFilePath(fileName).length === 0) {
-            api.createFileShareKey().then(data => {
-                if (!data.result && data.status !== 'OK') return false;
-
-                api.createPath(fileName, data.result[0].key_id).then(data => {
-                    if (data.status === 'OK') {
-                        api.createFile(fileName, filePath).then(data => {
-                            if (data.status === 'OK') {
+            api.createFileShareKey().then(shareKeyData => {
+                if (!shareKeyData.result && shareKeyData.status !== 'OK') return false;
+                const keyId = shareKeyData.result[0].key_id;
+                api.createPath(fileName, keyId).then(pathData => {
+                    if (pathData.status === 'OK') {
+                        api.createFile(keyId + ':' + fileName, filePath).then(fileData => {
+                            if (fileData.status === 'OK') {
                                 console.log('file: ', fileName, 'Created');
                             }
                         }).catch(err => {

@@ -19,7 +19,7 @@
                         class="btn btn-primary">
                     Download
                 </button>
-                <button @click="deleteFile(currentFile.path)"
+                <button @click="deleteFile(currentFile)"
                         class="btn btn-secondary">
                     Delete
                 </button>
@@ -51,7 +51,7 @@
                         </button>
                     </div>
                 </div>
-                
+
                 <p v-if="isSharing"
                    class="is-sharing">
                     Sharing file with: {{selectedFriend.username}}
