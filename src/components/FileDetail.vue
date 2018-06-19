@@ -11,7 +11,7 @@
                     <i class="icon-download-file"></i>
                     Download
                 </li>
-                <li @click="deleteFile(file.path)" class="delete">
+                <li @click="deleteFile(file)" class="delete">
                     <i class="icon-delete-file"></i>
                     Delete
                 </li>
