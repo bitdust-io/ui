@@ -137,7 +137,6 @@ const Api = {
     },
 
     deleteFile(remotePath) {
-        debugger
         return fetch(this.makeApiEndpoint('file/delete'), {
             method: 'delete',
             body: JSON.stringify({
