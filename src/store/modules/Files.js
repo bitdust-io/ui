@@ -67,6 +67,7 @@ const actions = {
     createFile({commit, dispatch}, file) {
         if (!file) return false;
         let filePath = file.files[0].path;
+        let keyId = file.files[0].key_id;
         let fileName = filePath.match(/\/([^/]*)$/)[1];
 
         if (getters.hasFilePath(fileName).length === 0) {
@@ -75,7 +76,7 @@ const actions = {
 
                 api.createPath(fileName, data.result[0].key_id).then(data => {
                     if (data.status === 'OK') {
-                        api.createFile(fileName, filePath).then(data => {
+                        api.createFile(fileName, filePath, data.result[0].key_id).then(data => {
                             if (data.status === 'OK') {
                                 console.log('file: ', fileName, 'Created');
                             }
@@ -89,7 +90,7 @@ const actions = {
                 });
             });
         } else {
-            api.createFile(fileName, filePath).then(data => {
+            api.createFile(fileName, filePath, keyId).then(data => {
                 if (data.status === 'OK') {
                     console.log('file: ', fileName, 'Created');
                 }

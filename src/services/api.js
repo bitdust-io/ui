@@ -126,11 +126,11 @@ const Api = {
         }).then(res => res.json());
     },
 
-    createFile(fileName, filePath) {
+    createFile(fileName, filePath, keyId) {
         return fetch(this.makeApiEndpoint('file/upload/start'), {
             method: 'POST',
             body: JSON.stringify({
-                'remote_path': fileName,
+                'remote_path': keyId + ':' + fileName,
                 'local_path': filePath
             })
         }).then(res => res.json());
