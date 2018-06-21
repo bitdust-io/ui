@@ -214,6 +214,7 @@
 
     .friends-list {
         display: flex;
+        flex-flow: row wrap;
 
         li {
             text-align: center;
