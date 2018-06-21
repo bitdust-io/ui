@@ -77,7 +77,7 @@
                     Api.getIdentity().then(resp => {
                         if (resp.status === 'OK') {
                             this.updateIdentity(resp.result[0]);
-                            // this.$router.push('home');
+                            this.$router.push('home');
                         } else {
                             this.$router.push('create-identity');
                         }
