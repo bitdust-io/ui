@@ -69,9 +69,12 @@
             </div>
             <hr/>
 
-            <div v-for="version in currentFile.versions">
-                available: {{version.reliable}}
-                uploaded: {{version.delivered}}
+            <div v-for="(version , index) in currentFile.versions"
+                 :key="index"
+                 class="file-info">
+                ({{index + 1}})
+                Available: {{version.reliable}}
+                Uploaded: {{version.delivered}}
             </div>
         </div>
         <i @click="closeFile" class="wall"></i>
@@ -188,6 +191,10 @@
 
 <style scoped lang="scss">
     @import "../../src/assets/scss/colors";
+
+    .file-info {
+        font-size: .8rem;
+    }
 
     .share-buttons {
 
