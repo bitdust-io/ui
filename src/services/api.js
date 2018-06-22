@@ -117,6 +117,12 @@ const Api = {
         return fetch(this.makeApiEndpoint('file/list')).then(res => res.json());
     },
 
+    getFileInfo(file) {
+        let query = 'remote_path=' + file.key_id + ':' + file.path;
+        return fetch(this.makeApiEndpoint('file/info', query)
+        ).then(res => res.json());
+    },
+
     createPath(pathName, keyId) {
         return fetch(this.makeApiEndpoint('file/create'), {
             method: 'POST',

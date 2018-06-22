@@ -70,8 +70,8 @@
             <hr/>
 
             <div v-for="version in currentFile.versions">
-                reliable: {{version.reliable}}
-                delivered: {{version.delivered}}
+                available: {{version.reliable}}
+                uploaded: {{version.delivered}}
             </div>
         </div>
         <i @click="closeFile" class="wall"></i>
@@ -104,7 +104,8 @@
             ...mapActions([
                 'deleteFile',
                 'closeFile',
-                'getApiFriends'
+                'getApiFriends',
+                'updateCurrentFileData'
             ]),
             stopPropagation(event) {
                 event.preventDefault();
@@ -142,19 +143,31 @@
                 Api.shareFile(this.currentFile, this.selectedFriend).then(data => {
                     this.resetOpenFile();
                 });
+            },
+            updateFileInfo() {
+                Api.getFileInfo(this.currentFile).then(data => {
+                    this.updateCurrentFileData(data.result[0].versions);
+                });
             }
         },
         computed: {
             ...mapGetters([
                 'isFileOpen',
                 'currentFile',
-                'getFriends'
+                'getFriends',
+                'connectionStatus'
             ])
         },
         watch: {
+            'connectionStatus': function () {
+                if (this.isFileOpen) {
+                    this.updateFileInfo();
+                }
+            },
             'currentFile': function (response) {
                 if (response) {
                     this.resetOpenFile();
+                    this.updateFileInfo();
                 }
             },
             'isFileOpen': function (response) {
