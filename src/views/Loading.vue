@@ -1,7 +1,7 @@
 <template>
     <section class="bg-wave section-loading">
         <article>
-            <header v-if="!error">
+            <header>
                 <div class="loading">
                     <svg version="1.1" id="L6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                     viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
@@ -34,14 +34,6 @@
                     one moment please
                 </h2>
             </header>
-            <header v-if="error">
-                <h1 class="page-title">
-                    We are connecting you
-                </h1>
-                <h2 class="sub-title">
-                    Ooops, something went wrong, can you please restart Bitdust
-                </h2>
-            </header>
         </article>
     </section>
 </template>
@@ -52,11 +44,6 @@
 
     export default {
         name: 'loading',
-        data() {
-            return {
-                error: false
-            };
-        },
         computed: {
             ...mapGetters([
                 'connectionStatus'
