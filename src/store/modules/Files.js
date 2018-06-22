@@ -96,7 +96,9 @@ const actions = {
                 });
             });
         } else {
-            api.createFile(fileName, filePath).then(data => {
+            let currentFile = getters.hasFilePath(fileName)[0];
+            let remotePath = currentFile.key_id + ':' + currentFile.path;
+            api.createFile(remotePath, filePath).then(data => {
                 if (data.status === 'OK') {
                     console.log('file: ', fileName, 'Created');
                 }
