@@ -3,10 +3,6 @@
         <span class="icon-menu"></span>
         <div class="file-detail-content">
             <ul class="file-detail-list">
-                <li @click="shareFile()">
-                    <i class="icon-share-file"></i>
-                    Share
-                </li>
                 <li @click="downloadFile()">
                     <i class="icon-download-file"></i>
                     Download
