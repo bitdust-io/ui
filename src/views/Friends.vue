@@ -49,6 +49,12 @@
                     <input v-model="search"
                            id="search"/>
 
+                    <div v-if="addFriendResponse"
+                    class="add-friend-response">
+                        <span @click="addFriendResponse = null"
+                              class="close">X</span>
+                        {{addFriendResponse.result[0]}}
+                    </div>
                     <ul class="friends-list">
                         <li v-for="result in searchResults">
                             <div v-if="result.result === 'exist'">
@@ -57,8 +63,6 @@
                                     <p>{{result.nickname}}</p>
                                     <p>{{result.idurl}}</p>
                                 </div>
-
-                                {{addFriendResponse}}
                             </div>
                             <div v-if="result.result === 'not exist'">
                                 <span class="icon-invite">invite</span>
@@ -169,6 +173,23 @@
 
     @import "../../src/assets/scss/colors";
 
+    .add-friend-response{
+        font-size: .8em;
+        margin: 25px 0;
+        padding: 15px;
+        background: $color-blue-2;
+        display: block;
+
+        .close {
+            background: $color-white;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-right: 10px;
+            &:hover {
+                opacity: 0.6;
+            }
+        }
+    }
     .search {
         font-size: .9rem;
     }
@@ -187,6 +208,7 @@
     }
 
     .friends-list {
+        margin-top: 30px;
         position: relative;
         list-style: none;
         display: flex;
@@ -194,7 +216,7 @@
 
         li {
             position: relative;
-            margin: 10px 10px;
+            margin: 10px 10px 0 0;
             min-width: 260px;
             background: $color-white;
             padding: 10px 10px 10px 30px;
