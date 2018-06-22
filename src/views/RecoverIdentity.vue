@@ -23,10 +23,11 @@
                     <label class="ui-label" for="privateKey">
                         Paste your private key
                     </label>
-                    <input class="ui-input"
-                           v-model="privateKey"
-                           name="privateKey"
-                           id="privateKey">
+                    <textarea class="ui-input"
+                              v-model="privateKey"
+                              name="privateKey"
+                              id="privateKey">
+                    </textarea>
 
                     <div v-if="error"
                          class="error">
@@ -124,10 +125,10 @@
     }
 
     .ui-input {
-        text-align: center;
+        font-size: 0.7rem;
         width: 100%;
         max-width: 580px;
-        height: 60px;
+        height: 100px;
         margin: 1.5rem 0 1rem;
     }
 
