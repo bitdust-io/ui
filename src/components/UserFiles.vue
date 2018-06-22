@@ -15,9 +15,6 @@
                 <file-detail :file="file"/>
             </li>
         </ul>
-        <div v-if="isFileOpen">
-            open
-        </div>
     </div>
 </template>
 
@@ -29,7 +26,6 @@
     export default {
         data() {
             return {
-                isFileOpen: false,
                 search: ''
             };
         },
@@ -87,7 +83,6 @@
             color: $color-gray-2;
         }
     }
-
 
     li {
         background: $color-white;
