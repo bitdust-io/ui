@@ -6,7 +6,8 @@ const state = {
     filesList: [],
     sharedFilesList: [],
     isFileOpen: false,
-    currentFile: {}
+    currentFile: {},
+    filesErrorLoading: true
 };
 
 const getters = {
@@ -35,6 +36,9 @@ const mutations = {
     },
     UPDATE_CURRENT_FILE_DATA(state, file) {
         state.currentFile.versions = file;
+    },
+    UPDATE_FILES_ERROR_LOADING(state, value) {
+        state.filesErrorLoading = value;
     }
 };
 
@@ -65,9 +69,18 @@ const actions = {
             commit('UPDATE_SHARED_FILE_LIST', data.result);
         });
     },
-    getApiFiles({commit}) {
+    getApiFiles({commit, dispatch}) {
         api.getFiles().then(data => {
-            commit('UPDATE_FILE_LIST', data.result);
+            if (data.status === 'ERROR') {
+                setTimeout(() => {
+                    dispatch('getApiFiles');
+                    commit('UPDATE_FILES_ERROR_LOADING', true);
+                    console.log('retrying to get files');
+                }, 1000);
+            } else {
+                commit('UPDATE_FILE_LIST', data.result);
+                commit('UPDATE_FILES_ERROR_LOADING', false);
+            }
         });
     },
     createFile({commit, dispatch}, file) {

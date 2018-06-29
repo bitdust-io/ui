@@ -98,3 +98,14 @@ article {
     height: 100%;
     overflow: scroll;
 }
+
+.loading-wrapper {
+    width: 100%;
+    text-align: center;
+}
+
+.loading {
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+}

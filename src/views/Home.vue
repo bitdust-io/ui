@@ -32,7 +32,6 @@
     import userSharedFiles from '../components/UserSharedFiles';
     import filesUpload from '../components/FileUpload';
     import fileOpen from '../components/FileOpen';
-    import {mapGetters} from 'vuex';
     import navigation from '@/components/Navigation';
     import bitHeader from '@/components/BitHeader';
 
@@ -55,12 +54,6 @@
             setMenuActive(menu) {
                 this.activeTab = menu;
             }
-        },
-        computed: {
-            ...mapGetters([
-                'connectionStatus',
-                'isFileOpen'
-            ])
         }
     };
 </script>
