@@ -7,6 +7,19 @@
         <input v-model="search"
                placeholder="type a file name"
                id="search"/>
+
+        <div v-if="Files.filesErrorLoading"
+             class="loading-wrapper">
+            <img src="../assets/images/loading.svg"
+                 class="loading"/>
+            <p>
+                Please wait, loading your files.
+            </p>
+        </div>
+        <div v-if="filteredList.length === 0 && !Files.filesErrorLoading"
+             class="no-files">
+            You don't have any file uploaded yet, try to upload your fisrt ;)
+        </div>
         <ul>
             <li v-for="file in filteredList">
                 <file-extension :file="file.path"/>
@@ -19,14 +32,15 @@
 </template>
 
 <script>
-    import {mapGetters, mapActions} from 'vuex';
+    import {mapGetters, mapActions, mapState} from 'vuex';
     import FileDetail from '../components/FileDetail';
     import FileExtension from '../components/FileExtension';
 
     export default {
         data() {
             return {
-                search: ''
+                search: '',
+                isFilesLoading: true
             };
         },
         components: {
@@ -44,8 +58,10 @@
             ...mapGetters([
                 'getFiles'
             ]),
+            ...mapState(['Files']),
             filteredList() {
                 if (!this.getFiles) return;
+                this.isFilesLoading = false;
                 return this.getFiles.filter(file => {
                     if (file.name.charAt(0) === '.') return;
                     return file.name.toLowerCase().includes(this.search.toLowerCase());
@@ -60,6 +76,22 @@
 
 <style scoped lang="scss">
     @import "../../src/assets/scss/colors";
+
+    .no-files {
+        text-align: center;
+        margin: 30px auto;
+        max-width: 50%;
+    }
+
+    .loading-wrapper {
+        margin-top: 30px;
+        text-align: center;
+
+        .loading {
+            margin: auto;
+            display: block;
+        }
+    }
 
     .search {
         font-size: .9rem;
