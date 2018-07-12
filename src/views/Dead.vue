@@ -1,10 +1,18 @@
 <template>
-    <div class="dead page">
-        <h1>
-            Ooops, something went wrong, can you please restart Bitdust
-        </h1>
-        <h2>Trying to re-connect</h2>
-    </div>
+    <section class="page">
+        <article>
+            <div class="dead">
+                <div class="loading-wrapper">
+                    <img src="../assets/images/loading.svg"
+                         class="loading"/>
+                </div>
+                <h1>
+                    Ooops, something went wrong, can you please restart Bitdust
+                </h1>
+                <h2>Trying to re-connect</h2>
+            </div>
+        </article>
+    </section>
 </template>
 
 <script>
@@ -26,3 +34,21 @@
         }
     };
 </script>
+
+<style scoped lang="scss">
+    .page {
+        justify-content: flex-start;
+        align-items: center;
+        text-align: center;
+
+        article {
+            margin-top: 7.7rem;
+            line-height: 4rem;
+        }
+
+        .page-subtitle {
+            text-align: center;
+            margin-top: 1rem;
+        }
+    }
+</style>
