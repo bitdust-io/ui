@@ -87,7 +87,7 @@ const actions = {
         if (!file) return false;
         let filePath = file.files[0].path;
         let fileName = filePath.match(/\/([^/]*)$/)[1];
-        // TODO Cleanup file name ot avoid
+        // TODO Cleanup file name
 
         if (getters.hasFilePath(fileName).length === 0) {
             api.createFileShareKey().then(shareKeyData => {
