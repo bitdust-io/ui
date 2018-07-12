@@ -37,16 +37,6 @@
 
 <style lang="scss" scoped>
 
-    .loading {
-        text-align: center;
-    }
-
-    svg {
-        width: 100px;
-        height: 100px;
-        display: inline-block;
-    }
-
     .section-loading {
         justify-content: flex-start;
         align-items: center;
