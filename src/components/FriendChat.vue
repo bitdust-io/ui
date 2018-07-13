@@ -60,6 +60,7 @@
                     user: this.currentFriend
                 }).then(resp => {
                     this.isSending = false;
+                }).finally(() => {
                     this.resetOpenFriend();
                 });
             },
@@ -120,15 +121,11 @@
         }
     }
 
-    .user-messages {
-        min-height: 300px;
-        padding: 10px 20px;
-    }
-
     .friend {
         background: #F8F8F8;
         position: fixed;
-        width: 400px;
+        width: 500px;
+        height: 500px;
         right: 20px;
         bottom: -610px;
         transition: all .2s ease-in-out;
@@ -178,7 +175,7 @@
         resize: none;
         padding: 10px;
         margin-left: 10px;
-        width: 280px;
+        width: 350px;
     }
 
     .flex {
