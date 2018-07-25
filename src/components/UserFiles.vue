@@ -18,7 +18,7 @@
         </div>
         <div v-if="filteredList.length === 0 && !Files.filesErrorLoading"
              class="no-files">
-            You don't have any file uploaded yet, try to upload your fisrt ;)
+            You don't have any file uploaded yet, try to upload your first ;)
         </div>
         <ul>
             <li v-for="file in filteredList">
