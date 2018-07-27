@@ -2,14 +2,14 @@
 * Fonts
 *------------------------------------------------------------------------------------------------------------*/
 
-$font-dir: "../../../static/fonts/";
+$font-dir: "/static/fonts/";
 
 @mixin font-face($font-label, $font-path, $font-name, $style: normal, $weight: normal) {
     @font-face {
         font-family: $font-label;
-        src:url($font-path + $font-name + ".woff2") format("woff2"),
-            url($font-path + $font-name + ".woff") format("woff"),
-            url($font-path + $font-name + ".ttf") format("truetype");
+        src: url($font-path + $font-name + ".woff2") format("woff2"),
+        url($font-path + $font-name + ".woff") format("woff"),
+        url($font-path + $font-name + ".ttf") format("truetype");
         font-weight: $weight;
         font-style: $style;
     }
