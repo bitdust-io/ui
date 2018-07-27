@@ -1,4 +1,9 @@
 const Api = {
+
+    restartProcess() {
+        return fetch(this.makeApiEndpoint('process/restart')).then(res => res.json());
+    },
+
     removeFriend(id) {
         return fetch(this.makeApiEndpoint('friend/remove'), {
             method: 'DELETE',
