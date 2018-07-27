@@ -16,8 +16,12 @@
         <user-messages :from="currentFriend"/>
 
         <div class="flex">
+
         <textarea v-model="message"
+                  ref="chat"
                   class="chat-input"
+                  :disabled="isSending"
+                  :class="{'icon-loading': isSending}"
                   rows="1"></textarea>
 
             <button @click="sendMessage()"
@@ -43,7 +47,8 @@
             return {
                 message: '',
                 isSending: false,
-                isSwitched: false
+                isSwitched: false,
+                chat: ''
             };
         },
         methods: {
@@ -60,8 +65,9 @@
                     user: this.currentFriend
                 }).then(resp => {
                     this.isSending = false;
-                }).finally(() => {
                     this.resetOpenFriend();
+                }).catch(() => {
+                    // TODO Handle error
                 });
             },
             resetOpenFriend() {
@@ -86,6 +92,7 @@
                 if (response) {
                     this.resetOpenFriend();
                     this.switchUserChat();
+                    this.$refs.chat.focus();
                 }
             },
             'isFriendChatOpen': function (response) {
@@ -98,6 +105,11 @@
             window.addEventListener('keyup', (ev) => {
                 if (ev.code === 'Escape') {
                     this.closeFriend();
+                }
+            });
+            document.addEventListener('keydown', ev => {
+                if (ev.code === 'Enter') {
+                    this.sendMessage();
                 }
             });
         }
@@ -122,6 +134,7 @@
     }
 
     .friend {
+        z-index: 1;
         background: #F8F8F8;
         position: fixed;
         width: 500px;
@@ -176,6 +189,7 @@
         padding: 10px;
         margin-left: 10px;
         width: 350px;
+        background-position: right center;
     }
 
     .flex {
