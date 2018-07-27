@@ -85,9 +85,9 @@ const actions = {
     },
     createFile({commit, dispatch}, file) {
         if (!file) return false;
-        let filePath = file.files[0].path;
+        let filePath = file.files[0].path.replace(/\\/g, '/');
         let fileName = filePath.match(/\/([^/]*)$/)[1];
-        // TODO Cleanup file name
+        // TODO Sanitize file name
 
         if (getters.hasFilePath(fileName).length === 0) {
             api.createFileShareKey().then(shareKeyData => {
