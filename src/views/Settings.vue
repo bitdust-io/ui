@@ -19,6 +19,9 @@
                     </button>
                 </h2>
 
+                <button @click="restartProcess"
+                class="btn btn-primary">Restart</button>
+
                 <h2 class="events-title">Events - total ({{getEvents.length}})</h2>
                 <ul class="event-list">
                     <li v-for="event in getEvents">
@@ -64,6 +67,9 @@
                 api.getPath().then(resp => {
                     this.localPath = resp.result[0].value;
                 });
+            },
+            restartProcess() {
+                api.restartProcess();
             }
         },
         computed: {
@@ -85,7 +91,6 @@
 
 <style scoped lang="scss">
     @import "../../src/assets/scss/colors";
-
 
     .ui-input {
         border: 1px solid $color-gray-2;
