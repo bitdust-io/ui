@@ -1,5 +1,13 @@
 const Api = {
 
+    getCustomers() {
+        return fetch(this.makeApiEndpoint('customer/list')).then(res => res.json());
+    },
+
+    getSuppliers() {
+        return fetch(this.makeApiEndpoint('supplier/list')).then(res => res.json());
+    },
+
     restartProcess() {
         return fetch(this.makeApiEndpoint('process/restart')).then(res => res.json());
     },
