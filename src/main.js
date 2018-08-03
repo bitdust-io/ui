@@ -2,7 +2,7 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 import store from './store';
-
+import application from './services/application';
 import './assets/scss/styles.scss';
 
 Vue.config.productionTip = false;
@@ -13,5 +13,6 @@ new Vue({
     router,
     store,
     components: {App},
-    template: '<App/>'
+    template: '<App/>',
+    created: application.keepConnection()
 });
