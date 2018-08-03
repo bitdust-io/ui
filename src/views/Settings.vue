@@ -20,7 +20,12 @@
                 </h2>
 
                 <button @click="restartProcess"
-                class="btn btn-primary">Restart</button>
+                        class="btn btn-primary">Restart
+                </button>
+
+                <suppliers/>
+
+                <customers/>
 
                 <h2 class="events-title">Events - total ({{getEvents.length}})</h2>
                 <ul class="event-list">
@@ -40,6 +45,8 @@
 <script>
     import api from '@/services/api';
     import navigation from '@/components/Navigation';
+    import suppliers from '@/components/Suppliers';
+    import customers from '@/components/Customers';
     import bitHeader from '@/components/BitHeader';
     import {mapGetters} from 'vuex';
     import Vue from 'vue';
@@ -54,7 +61,9 @@
         },
         components: {
             navigation,
-            bitHeader
+            bitHeader,
+            suppliers,
+            customers
         },
         methods: {
             setDownloadPath() {

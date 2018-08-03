@@ -34,6 +34,7 @@
     import fileOpen from '../components/FileOpen';
     import navigation from '@/components/Navigation';
     import bitHeader from '@/components/BitHeader';
+    import application from '../services/application';
 
     export default {
         name: 'home',
@@ -54,6 +55,10 @@
             setMenuActive(menu) {
                 this.activeTab = menu;
             }
+        },
+        created() {
+            application.eventsListen();
+            application.messagesListen();
         }
     };
 </script>
