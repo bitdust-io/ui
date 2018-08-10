@@ -2,7 +2,7 @@
 * Fonts
 *------------------------------------------------------------------------------------------------------------*/
 
-$font-dir: "./static/fonts/";
+$font-dir: "/static/fonts/";
 
 @mixin font-face($font-label, $font-path, $font-name, $style: normal, $weight: normal) {
     @font-face {
