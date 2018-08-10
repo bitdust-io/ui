@@ -35,7 +35,7 @@
             userMessages() {
                 if (!this.getMessages) return;
                 let messages = this.getMessages.filter(message => {
-                    if (!message) return;
+                    if (!message || !this.currentFriend.global_id) return;
                     return message.sender.toLowerCase().includes(this.currentFriend.global_id.toLowerCase()) ||
                         message.recipient.toLowerCase().includes(this.currentFriend.global_id.toLowerCase());
                 });
