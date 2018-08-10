@@ -23,7 +23,6 @@ const Application = {
             setTimeout(() => {
                 this.keepConnection();
             }, 2000);
-
         }).catch(() => {
             apiNotResponding += 1;
             if (apiNotResponding > 5) {
