@@ -7,7 +7,7 @@
                          class="loading"/>
                 </div>
                 <h1>
-                    Ooops, something went wrong, can you please restart Bitdust
+                    Ooops, something went wrong.
                 </h1>
                 <h2>Trying to re-connect</h2>
             </div>
