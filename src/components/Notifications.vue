@@ -34,6 +34,7 @@
         },
         watch: {
             'getLastEvent': function (response) {
+                if (!response.result) return;
                 response.result.forEach(resultItem => {
                     if (resultItem.id === this.SHARED_FILE) {
                         this.hasNewFile = true;
