@@ -1,6 +1,7 @@
 <template>
     <header>
         <div class="header-right">
+            <notifications/>
             <user-identity/>
             <div class="connection-status" :class="connectionStatus.status">
             </div>
@@ -11,6 +12,7 @@
 <script>
     import {mapGetters} from 'vuex';
     import UserIdentity from './UserIdentity';
+    import Notifications from './Notifications';
 
     export default {
         computed: {
@@ -19,7 +21,8 @@
             ])
         },
         components: {
-            UserIdentity
+            UserIdentity,
+            Notifications
         }
     };
 </script>

@@ -72,6 +72,9 @@
             },
             resetOpenFriend() {
                 this.message = '';
+                this.$nextTick(() => {
+                    this.$refs.chat.focus();
+                });
             },
             switchUserChat() {
                 this.isSwitched = true;
