@@ -1,5 +1,9 @@
 const Api = {
 
+    getDonated() {
+        return fetch(this.makeApiEndpoint('space/donated')).then(res => res.json());
+    },
+
     getCustomers() {
         return fetch(this.makeApiEndpoint('customer/list')).then(res => res.json());
     },
