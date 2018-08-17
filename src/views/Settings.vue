@@ -27,6 +27,8 @@
 
                 <customers/>
 
+                <donated/>
+
                 <h2 class="events-title">Events - total ({{getEvents.length}})</h2>
                 <ul class="event-list">
                     <li v-for="event in getEvents">
@@ -48,6 +50,7 @@
     import suppliers from '@/components/Suppliers';
     import customers from '@/components/Customers';
     import bitHeader from '@/components/BitHeader';
+    import donated from '@/components/Donated';
     import {mapGetters} from 'vuex';
     import Vue from 'vue';
 
@@ -63,7 +66,8 @@
             navigation,
             bitHeader,
             suppliers,
-            customers
+            customers,
+            donated
         },
         methods: {
             setDownloadPath() {
@@ -133,7 +137,7 @@
 
     .event-list {
         font-size: .8rem;
-        height: 200px;
+        height: 400px;
         overflow: auto;
     }
 </style>
