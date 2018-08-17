@@ -88,7 +88,7 @@ article {
 .content {
     margin-left: 330px;
     transition: all .3s ease-in-out;
-    overflow: scroll;
+    overflow: auto;
     flex: 1;
     height: 100%;
 }
@@ -96,7 +96,7 @@ article {
 .container {
     display: flex;
     height: 100%;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .loading-wrapper {
