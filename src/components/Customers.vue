@@ -2,7 +2,7 @@
     <div class="customers">
         My Customers
 
-        <pre v-if="customers.length > 0">
+        <pre v-if="customers && customers.length > 0">
             {{customers}}
         </pre>
         <h3 v-else>
