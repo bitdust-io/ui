@@ -2,7 +2,7 @@
     <div class="customers">
         My Customers
 
-        <pre v-if="customers">
+        <pre v-if="customers.length > 0">
             {{customers}}
         </pre>
         <h3 v-else>
@@ -19,12 +19,12 @@
         name: 'customers',
         data() {
             return {
-                customers: {}
+                customers: []
             };
         },
         created() {
             Api.getCustomers().then(data => {
-                this.customers = data.result[0];
+                this.customers = data.result;
             });
         }
     };
