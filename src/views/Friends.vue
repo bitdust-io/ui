@@ -39,6 +39,7 @@
                         </li>
                     </ul>
                 </div>
+
                 <div v-show="this.activeTab === 'addFriends'">
 
                     <label for="search"
@@ -49,8 +50,12 @@
                     <input v-model="search"
                            id="search"/>
 
+                    <button class="ui-button primary"
+                            @click="searchUser">Search
+                    </button>
+
                     <div v-if="addFriendResponse"
-                    class="add-friend-response">
+                         class="add-friend-response">
                         <span @click="addFriendResponse = null"
                               class="close">X</span>
                         {{addFriendResponse.result[0]}}
@@ -65,10 +70,10 @@
                                 </div>
                             </div>
                             <div v-if="result.result === 'not exist'">
-                                <span class="icon-invite">invite</span>
-                                <div>
-                                    <p>{{result.nickname}}</p>
-                                </div>
+                                <h4>
+                                    No results for
+                                </h4>
+                                <p>{{result.nickname}}</p>
                             </div>
                         </li>
                     </ul>
@@ -156,13 +161,6 @@
                 });
             }
         },
-        watch: {
-            'search': function (resp) {
-                if (resp.length > 3) {
-                    this.searchUser();
-                }
-            }
-        },
         created() {
             this.getApiFriends();
         }
@@ -173,7 +171,7 @@
 
     @import "../../src/assets/scss/colors";
 
-    .add-friend-response{
+    .add-friend-response {
         font-size: .8em;
         margin: 25px 0;
         padding: 15px;
@@ -190,8 +188,15 @@
             }
         }
     }
+
     .search {
         font-size: .9rem;
+    }
+
+    .ui-button {
+        font-size: 1rem;
+        padding: 10px 15px;
+        vertical-align: top;
     }
 
     input {
