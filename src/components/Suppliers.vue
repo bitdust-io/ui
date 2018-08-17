@@ -2,13 +2,12 @@
     <div class="suppliers">
         My Suppliers
 
-        <div v-if="suppliers.length > 0">
+        <pre v-if="suppliers">
             {{suppliers}}
-        </div>
+        </pre>
         <h3 v-else>
             You have no suppliers yet.
         </h3>
-
     </div>
 </template>
 
@@ -24,7 +23,7 @@
         },
         created() {
             Api.getSuppliers().then(data => {
-                this.suppliers = data.result;
+                this.suppliers = data.result[0];
             });
         }
     };
