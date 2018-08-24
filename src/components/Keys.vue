@@ -1,19 +1,17 @@
 <template>
-    <div class="customers">
+    <div class="keys">
 
-        <ul v-if="customers && customers.length > 0">
-            <li v-for="(customer, index) in customers"
-                :key="index">
-                <icon name="person"
+        <ul v-if="keys && keys.length > 0">
+            <li v-for="(key, index) in keys" :key="index">
+                <icon name="lock"
                       class="icon"
-                      size="xxl"
-                      :class="customer.contact_status"/>
-                <p>{{customer.global_id}}</p>
+                      size="xl"/>
+                {{key.alias}}
             </li>
         </ul>
 
         <h3 v-else>
-            You have no customers yet.
+            You have no keys yet.
         </h3>
 
     </div>
@@ -24,15 +22,15 @@
     import Icon from './Generic/Icon/Icon';
 
     export default {
-        name: 'Customers',
+        name: 'Keys',
         data() {
             return {
-                customers: []
+                keys: []
             };
         },
         created() {
-            Api.getCustomers().then(data => {
-                this.customers = data.result;
+            Api.getKeys().then(data => {
+                this.keys = data.result;
             });
         },
         components: {
@@ -44,7 +42,7 @@
 <style scoped lang="scss">
     @import "../../src/assets/scss/colors";
 
-    .customers {
+    .keys {
     }
 
     ul {
@@ -61,11 +59,6 @@
 
         .icon {
             margin-right: 15px;
-            color: $color-red;
-
-            &.online {
-                color: $color-green;
-            }
         }
     }
 

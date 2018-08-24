@@ -72,9 +72,11 @@
             },
             resetOpenFriend() {
                 this.message = '';
-                this.$nextTick(() => {
-                    this.$refs.chat.focus();
-                });
+                if (this.$refs.chat) {
+                    this.$nextTick(() => {
+                        this.$refs.chat.focus();
+                    });
+                }
             },
             switchUserChat() {
                 this.isSwitched = true;
@@ -95,7 +97,11 @@
                 if (response) {
                     this.resetOpenFriend();
                     this.switchUserChat();
-                    this.$refs.chat.focus();
+                    if (this.$refs.chat) {
+                        this.$nextTick(() => {
+                            this.$refs.chat.focus();
+                        });
+                    }
                 }
             },
             'isFriendChatOpen': function (response) {
