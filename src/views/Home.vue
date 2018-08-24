@@ -1,6 +1,5 @@
 <template>
-    <div class="home page">
-        <bit-header/>
+    <div class="home">
         <div class="container">
             <navigation/>
             <div class="content">
@@ -33,7 +32,6 @@
     import filesUpload from '../components/FileUpload';
     import fileOpen from '../components/FileOpen';
     import navigation from '@/components/Navigation';
-    import bitHeader from '@/components/BitHeader';
     import application from '../services/application';
 
     export default {
@@ -48,8 +46,7 @@
             userSharedFiles,
             filesUpload,
             fileOpen,
-            navigation,
-            bitHeader
+            navigation
         },
         methods: {
             setMenuActive(menu) {
