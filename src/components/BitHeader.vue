@@ -1,5 +1,5 @@
 <template>
-    <header>
+    <header v-if="visible">
         <div class="header-right">
             <notifications/>
             <user-identity/>
@@ -15,10 +15,36 @@
     import Notifications from './Notifications';
 
     export default {
+        name: 'Header',
+        data() {
+            return {
+                visible: false
+            };
+        },
+        created() {
+            this.$watch(
+                function () {
+                    return this.$route;
+                },
+                function (route) {
+                    this.visible = this.isVisible(route.name);
+                }
+            );
+        },
         computed: {
             ...mapGetters([
                 'connectionStatus'
             ])
+        },
+        methods: {
+            isVisible(name) {
+                let visibleRouters = [
+                    'home',
+                    'users',
+                    'settings'
+                ];
+                return visibleRouters.indexOf(name) > -1;
+            }
         },
         components: {
             UserIdentity,
