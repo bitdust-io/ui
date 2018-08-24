@@ -1,6 +1,5 @@
 <template>
-    <div class="friends page">
-        <bit-header/>
+    <div class="friends">
         <div class="container">
             <navigation/>
             <friend-chat/>
@@ -100,7 +99,6 @@
     import {mapGetters, mapActions} from 'vuex';
     import api from '../services/api';
     import navigation from '@/components/Navigation';
-    import bitHeader from '@/components/BitHeader';
     import FriendChat from '../components/FriendChat';
     import friendMessageCounter from '../components/FriendMessagesCounter';
     import userFirstLetter from '../components/UserFirstLetter';
@@ -118,7 +116,6 @@
         },
         components: {
             navigation,
-            bitHeader,
             FriendChat,
             friendMessageCounter,
             userFirstLetter

@@ -1,6 +1,5 @@
 <template>
-    <div class="settings page">
-        <bit-header/>
+    <div class="settings">
         <div class="container">
             <navigation/>
             <div class="content">
@@ -23,22 +22,9 @@
                         class="btn btn-primary">Restart
                 </button>
 
-                <suppliers/>
+                <Tabs :components="components"
+                      class="tabs"/>
 
-                <customers/>
-
-                <donated/>
-
-                <h2 class="events-title">Events - total ({{getEvents.length}})</h2>
-                <ul class="event-list">
-                    <li v-for="event in getEvents">
-                        {{event.status}}
-                        <div v-for="item in event.result">
-                            {{item.id}}
-                            {{item.time | date}}
-                        </div>
-                    </li>
-                </ul>
             </div>
         </div>
     </div>
@@ -49,25 +35,24 @@
     import navigation from '@/components/Navigation';
     import suppliers from '@/components/Suppliers';
     import customers from '@/components/Customers';
-    import bitHeader from '@/components/BitHeader';
     import donated from '@/components/Donated';
-    import {mapGetters} from 'vuex';
+    import keys from '@/components/Keys';
+    import events from '@/components/Events';
     import Vue from 'vue';
+    import Tabs from './Tabs';
 
     export default {
-        name: 'users',
+        name: 'Settings',
         data() {
             return {
                 localPath: '',
-                downloadPath: ''
+                downloadPath: '',
+                currentComponent: undefined
             };
         },
         components: {
             navigation,
-            bitHeader,
-            suppliers,
-            customers,
-            donated
+            Tabs
         },
         methods: {
             setDownloadPath() {
@@ -85,13 +70,16 @@
                 api.restartProcess();
             }
         },
-        computed: {
-            ...mapGetters([
-                'getEvents'
-            ])
-        },
         created() {
             this.getPath();
+
+            this.components = [
+                keys,
+                suppliers,
+                customers,
+                donated,
+                events
+            ];
         }
     };
 
@@ -105,6 +93,10 @@
 <style scoped lang="scss">
     @import "../../src/assets/scss/colors";
 
+    .settings {
+        height: 100%;
+    }
+
     .ui-input {
         border: 1px solid $color-gray-2;
 
@@ -113,8 +105,8 @@
         }
     }
 
-    ul {
-        list-style: none;
+    .tabs {
+        margin-top: 50px;
     }
 
     .title {
@@ -130,14 +122,4 @@
         margin: 10px 0;
     }
 
-    .events-title {
-        margin-top: 50px;
-        font-size: .8rem;
-    }
-
-    .event-list {
-        font-size: .8rem;
-        height: 400px;
-        overflow: auto;
-    }
 </style>
