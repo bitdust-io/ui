@@ -1,7 +1,7 @@
 <template>
     <div class="donated">
 
-        <div v-if="donated">
+        <div v-if="donated.customers">
 
             <div class="stats">
 
@@ -127,7 +127,7 @@
                 donated: {
                     customers: []
                 },
-                datacollection: null
+                datacollection: {}
             };
         },
         created() {
@@ -147,7 +147,7 @@
             },
             getLabels() {
                 const regex = /[^/]+$/;
-                let labels = this.donated.customers.map(item => item.idurl.match(regex, ''));
+                let labels = this.donated.customers.map(item => item.idurl.match(regex, '')) || [];
                 labels.push('Free Space');
                 return labels;
             },
