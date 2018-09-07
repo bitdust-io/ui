@@ -46,7 +46,10 @@
             };
         },
         methods: {
-            ...mapActions(['getApiFriends']),
+            ...mapActions([
+                'getApiFriends',
+                'getApiSharedFiles'
+            ]),
             closeNotification() {
                 this.hasNewFile = false;
             },
