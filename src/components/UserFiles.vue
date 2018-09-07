@@ -13,7 +13,7 @@
             <img src="../assets/images/loading.svg"
                  class="loading"/>
             <p>
-                Please wait, loading your files.
+                Loading...
             </p>
         </div>
         <div v-if="filteredList.length === 0 && !Files.filesErrorLoading"
