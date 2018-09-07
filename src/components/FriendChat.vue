@@ -13,7 +13,7 @@
                   class="close">close</span>
         </div>
 
-        <user-messages :from="currentFriend"/>
+        <user-messages :from="currentFriend" v-if="isFriendChatOpen"/>
 
         <div class="flex">
 
@@ -83,6 +83,16 @@
                 setTimeout(() => {
                     this.isSwitched = false;
                 }, 500);
+            },
+            closeFromEsq(ev) {
+                if (ev.code === 'Escape') {
+                    this.closeFriend();
+                }
+            },
+            sendFromEnter(ev) {
+                if (ev.code === 'Enter') {
+                    this.sendMessage();
+                }
             }
         },
         computed: {
@@ -111,16 +121,12 @@
             }
         },
         mounted() {
-            window.addEventListener('keyup', (ev) => {
-                if (ev.code === 'Escape') {
-                    this.closeFriend();
-                }
-            });
-            document.addEventListener('keydown', ev => {
-                if (ev.code === 'Enter') {
-                    this.sendMessage();
-                }
-            });
+            window.addEventListener('keyup', this.closeFromEsq);
+
+            document.addEventListener('keydown', this.sendFromEnter);
+        },
+        beforeDestroy() {
+            window.removeEventListener('keyup', this.closeFromEsq);
         }
     };
 </script>
