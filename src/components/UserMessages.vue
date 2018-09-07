@@ -5,14 +5,22 @@
              class="no-messages-here">
             No messages here...
         </div>
-
         <ul>
             <li v-for="item in userMessages"
-                :class="{'mine': item.sender !== currentFriend.global_id}">
-                <p class="message">{{item.data.message}}</p>
-                <p class="message-time">{{new Date(item.time*1000).toLocaleString()}}</p>
-                <div class="sender" v-if="item.sender === currentFriend.global_id">
-                    <user-first-letter :name="currentFriend.username"/>
+                :class="{'mine': item.sender.replace('master$', '') !== currentFriend.global_id}">
+
+                <p class="message">
+                    {{item.data.message}}
+                </p>
+
+                <p class="message-time">
+                    {{new Date(item.time*1000).toLocaleString()}}
+                </p>
+
+                <div class="sender"
+                     v-if="item.sender.replace('master$', '') === currentFriend.global_id">
+                    <user-first-letter
+                        :name="currentFriend.username"/>
                 </div>
             </li>
         </ul>
@@ -36,7 +44,10 @@
                 if (!this.getMessages) return;
                 let messages = this.getMessages.filter(message => {
                     if (!message || !this.currentFriend.global_id) return;
-                    return message.sender.toLowerCase().includes(this.currentFriend.global_id.toLowerCase()) ||
+
+                    let newMessage = message.sender.replace('master$', '');
+
+                    return newMessage.includes(this.currentFriend.global_id.toLowerCase()) ||
                         message.recipient.toLowerCase().includes(this.currentFriend.global_id.toLowerCase());
                 });
                 return messages.reverse();
@@ -71,10 +82,10 @@
     li {
         position: relative;
         max-width: 80%;
-        border-radius: 20px;
+        border-radius: 10px;
         list-style: none;
         font-size: 1.1rem;
-        padding: 6px 20px;
+        padding: 3px 16px;
         margin: 10px 10px 20px 20px;
         background: $color-white;
         box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.20);
@@ -90,7 +101,7 @@
         left: -30px;
         top: 24px;
         position: absolute;
-        transform: scale(.4);
+        transform: scale(.6);
         opacity: .4;
         filter: grayscale(100%);
     }
@@ -101,6 +112,6 @@
 
     .message-time {
         text-align: right;
-        font-size: .8rem;
+        font-size: .7rem;
     }
 </style>
