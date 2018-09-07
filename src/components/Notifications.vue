@@ -84,10 +84,9 @@
             getMessages(response) {
                 if (!response) return;
                 let newMessage;
-                response.some(message => {
+                response.forEach(message => {
                     newMessage = this.getFriends.find(friend => friend.global_id === message.sender);
                     if (!newMessage && (this.getIdentity.global_id !== message.sender)) this.newMessage = message;
-                    return !newMessage;
                 });
             }
         }
