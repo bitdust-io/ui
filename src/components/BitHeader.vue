@@ -42,6 +42,11 @@
         components: {
             UserIdentity,
             Notifications
+        },
+        watch: {
+            '$route'(to, from) {
+                this.visible = this.isVisible(to.name);
+            }
         }
     };
 </script>
