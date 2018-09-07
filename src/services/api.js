@@ -20,6 +20,19 @@ const Api = {
         return fetch(this.makeApiEndpoint('process/restart')).then(res => res.json());
     },
 
+    replaceSupplier(supplier) {
+        return fetch(this.makeApiEndpoint('supplier/replace'), {
+            method: 'DELETE',
+            body: JSON.stringify({
+                'index': supplier.index,
+                'position': supplier.position,
+                'idurl': supplier.idurl,
+                'global_id': supplier.global_id,
+                'id': supplier.id
+            })
+        }).then(res => res.json());
+    },
+
     removeFriend(id) {
         return fetch(this.makeApiEndpoint('friend/remove'), {
             method: 'DELETE',

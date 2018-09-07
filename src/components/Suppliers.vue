@@ -10,6 +10,8 @@
                       size="xxl"
                       :class="supplier.contact_status"/>
                 <p>{{supplier.global_id}}</p>
+                <span @click="replaceSupplier(supplier)"
+                      class="replace-supplier">replace</span>
             </li>
         </ul>
 
@@ -31,10 +33,20 @@
                 suppliers: []
             };
         },
+        methods: {
+            replaceSupplier(supplier) {
+                Api.replaceSupplier(supplier).then(resp => {
+                    this.getSuppliers();
+                });
+            },
+            getSuppliers() {
+                Api.getSuppliers().then(data => {
+                    this.suppliers = data.result;
+                });
+            }
+        },
         created() {
-            Api.getSuppliers().then(data => {
-                this.suppliers = data.result;
-            });
+            this.getSuppliers();
         },
         components: {
             Icon
@@ -45,7 +57,13 @@
 <style scoped lang="scss">
     @import "../../src/assets/scss/colors";
 
-    .suppliers {
+    .replace-supplier {
+        padding: 4px;
+        color: $color-white;
+        margin-left: 20px;
+        cursor: pointer;
+        font-size: .8rem;
+        background: $color-red;
     }
 
     ul {
