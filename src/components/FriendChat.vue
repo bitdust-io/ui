@@ -58,8 +58,8 @@
                 'addMessage'
             ]),
             sendMessage() {
+                if (this.message.length < 3) return;
                 this.isSending = true;
-                if (!this.message) return;
                 message.sendMessage({
                     message: this.message,
                     user: this.currentFriend
