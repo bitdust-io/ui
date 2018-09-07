@@ -21,15 +21,8 @@
                 visible: false
             };
         },
-        created() {
-            this.$watch(
-                function () {
-                    return this.$route;
-                },
-                function (route) {
-                    this.visible = this.isVisible(route.name);
-                }
-            );
+        mounted() {
+            this.visible = this.isVisible(this.$router.currentRoute.name);
         },
         computed: {
             ...mapGetters([
