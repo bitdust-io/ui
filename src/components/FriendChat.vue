@@ -122,11 +122,11 @@
         },
         mounted() {
             window.addEventListener('keyup', this.closeFromEsq);
-
-            document.addEventListener('keydown', this.sendFromEnter);
+            window.addEventListener('keydown', this.sendFromEnter);
         },
         beforeDestroy() {
             window.removeEventListener('keyup', this.closeFromEsq);
+            window.removeEventListener('keydown', this.sendFromEnter);
         }
     };
 </script>
