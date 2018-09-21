@@ -3,27 +3,45 @@
 
         <div v-if="userMessages.length === 0"
              class="no-messages-here">
-            No messages here...
+            No new messages here...
         </div>
-        <ul>
-            <li v-for="item in userMessages"
-                :class="{'mine': item.sender.replace('master$', '') !== currentFriend.global_id}">
+        <div class="messages">
+            <ul>
+                <li v-for="item in userMessages"
+                    :class="{'mine': item.sender.replace('master$', '') !== currentFriend.global_id}">
 
-                <p class="message">
-                    {{item.data.message}}
-                </p>
+                    <p class="message">
+                        {{item.data.message}}
+                    </p>
 
-                <p class="message-time">
-                    {{new Date(item.time*1000).toLocaleString()}}
-                </p>
+                    <p class="message-time">
+                        {{new Date(item.time*1000).toLocaleString()}}
+                    </p>
 
-                <div class="sender"
-                     v-if="item.sender.replace('master$', '') === currentFriend.global_id">
-                    <user-first-letter
-                        :name="currentFriend.username"/>
-                </div>
-            </li>
-        </ul>
+                    <div class="sender"
+                         v-if="item.sender.replace('master$', '') === currentFriend.global_id">
+                        <user-first-letter
+                            :name="currentFriend.username"/>
+                    </div>
+                </li>
+            </ul>
+            <div class="chat-history">
+                <h3>Older messages</h3>
+                <ul>
+                    <li v-for="message in oldMessages"
+                        :class="{'mine': message.doc.sender.glob_id.replace('master$', '') !== currentFriend.global_id}">
+
+                        <p class="message">
+                            {{message.doc.payload.data.message}}
+                        </p>
+
+                        <p class="message-time">
+                            {{new Date(message.doc.payload.time*1000).toLocaleString()}}
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
     </div>
 </template>
@@ -31,10 +49,24 @@
 <script>
     import {mapGetters} from 'vuex';
     import userFirstLetter from './UserFirstLetter';
+    import Api from '../services/api';
 
     export default {
         name: 'userMessages',
+        data() {
+            return {
+                history: [],
+                oldMessages: []
+            };
+        },
         components: {userFirstLetter},
+        methods: {
+            loadChatHistory() {
+                Api.getMessageHistoryForUser(this.currentFriend).then(data => {
+                    this.oldMessages = data.result;
+                });
+            }
+        },
         computed: {
             ...mapGetters([
                 'currentFriend',
@@ -52,6 +84,14 @@
                 });
                 return messages.reverse();
             }
+        },
+        mounted() {
+            this.loadChatHistory();
+        },
+        watch: {
+            currentFriend() {
+                this.loadChatHistory();
+            }
         }
     };
 </script>
@@ -64,7 +104,7 @@
         padding: 20px;
     }
 
-    ul {
+    .messages {
         height: 280px;
         overflow: auto;
         padding-bottom: 100px;
@@ -108,10 +148,17 @@
 
     .no-messages-here {
         font-size: .8rem;
+        margin-bottom: 20px;
     }
 
     .message-time {
         text-align: right;
         font-size: .7rem;
+    }
+
+    .chat-history {
+        h3 {
+            font-size: .8rem;
+        }
     }
 </style>
