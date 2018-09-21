@@ -1,5 +1,10 @@
 const Api = {
 
+    getMessageHistoryForUser(user) {
+        let query = 'id=' + user.global_id;
+        return fetch(this.makeApiEndpoint('message/history', query)).then(res => res.json());
+    },
+
     getKeys() {
         return fetch(this.makeApiEndpoint('key/list')).then(res => res.json());
     },
