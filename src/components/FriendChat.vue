@@ -93,6 +93,13 @@
                 if (ev.code === 'Enter') {
                     this.sendMessage();
                 }
+            },
+            focusOnInput() {
+                if (this.$refs.chat) {
+                    this.$nextTick(() => {
+                        this.$refs.chat.focus();
+                    });
+                }
             }
         },
         computed: {
@@ -107,11 +114,7 @@
                 if (response) {
                     this.resetOpenFriend();
                     this.switchUserChat();
-                    if (this.$refs.chat) {
-                        this.$nextTick(() => {
-                            this.$refs.chat.focus();
-                        });
-                    }
+                    this.focusOnInput();
                 }
             },
             'isFriendChatOpen': function (response) {
@@ -121,6 +124,7 @@
             }
         },
         mounted() {
+            this.focusOnInput();
             window.addEventListener('keyup', this.closeFromEsq);
             window.addEventListener('keydown', this.sendFromEnter);
         },
