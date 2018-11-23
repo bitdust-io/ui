@@ -14,7 +14,12 @@ module.exports = {
             2,
             'always'
         ],
-        'indent': 'off'
+        'indent': 'off',
+        'space-before-function-paren': [
+            'error', {'anonymous': 'ignore', 'named': 'never'}
+        ],
+        'generator-star-spacing': 0,
+        'object-curly-spacing': [0, 'always']
     },
     parserOptions: {
         parser: 'babel-eslint'

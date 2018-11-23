@@ -1,14 +1,39 @@
 <template>
     <div id="app">
+        <img alt="Vue logo" src="@/assets/logo.svg">
         <div id="nav">
-            <router-link to="/">Home</router-link>
-            |
-            <router-link to="/about">About</router-link>
+            <router-link v-for="(item, index) in items"
+                         :key="index" :to="item.path">
+                {{item.name}}
+            </router-link>
+
         </div>
         <router-view/>
+        {{connectionStatus}}
     </div>
 </template>
 
+<script>
+    import {mapGetters} from 'vuex';
+
+    export default {
+        name: 'App',
+        data() {
+            return {items: []};
+        },
+        computed: {
+            ...mapGetters(['connectionStatus'])
+        },
+        created() {
+            this.$router.options.routes.forEach(route => {
+                this.items.push({
+                    name: route.name,
+                    path: route.path
+                });
+            });
+        }
+    };
+</script>
 <style lang="scss">
     #app {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
