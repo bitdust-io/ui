@@ -1,4 +1,4 @@
-# bitdust-web-2
+# bitdust-web
 
 ## Project setup
 ```
