@@ -1,6 +1,8 @@
 {
-  "name": "bitdust-web-2",
+  "name": "bitdust-web",
   "version": "0.1.0",
+  "description": "Bitdust Web",
+  "author": "Renato Cardoso <re2005@gmail.com>",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
