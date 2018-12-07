@@ -4,19 +4,25 @@ module.exports = {
         node: true
     },
     'extends': [
-        'plugin:vue/essential',
+        'plugin:vue/strongly-recommended',
         '@vue/standard'
     ],
     rules: {
-        'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-        'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-        'semi': [
+        'no-console': 'off',
+        'no-debugger': 'off',
+        semi: [
             2,
             'always'
         ],
-        'indent': 'off',
+        indent: 'off',
+        'vue/script-indent': ['warn', 4, {
+            'baseIndent': 1
+        }],
+        'vue/html-indent': ['warn', 4, {
+            'baseIndent': 1
+        }],
         'space-before-function-paren': [
-            'error', {'anonymous': 'ignore', 'named': 'never'}
+            'error', {anonymous: 'ignore', named: 'never'}
         ],
         'generator-star-spacing': 0,
         'object-curly-spacing': [0, 'always']
