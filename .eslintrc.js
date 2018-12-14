@@ -4,7 +4,7 @@ module.exports = {
         node: true
     },
     'extends': [
-        'plugin:vue/strongly-recommended',
+        'plugin:vue/essential',
         '@vue/standard'
     ],
     rules: {
@@ -16,10 +16,10 @@ module.exports = {
         ],
         indent: 'off',
         'vue/script-indent': ['warn', 4, {
-            'baseIndent': 1
+            baseIndent: 1
         }],
         'vue/html-indent': ['warn', 4, {
-            'baseIndent': 1
+            baseIndent: 1
         }],
         'space-before-function-paren': [
             'error', {anonymous: 'ignore', named: 'never'}
