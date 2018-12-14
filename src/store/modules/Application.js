@@ -1,20 +1,28 @@
 const state = {
-    connectionStatus: {}
+    connectionStatus: {},
+    identity: {}
 };
 
 const getters = {
-    connectionStatus: state => state.connectionStatus
+    connectionStatus: state => state.connectionStatus,
+    getIdentity: state => state.identity
 };
 
 const mutations = {
     updateConnectionStatus(state, value) {
         state.connectionStatus = value;
+    },
+    updateIdentity(state, value) {
+        state.identity = value;
     }
 };
 
 const actions = {
     updateConnectionStatus({commit}, value) {
         commit('updateConnectionStatus', value);
+    },
+    updateIdentity({commit}, value) {
+        commit('updateIdentity', value);
     }
 };
 

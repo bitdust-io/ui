@@ -16,7 +16,7 @@ const Application = {
         }).catch(() => {
             apiNotResponding += 1;
             if (apiNotResponding > 5) {
-                Router.push('dead');
+                Router.push('/dead');
             }
             setTimeout(() => {
                 this.keepConnection();

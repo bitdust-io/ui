@@ -1,0 +1,37 @@
+$font-dir: "../fonts/";
+
+@mixin font-face($font-label, $font-path, $font-name, $type, $format, $style: normal, $weight: normal) {
+  @font-face {
+    font-family: $font-label;
+    src: url($font-path + $font-name + $type) format($format);
+    font-weight: $weight;
+    font-style: $style;
+  }
+}
+
+@include font-face("Segoe UI", $font-dir, "segoeui", ".ttf", "truetype", "normal", "normal");
+@include font-face("Metric-Bold", $font-dir, "kpn-metric-bold", ".otf", "opentype", "normal", "normal");
+
+/* ------------------------------------------------------------------------------------------------------------
+* Define main font styles
+*------------------------------------------------------------------------------------------------------------*/
+
+@mixin segoe_ui {
+  font-family: Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-weight: 400;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+}
+
+@mixin metric {
+  font-family: Metric-Bold, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-weight: 400;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+}
