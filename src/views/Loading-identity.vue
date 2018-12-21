@@ -12,7 +12,7 @@
 
 <script>
     import {mapGetters} from 'vuex';
-    import Icon from '@/components/Icon/Icon';
+    import Icon from '@/components/Globals/Icon';
 
     export default {
         name: 'Loading',
