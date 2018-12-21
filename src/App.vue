@@ -1,39 +1,20 @@
 <template>
     <div id="app">
-        <div id="nav">
-            <router-link v-for="(item, index) in items"
-                         :key="index"
-                         :to="item.path">
-                {{ item.name }}
-            </router-link>
-        </div>
+        <BitHeader/>
         <router-view/>
+        <Bubbles/>
     </div>
 </template>
 
 <script>
+    import BitHeader from '@/components/Globals/BitHeader';
+    import Bubbles from '@/components/Globals/Bubbles';
+
     export default {
         name: 'App',
-        created() {
-            this.items = [];
-            this.$router.options.routes.forEach(route => {
-                this.items.push({
-                    name: route.name,
-                    path: route.path
-                });
-            });
+        components: {
+            BitHeader,
+            Bubbles
         }
     };
 </script>
-<style lang="scss" scoped>
-    #nav {
-        padding: 30px;
-        a {
-            font-weight: bold;
-            color: #2c3e50;
-            &.router-link-exact-active {
-                color: red;
-            }
-        }
-    }
-</style>

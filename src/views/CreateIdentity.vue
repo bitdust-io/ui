@@ -82,7 +82,6 @@
 
                     Api.createIdentity(this.identityName).then(resp => {
                         this.isLoading = false;
-                        debugger;
                         if (resp.status === 'OK') {
                             this.$router.push('loading-identity');
                         } else {
@@ -100,12 +99,11 @@
 </script>
 
 <style scoped lang="scss">
-
     @import "../assets/scss/colors";
 
     h1 {
         color: $color-gray-1;
-        margin: 40px 0;
+        margin: 80px 0 40px;
     }
 
     h2 {
