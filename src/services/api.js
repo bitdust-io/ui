@@ -43,6 +43,16 @@ const Api = {
         }).then(res => res.json());
     },
 
+    async identityBackup() {
+        let {result} = await this.getPath();
+        return fetch(this.makeApiEndpoint('identity/backup'), {
+            method: 'POST',
+            body: JSON.stringify({
+                'destination_path': result[0].value + 'bitdust-private-key.txt'
+            })
+        }).then(res => res.json());
+    },
+
     addFriend(id) {
         return fetch(this.makeApiEndpoint('friend/add'), {
             method: 'POST',
@@ -197,7 +207,7 @@ const Api = {
         });
     },
 
-    getPath() {
+    async getPath() {
         return fetch(this.makeApiEndpoint('config/get/paths/restore')).then(res => res.json());
     },
 

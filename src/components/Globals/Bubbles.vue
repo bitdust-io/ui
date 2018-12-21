@@ -1,0 +1,87 @@
+<template>
+    <div class="bubbles">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</template>
+
+<style lang="scss" scoped>
+    @import "../../assets/scss/colors";
+
+    .bubbles {
+        z-index: -1;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow-y: scroll;
+        pointer-events: none;
+
+        div {
+            width: 60px;
+            height: 60px;
+            position: absolute;
+            border-radius: 100%;
+            background: $color-purple-1;
+            transition: all 0.2s cubic-bezier(0.1, 1, 0.1, 3);
+
+            &:hover {
+                transform: scale(2.1) !important;
+            }
+
+            &:nth-child(1) {
+                transform: scale(0.6);
+                opacity: 0.2;
+                left: 25%;
+                animation: moveclouds 15s linear infinite, sideWays 4s ease-in-out infinite alternate;
+            }
+            &:nth-child(2) {
+                left: 10%;
+                transform: scale(1.6);
+                opacity: 0.2;
+                animation: moveclouds 25s linear infinite, sideWays 5s ease-in-out infinite alternate;
+            }
+            &:nth-child(3) {
+                left: 85%;
+                transform: scale(1.8);
+                opacity: 0.3;
+                animation: moveclouds 20s linear infinite, sideWays 4s ease-in-out infinite alternate;
+            }
+            &:nth-child(4) {
+                left: 60%;
+                transform: scale(0.9);
+                opacity: 0.25;
+                animation: moveclouds 18s linear infinite, sideWays 2s ease-in-out infinite alternate;
+            }
+            &:nth-child(5) {
+                left: 40%;
+                transform: scale(1.3);
+                opacity: 0.3;
+                animation: moveclouds 7s linear infinite, sideWays 1s ease-in-out infinite alternate;
+            }
+        }
+    }
+
+    @-webkit-keyframes moveclouds {
+        0% {
+            top: 1200px;
+        }
+        100% {
+            top: -100px;
+        }
+    }
+
+    @-webkit-keyframes sideWays {
+        0% {
+            margin-left: 0px;
+        }
+        100% {
+            margin-left: 50px;
+        }
+    }
+
+</style>
