@@ -45,7 +45,7 @@
 
 <script>
     import Api from '../services/api';
-    import Icon from '@/components/Icon/Icon';
+    import Icon from '@/components/Globals/Icon';
 
     export default {
         name: 'create-identity',
