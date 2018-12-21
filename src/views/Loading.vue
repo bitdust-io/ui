@@ -1,5 +1,5 @@
 <template>
-    <div class="loading intro-background">
+    <div class="loading">
         <div class="logo-wrapper">
             <icon name="logo" class="logo"/>
             <icon name="loading"
@@ -17,6 +17,9 @@
 
     export default {
         name: 'Loading',
+        created() {
+            document.getElementsByTagName('html')[0].classList.add('intro-background');
+        },
         computed: {
             ...mapGetters([
                 'connectionStatus'
@@ -57,23 +60,12 @@
     @import "../assets/scss/_colors.scss";
     @import "../assets/scss/includes.scss";
 
-    .loading {
-        height: 100%;
-        margin-top: 40px;
-    }
-
     .logo-wrapper {
         margin: 40px auto;
         position: relative;
         width: 140px;
         height: 260px;
         display: block;
-    }
-
-    .rotating {
-        animation: rotating 2s linear infinite;
-        position: absolute;
-        fill: $color-blue-1;
     }
 
     .logo {
@@ -87,17 +79,4 @@
         fill: $color-blue-1;
     }
 
-    @keyframes rotating {
-        to {
-            transform: rotate(360deg);
-        }
-    }
-
-    h1 {
-        text-align: center;
-        display: block;
-        color: $color-blue-1;
-        @include metric;
-        font-size: 5rem;
-    }
 </style>
