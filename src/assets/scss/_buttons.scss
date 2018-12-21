@@ -1,0 +1,25 @@
+@import "colors";
+@import "fonts";
+
+.ui-button {
+  font-size: 32px;
+  color: $color-white;
+  letter-spacing: 0;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+
+  &.primary {
+    background: $color-purple-1;
+  }
+
+  &.slim {
+    border: 1px solid $color-gray-2;
+  }
+
+  &:hover {
+    opacity: .8;
+  }
+}
