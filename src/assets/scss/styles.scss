@@ -1,5 +1,6 @@
 @import './fonts';
 @import './colors';
+@import './buttons';
 
 html, body, #app {
   height: 100%;
@@ -41,4 +42,26 @@ body {
     content: '';
     position: absolute;
   }
+}
+
+
+h1 {
+  text-align: center;
+  display: block;
+  color: $color-blue-1;
+  @include metric;
+  font-size: 5rem;
+}
+
+@keyframes rotating {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+.rotating {
+  animation: rotating 2s linear infinite;
+  position: absolute;
+  fill: $color-blue-1;
 }
