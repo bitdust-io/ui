@@ -32,7 +32,7 @@
                 </button>
 
                 <router-link to="/recover-identity"
-                             class="recover">Recover identity?
+                             class="text-link">Recover identity?
                 </router-link>
             </div>
 
@@ -99,7 +99,7 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../assets/scss/colors";
+    @import "../assets/scss/includes.scss";
 
     h1 {
         color: $color-gray-1;
@@ -161,14 +161,6 @@
     .note {
         font-size: 0.9rem;
         color: $color-gray-1;
-    }
-
-    .recover {
-        text-decoration: none;
-        color: $color-gray-1;
-        &:hover {
-            color: $color-blue-1;
-        }
     }
 
     .is-loading {

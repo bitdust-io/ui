@@ -57,7 +57,6 @@
 </script>
 
 <style lang="scss" scoped>
-    @import "../assets/scss/_colors.scss";
     @import "../assets/scss/includes.scss";
 
     .logo-wrapper {

@@ -48,5 +48,6 @@
 
     .user-name {
         text-transform: capitalize;
+        color: $color-white;
     }
 </style>
