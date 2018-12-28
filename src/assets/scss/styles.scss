@@ -44,7 +44,6 @@ body {
   }
 }
 
-
 h1 {
   text-align: center;
   display: block;
@@ -59,9 +58,18 @@ h1 {
   }
 }
 
-
 .rotating {
   animation: rotating 2s linear infinite;
   position: absolute;
   fill: $color-blue-1;
+}
+
+.text-link {
+  display: block;
+  text-decoration: none;
+  color: $color-gray-1;
+
+  &:hover {
+    color: $color-blue-1;
+  }
 }

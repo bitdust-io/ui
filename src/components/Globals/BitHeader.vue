@@ -76,7 +76,6 @@
         height: 100px;
         display: flex;
         justify-content: space-between;
-
         background-image: linear-gradient(-120deg, $color-blue-1 0%, $color-purple-1 100%);
 
         .header-right {
@@ -92,6 +91,7 @@
             border: 1px solid $color-white;
             border-radius: 50%;
             margin-left: 10px;
+            margin-top: 4px;
         }
 
         .OK {

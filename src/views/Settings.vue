@@ -16,5 +16,5 @@
                 Api.identityBackup();
             }
         }
-    }
+    };
 </script>
