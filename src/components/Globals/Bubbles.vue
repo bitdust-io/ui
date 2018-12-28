@@ -46,6 +46,7 @@
                 animation: moveclouds 25s linear infinite, sideWays 5s ease-in-out infinite alternate;
             }
             &:nth-child(3) {
+                background: $color-blue-2;
                 left: 85%;
                 transform: scale(1.8);
                 opacity: 0.3;
@@ -58,6 +59,7 @@
                 animation: moveclouds 18s linear infinite, sideWays 2s ease-in-out infinite alternate;
             }
             &:nth-child(5) {
+                background: $color-blue-2;
                 left: 40%;
                 transform: scale(1.3);
                 opacity: 0.3;
