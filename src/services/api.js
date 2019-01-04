@@ -54,12 +54,9 @@ const Api = {
     },
 
     addFriend(id) {
-        return fetch(this.makeApiEndpoint('friend/add'), {
-            method: 'POST',
-            body: JSON.stringify({
-                'idurl': id
-            })
-        }).then(res => res.json());
+        return this.makePost('friend/add', {
+            'idurl': id
+        });
     },
 
     observeUser(user) {
@@ -79,40 +76,29 @@ const Api = {
     },
 
     serviceStop(serviceId) {
-        return fetch(this.makeApiEndpoint('service/stop' + serviceId), {
-            method: 'POST'
-        }).then(res => res.json());
+        return this.makePost('service/stop' + serviceId);
     },
 
     serviceStart(serviceId) {
-        return fetch(this.makeApiEndpoint('service/start' + serviceId), {
-            method: 'POST'
-        }).then(res => res.json());
+        return this.makePost('service/start' + serviceId);
     },
 
     recoverIdentityFile(file) {
-        return fetch(this.makeApiEndpoint('identity/recover'), {
-            method: 'POST',
-            body: JSON.stringify({
-                'private_key_local_file': file
-            })
-        }).then(res => res.json());
+        return this.makePost('identity/recover', {
+            'private_key_local_file': file
+        });
     },
 
     recoverIdentityKey(key) {
-        return fetch(this.makeApiEndpoint('identity/recover'), {
-            method: 'POST',
-            body: JSON.stringify({
-                'private_key_source': key
-            })
-        }).then(res => res.json());
+        return this.makePost('identity/recover', {
+            'private_key_source': key
+        });
     },
 
     createIdentity(username) {
-        return fetch(this.makeApiEndpoint('identity/create'), {
-            method: 'POST',
-            body: JSON.stringify({'username': username})
-        }).then(res => res.json());
+        return this.makePost('identity/create', {
+            'username': username
+        });
     },
 
     getIdentity() {
@@ -120,12 +106,9 @@ const Api = {
     },
 
     eventsSend(eventId) {
-        return fetch(this.makeApiEndpoint('event/send' + eventId), {
-            method: 'POST',
-            body: JSON.stringify({
-                'request': 'hello'
-            })
-        }).then(res => res.json());
+        return this.makePost('event/send' + eventId, {
+            'request': 'hello'
+        });
     },
 
     eventsListen() {
@@ -133,21 +116,14 @@ const Api = {
     },
 
     shareFile(file, friend) {
-        return fetch(this.makeApiEndpoint('share/grant'), {
-            method: 'PUT',
-            body: JSON.stringify(
-                {
-                    'trusted_global_id': friend.global_id,
-                    'key_id': file.key_id
-                }
-            )
-        }).then(res => res.json());
+        return this.makePut('share/grant', {
+            'trusted_global_id': friend.global_id,
+            'key_id': file.key_id
+        });
     },
 
     createFileShareKey() {
-        return fetch(this.makeApiEndpoint('share/create'), {
-            method: 'POST'
-        }).then(res => res.json());
+        return this.makePost('share/create');
     },
 
     getSharedKeys() {
@@ -164,46 +140,31 @@ const Api = {
 
     getFileInfo(file) {
         let query = 'remote_path=' + file.key_id + ':' + file.path;
-        return fetch(this.makeApiEndpoint('file/info', query)
-        ).then(res => res.json());
+        return this.makeGet('file/info', query);
     },
 
     createPath(pathName, keyId) {
-        return fetch(this.makeApiEndpoint('file/create'), {
-            method: 'POST',
-            body: JSON.stringify(
-                {'remote_path': keyId + ':' + pathName}
-            )
-        }).then(res => res.json());
+        return this.makePost('file/create', {
+            'remote_path': keyId + ':' + pathName
+        });
     },
 
     createFile(remotePath, filePath) {
-        return fetch(this.makeApiEndpoint('file/upload/start'), {
-            method: 'POST',
-            body: JSON.stringify({
-                'remote_path': remotePath,
-                'local_path': filePath
-            })
-        }).then(res => res.json());
+        return this.makePost('file/upload/start', {
+            'remote_path': remotePath,
+            'local_path': filePath
+        });
     },
 
     deleteFile(remotePath) {
-        return fetch(this.makeApiEndpoint('file/delete'), {
-            method: 'delete',
-            body: JSON.stringify({
-                'remote_path': remotePath
-            })
+        return this.makeDelete('file/delete', {
+            'remote_path': remotePath
         });
     },
 
     downloadFile(filePath) {
-        return this.getPath().then(response => {
-            return fetch(this.makeApiEndpoint('file/download/start'), {
-                method: 'POST',
-                body: JSON.stringify({
-                    'remote_path': filePath
-                })
-            });
+        return this.makePost('file/download/start', {
+            'remote_path': filePath
         });
     },
 
@@ -212,12 +173,9 @@ const Api = {
     },
 
     setPath(filePath) {
-        return fetch(this.makeApiEndpoint('config/set/paths/restore'), {
-            method: 'POST',
-            body: JSON.stringify({
-                'value': filePath
-            })
-        }).then(res => res.json());
+        return this.makePost('config/set/paths/restore', {
+            'value': filePath
+        });
     },
 
     makeApiEndpoint(service, params) {
@@ -226,6 +184,27 @@ const Api = {
             return this.constants.API_URL + ':' + this.constants.PORT + '/' + service + '/' + this.constants.API_VERSION + '?' + params;
         }
         return this.constants.API_URL + ':' + this.constants.PORT + '/' + service + '/' + this.constants.API_VERSION;
+    },
+
+    makePut(config, body) {
+        return fetch(this.makeApiEndpoint(config), {
+            method: 'PUT',
+            body: JSON.stringify(body)
+        }).then(res => res.json());
+    },
+
+    makeDelete(config, body) {
+        return fetch(this.makeApiEndpoint(config), {
+            method: 'DELETE',
+            body: JSON.stringify(body)
+        }).then(res => res.json());
+    },
+
+    makePost(config, body) {
+        return fetch(this.makeApiEndpoint(config), {
+            method: 'POST',
+            body: JSON.stringify(body)
+        }).then(res => res.json());
     },
 
     makeGet(config, query) {

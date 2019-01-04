@@ -35,7 +35,7 @@
                           name="privateKey"
                           id="privateKey"
                           placeholder="Paste here...">
-            </textarea>
+                </textarea>
 
                 <div v-if="error"
                      class="error">

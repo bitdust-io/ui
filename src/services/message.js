@@ -14,7 +14,7 @@ const Message = {
         }).then(res => res.json());
     },
     getMessages() {
-        return fetch(api.makeApiEndpoint('message/receive/electron_ui_consumer')).then(res => res.json());
+        return api.makeGet('message/receive/electron_ui_consumer');
     }
 };
 
