@@ -2,27 +2,27 @@ const Api = {
 
     getMessageHistoryForUser(user) {
         let query = 'id=' + user.global_id;
-        return fetch(this.makeApiEndpoint('message/history', query)).then(res => res.json());
+        return this.makeGet('message/history', query);
     },
 
     getKeys() {
-        return fetch(this.makeApiEndpoint('key/list')).then(res => res.json());
+        return this.makeGet('key/list');
     },
 
     getDonated() {
-        return fetch(this.makeApiEndpoint('space/donated')).then(res => res.json());
+        return this.makeGet('space/donated');
     },
 
     getCustomers() {
-        return fetch(this.makeApiEndpoint('customer/list')).then(res => res.json());
+        return this.makeGet('customer/list');
     },
 
     getSuppliers() {
-        return fetch(this.makeApiEndpoint('supplier/list')).then(res => res.json());
+        return this.makeGet('supplier/list');
     },
 
     restartProcess() {
-        return fetch(this.makeApiEndpoint('process/restart')).then(res => res.json());
+        return this.makeGet('process/restart');
     },
 
     replaceSupplier(supplier) {
@@ -63,19 +63,19 @@ const Api = {
     },
 
     observeUser(user) {
-        return fetch(this.makeApiEndpoint('user/observe/' + user, 'attempts=4')).then(res => res.json());
+        return this.makeGet('user/observe/' + user, 'attempts=4');
     },
 
     searchUser(user) {
-        return fetch(this.makeApiEndpoint('user/search/' + user)).then(res => res.json());
+        return this.makeGet('user/search/' + user);
     },
 
     userList() {
-        return fetch(this.makeApiEndpoint('friend/list')).then(res => res.json());
+        return this.makeGet('friend/list');
     },
 
     networkConnected() {
-        return fetch(this.makeApiEndpoint('network/connected')).then(res => res.json());
+        return this.makeGet('network/connected');
     },
 
     serviceStop(serviceId) {
@@ -116,7 +116,7 @@ const Api = {
     },
 
     getIdentity() {
-        return fetch(this.makeApiEndpoint('identity/get')).then(res => res.json());
+        return this.makeGet('identity/get');
     },
 
     eventsSend(eventId) {
@@ -129,7 +129,7 @@ const Api = {
     },
 
     eventsListen() {
-        return fetch(this.makeApiEndpoint('event/listen/electron')).then(res => res.json());
+        return this.makeGet('event/listen/electron');
     },
 
     shareFile(file, friend) {
@@ -151,15 +151,15 @@ const Api = {
     },
 
     getSharedKeys() {
-        return fetch(this.makeApiEndpoint('share/list')).then(res => res.json());
+        return this.makeGet('share/list');
     },
 
     getSharedFiles() {
-        return fetch(this.makeApiEndpoint('file/list', 'all_customers=1')).then(res => res.json());
+        return this.makeGet('file/list', 'all_customers=1');
     },
 
     getFiles() {
-        return fetch(this.makeApiEndpoint('file/list')).then(res => res.json());
+        return this.makeGet('file/list');
     },
 
     getFileInfo(file) {
@@ -208,7 +208,7 @@ const Api = {
     },
 
     async getPath() {
-        return fetch(this.makeApiEndpoint('config/get/paths/restore')).then(res => res.json());
+        return this.makeGet('config/get/paths/restore');
     },
 
     setPath(filePath) {
@@ -226,6 +226,10 @@ const Api = {
             return this.constants.API_URL + ':' + this.constants.PORT + '/' + service + '/' + this.constants.API_VERSION + '?' + params;
         }
         return this.constants.API_URL + ':' + this.constants.PORT + '/' + service + '/' + this.constants.API_VERSION;
+    },
+
+    makeGet(config, query) {
+        return fetch(this.makeApiEndpoint(config, query)).then(res => res.json());
     }
 };
 

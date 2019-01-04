@@ -7,21 +7,24 @@ let apiNotResponding = 0;
 
 const Application = {
 
-    keepConnection() {
-        Api.networkConnected().then(resp => {
-            store.commit('updateConnectionStatus', resp);
-            setTimeout(() => {
-                this.keepConnection();
-            }, 1000);
-        }).catch(() => {
+    bootstrap() {
+        this.keepConnection();
+    },
+
+    async keepConnection() {
+        try {
+            const status = await Api.networkConnected();
+            store.commit('updateConnectionStatus', status);
+        } catch (e) {
             apiNotResponding += 1;
             if (apiNotResponding > 5) {
                 Router.push('/dead');
             }
-            setTimeout(() => {
-                this.keepConnection();
-            }, 1000);
-        });
+        }
+
+        setTimeout(() => {
+            this.keepConnection();
+        }, 1000);
     },
 
     eventsListen() {
