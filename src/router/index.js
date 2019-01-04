@@ -5,6 +5,7 @@ import CreateIdentity from '../views/CreateIdentity';
 import Files from '../views/Files';
 import RecoverIdentity from '../views/Recover-identity';
 import LoadingIdentity from '../views/Loading-identity';
+import OnboardingSteps from '../components/onboarding/onboarding';
 import Friend from '../views/Friend';
 import Dead from '../views/Dead';
 import Settings from '../views/Settings';
@@ -36,6 +37,11 @@ export default new Router({
             path: '/loading-identity',
             name: 'loading-identity',
             component: LoadingIdentity
+        },
+        {
+            path: '/onboarding-steps',
+            name: 'onboarding-steps',
+            component: OnboardingSteps
         },
         {
             path: '/files',
