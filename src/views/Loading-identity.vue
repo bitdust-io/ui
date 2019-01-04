@@ -30,7 +30,7 @@
         watch: {
             connectionStatus(response) {
                 if (response.status === 'OK') {
-                    this.$router.push('/files');
+                    this.$router.push('/onboarding');
                 }
             }
         }
