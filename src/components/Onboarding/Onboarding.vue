@@ -6,10 +6,10 @@
             <p v-html="this.steps[this.currentStep].content"></p>
         </div>
         <div class="navigation">
-            <a class="skip" @click="skipOnboardingSteps()">
+            <a class="skip" @click="skipOnboardingSteps">
                 <span>Skip</span>
             </a>
-            <a class="back" v-if="isPreviousStepEnabled" @click="navigateToPreviousStep()">
+            <a class="back" :disabled="isPreviousStepEnabled" @click="navigateToPreviousStep()">
                 <span>
                     <span class="arrow arrow-left"></span> Previous
                 </span>
@@ -24,8 +24,10 @@
 </template>
 
 <script>
+    import Router from '@/router';
+
     export default {
-        name: 'onboarding-steps',
+        name: 'Onboarding',
         props: {},
         data() {
             return {
@@ -82,9 +84,7 @@
         },
         methods: {
             skipOnboardingSteps() {
-                // todo: handle skip logic.
-                // should navigate away from the onboarding view.
-                // save the user skip action (so that you don't show onboarding view again).
+                Router.push('/files');
             },
             navigateToNextStep() {
                 if (this.currentStep < this.steps.length - 1) {
@@ -108,18 +108,23 @@
         background-repeat: no-repeat;
         background-size: contain;
     }
+
     .step1 {
         background-image: url('../../assets/icons/onboarding/step1.svg');
     }
+
     .step2 {
         background-image: url('../../assets/icons/onboarding/step2.svg');
     }
+
     .step3 {
         background-image: url('../../assets/icons/onboarding/step3.svg');
     }
+
     .step4 {
         background-image: url('../../assets/icons/onboarding/step4.svg');
     }
+
     .step5 {
         background-image: url('../../assets/icons/onboarding/step5.svg');
     }
