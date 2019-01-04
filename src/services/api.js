@@ -26,31 +26,22 @@ const Api = {
     },
 
     replaceSupplier(supplier) {
-        return fetch(this.makeApiEndpoint('supplier/replace'), {
-            method: 'DELETE',
-            body: JSON.stringify({
-                'position': supplier.position
-            })
-        }).then(res => res.json());
+        return this.makeDelete('supplier/replace', {
+            'position': supplier.position
+        });
     },
 
     removeFriend(id) {
-        return fetch(this.makeApiEndpoint('friend/remove'), {
-            method: 'DELETE',
-            body: JSON.stringify({
-                'global_id': id
-            })
-        }).then(res => res.json());
+        return this.makeDelete('friend/remove', {
+            'global_id': id
+        });
     },
 
     async identityBackup() {
         let {result} = await this.getPath();
-        return fetch(this.makeApiEndpoint('identity/backup'), {
-            method: 'POST',
-            body: JSON.stringify({
-                'destination_path': result[0].value + 'bitdust-private-key.txt'
-            })
-        }).then(res => res.json());
+        return this.makePost('identity/backup', {
+            'destination_path': result[0].value + 'bitdust-private-key.txt'
+        });
     },
 
     addFriend(id) {
