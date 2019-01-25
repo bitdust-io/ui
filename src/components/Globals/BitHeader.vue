@@ -4,7 +4,9 @@
         <div id="nav">
             <router-link v-for="(item, index) in items"
                          :key="index"
-                         :to="item.path">
+                         :to="item.path"
+                         exact-active-class="active"
+                         :class="{'active': childActive(item.path)}">
                 {{ item.name }}
             </router-link>
 
@@ -44,7 +46,10 @@
         computed: {
             ...mapGetters([
                 'connectionStatus'
-            ])
+            ]),
+            childActive() {
+                return menu => menu.indexOf(this.$route.name) > -1;
+            }
         },
         methods: {
             isVisible(name) {
@@ -107,7 +112,7 @@
 
         a {
             color: $color-white;
-            &.router-link-exact-active, &.router-link-exact-active.router-link-active {
+            &.active {
                 color: red;
             }
         }

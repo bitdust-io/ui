@@ -1,97 +1,87 @@
 <template>
     <div class="friend">
-        <div class="container">
-            <friend-chat/>
-            <div class="content">
+        <div class="menu">
 
-                <ul class="sub-menu">
-                    <li :class="{'active': (activeTab ==='myFriends')}"
-                        @click="setMenuActive('myFriends')">MY FRIENDS
-                    </li>
-                    <li class="separator"></li>
-                    <li :class="{'active': (activeTab ==='addFriends')}"
-                        @click=" setMenuActive('addFriends')">SEARCH OTHER USERS
+            <h2 @click="openSearch">
+                Search other users
+            </h2>
+
+            <ul class="friends-list">
+                <li v-for="(friend, index) in getFriends"
+                    :key="index">
+                    <router-link
+                        :to="{ name: 'friend', params: { id: friend.username }}">
+                        {{friend.username}}
+                    </router-link>
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="main">
+
+            <friend-chat :current-friend="getCurrentFriend"
+                         v-if="getCurrentFriend"/>
+            <div v-else>
+                Please select a friend to chat !
+            </div>
+
+
+            <div class="search" v-if="isSearchOpen">
+
+                <label for="search">
+                    Search by name:
+                </label>
+
+                <input v-model="search"
+                       id="search"/>
+
+                <button class="ui-button primary"
+                        @click="searchUser">Search
+                </button>
+
+                <button class="ui-button slim"
+                        @click="closeSearch">Close
+                </button>
+
+                <div v-if="addFriendResponse"
+                     class="add-friend-response">
+                        <span @click="addFriendResponse = null"
+                              class="close">X</span>
+                    {{addFriendResponse.result[0]}}
+                </div>
+
+                <ul class="friends-list">
+                    <li v-for="result in searchResults"
+                        :key="result.nickname">
+                        <div v-if="result.result === 'exist'">
+                            <span class="icon-add" @click="addFriend(result.idurl)"></span>
+                            <div>
+                                <p>{{result.nickname}}</p>
+                                <p>{{result.idurl}}</p>
+                            </div>
+                        </div>
+                        <div v-if="result.result === 'not exist'">
+                            <h4>
+                                No results for
+                            </h4>
+                            <p>{{result.nickname}}</p>
+                        </div>
                     </li>
                 </ul>
 
-                <div v-show="this.activeTab === 'myFriends'">
-                    <ul class="friends-list">
-                        <li v-for="(friend, index) in getFriends"
-                            :key="index"
-                            @click="openFriend(friend)"
-                            :class="{'online' : friend.contact_status === 'online'}">
-
-                            <user-first-letter :name="friend.username"/>
-
-                            {{friend.username}}
-
-                            <friend-message-counter v-bind:friend="friend"/>
-
-                            <div v-if="friend.unread"
-                                 class="messages">
-                                {{friend.messages.length}}
-                            </div>
-
-                            <div class="icon-chat"
-                                 v-if="currentFriend.global_id === friend.global_id"></div>
-
-                        </li>
-                    </ul>
-                </div>
-
-                <div v-show="this.activeTab === 'addFriends'">
-
-                    <label for="search"
-                           class="search">
-                        Search by name:
-                    </label>
-
-                    <input v-model="search"
-                           id="search"/>
-
-                    <button class="ui-button primary"
-                            @click="searchUser">Search
-                    </button>
-
-                    <div v-if="addFriendResponse"
-                         class="add-friend-response">
-                        <span @click="addFriendResponse = null"
-                              class="close">X</span>
-                        {{addFriendResponse.result[0]}}
-                    </div>
-
+                <div v-if="observeSearchAlias.length > 1">
+                    <h2>Other results</h2>
                     <ul class="friends-list">
                         <li v-for="result in searchResults"
                             :key="result.nickname">
-                            <div v-if="result.result === 'exist'">
-                                <span class="icon-add" @click="addFriend(result.idurl)"></span>
-                                <div>
-                                    <p>{{result.nickname}}</p>
-                                    <p>{{result.idurl}}</p>
-                                </div>
-                            </div>
-                            <div v-if="result.result === 'not exist'">
-                                <h4>
-                                    No results for
-                                </h4>
+                            <span class="icon-add" @click="addFriend(result.idurl)"></span>
+                            <div>
                                 <p>{{result.nickname}}</p>
+                                <p>{{result.idurl}}</p>
                             </div>
                         </li>
                     </ul>
-
-                    <div v-if="observeSearchAlias.length > 1">
-                        <h2>Other results</h2>
-                        <ul class="friends-list">
-                            <li v-for="result in searchResults"
-                                :key="result.nickname">
-                                <span class="icon-add" @click="addFriend(result.idurl)"></span>
-                                <div>
-                                    <p>{{result.nickname}}</p>
-                                    <p>{{result.idurl}}</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
             </div>
         </div>
@@ -102,14 +92,13 @@
     import {mapGetters, mapActions} from 'vuex';
     import api from '../services/api';
     import FriendChat from '../components/Friend/FriendChat';
-    import friendMessageCounter from '../components/Friend/FriendMessagesCounter';
-    import userFirstLetter from '../components/Globals/UserFirstLetter';
 
     export default {
         name: 'Friend',
         data() {
             return {
                 activeTab: 'myFriends',
+                isSearchOpen: false,
                 search: '',
                 searchResults: '',
                 observeSearchAlias: [],
@@ -117,24 +106,27 @@
             };
         },
         components: {
-            FriendChat,
-            friendMessageCounter,
-            userFirstLetter
+            FriendChat
         },
         computed: {
             ...mapGetters([
                 'getFriends',
-                'getMessages',
-                'currentFriend'
-            ])
+                'getLastFriend'
+            ]),
+            getCurrentFriend() {
+                return this.getFriends.find(friend => friend.username === this.$route.params.id);
+            }
         },
         methods: {
             ...mapActions([
                 'getApiFriends',
-                'openFriend'
+                'updateLastFriend'
             ]),
-            setMenuActive(menu) {
-                this.activeTab = menu;
+            openSearch() {
+                this.isSearchOpen = true;
+            },
+            closeSearch() {
+                this.isSearchOpen = false;
             },
             searchUser() {
                 api.searchUser(this.search).then(resp => {
@@ -160,6 +152,16 @@
         },
         created() {
             this.getApiFriends();
+            if (!this.getCurrentFriend && this.getLastFriend) {
+                this.$router.push({name: 'friend', params: {id: this.getLastFriend.username}});
+            }
+        },
+        watch: {
+            getCurrentFriend(friend) {
+                if (friend) {
+                    this.updateLastFriend(friend);
+                }
+            }
         }
     };
 </script>
@@ -167,44 +169,43 @@
 <style lang="scss" scoped>
     @import "../assets/scss/includes.scss";
 
-    .add-friend-response {
-        font-size: .8em;
-        margin: 25px 0;
-        padding: 15px;
-        background: $color-blue-2;
-        display: block;
+    .friend {
+        display: flex;
+        justify-content: space-between;
+        height: 100%;
+    }
 
-        .close {
-            background: $color-white;
-            padding: 5px 10px;
-            cursor: pointer;
-            margin-right: 10px;
-            &:hover {
-                opacity: 0.6;
-            }
-        }
+    .menu {
+        background: $color-gray-3;
+        width: 300px;
+    }
+
+    .main {
+        flex: 1;
     }
 
     .search {
-        font-size: .9rem;
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, .9);
+        padding: 50px;
+
     }
 
-    .ui-button {
-        font-size: 1rem;
-        padding: 10px 15px;
-        vertical-align: top;
-    }
+    .icon-add {
+        cursor: pointer;
+        margin-right: 15px;
+        float: left;
+        width: 30px;
+        height: 30px;
+        background: url("../assets/icons/icon-add.svg") center no-repeat;
+        background-size: 24px;
 
-    input {
-        border: 1px solid $color-gray-2;
-        background: $color-white;
-        box-shadow: 0 4px 13px 0 rgba(0, 0, 0, 0.05);
-        border-radius: 4px;
-        padding: 6px;
-        font-size: .8rem;
-
-        &::placeholder {
-            color: $color-gray-2;
+        &:hover {
+            opacity: .6
         }
     }
 
@@ -233,39 +234,4 @@
         }
     }
 
-    .icon-add {
-        cursor: pointer;
-        margin-right: 15px;
-        float: left;
-        width: 30px;
-        height: 30px;
-        background: url("../assets/icons/icon-add.svg") center no-repeat;
-        background-size: 24px;
-
-        &:hover {
-            opacity: .6
-        }
-    }
-
-    .icon-chat {
-        right: 0;
-        top: 20px;
-        position: absolute;
-        opacity: 0.6;
-    }
-
-    .online {
-        position: relative;
-
-        &:before {
-            left: 10px;
-            top: 24px;
-            position: absolute;
-            content: '';
-            width: 12px;
-            height: 12px;
-            background: $color-green;
-            border-radius: 100%;
-        }
-    }
 </style>
