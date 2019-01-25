@@ -53,6 +53,11 @@
 
     export default {
         name: 'userMessages',
+        props: {
+            currentFriend: {
+                type: Object
+            }
+        },
         data() {
             return {
                 history: [],
@@ -69,7 +74,6 @@
         },
         computed: {
             ...mapGetters([
-                'currentFriend',
                 'getMessages'
             ]),
             userMessages() {
