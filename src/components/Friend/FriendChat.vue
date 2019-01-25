@@ -1,6 +1,5 @@
 <template>
-    <div class="friend"
-         :class="{open: isFriendChatOpen, switch: isSwitched}">
+    <div class="friend-chat">
 
         <div class="friend-header">
             <div>
@@ -9,21 +8,19 @@
             </div>
             <span @click="removeFriend(currentFriend.global_id)"
                   class="remove">remove</span>
-            <span @click="closeFriend"
-                  class="close">close</span>
         </div>
 
-        <user-messages :from="currentFriend" v-if="isFriendChatOpen"/>
+        <user-messages :current-friend="currentFriend"/>
 
         <div class="flex">
 
-        <textarea v-model="message"
-                  ref="chat"
-                  class="chat-input"
-                  :disabled="isSending"
-                  :class="{'icon-loading': isSending}"
-                  rows="1">
-        </textarea>
+            <textarea v-model="message"
+                      ref="chat"
+                      class="chat-input"
+                      :disabled="isSending"
+                      :class="{'icon-loading': isSending}"
+                      rows="1">
+            </textarea>
 
             <button @click="sendMessage()"
                     :disabled="!isSending && this.message.length === 0"
@@ -44,6 +41,11 @@
         components: {
             userMessages, userFirstLetter
         },
+        props: {
+            currentFriend: {
+                type: Object
+            }
+        },
         data() {
             return {
                 message: '',
@@ -54,7 +56,6 @@
         },
         methods: {
             ...mapActions([
-                'closeFriend',
                 'removeFriend',
                 'addMessage'
             ]),
@@ -79,17 +80,6 @@
                     });
                 }
             },
-            switchUserChat() {
-                this.isSwitched = true;
-                setTimeout(() => {
-                    this.isSwitched = false;
-                }, 500);
-            },
-            closeFromEsq(ev) {
-                if (ev.code === 'Escape') {
-                    this.closeFriend();
-                }
-            },
             sendFromEnter(ev) {
                 if (ev.code === 'Enter') {
                     this.sendMessage();
@@ -105,32 +95,14 @@
         },
         computed: {
             ...mapGetters([
-                'currentFriend',
-                'isFriendChatOpen',
                 'getIdentity'
             ])
         },
-        watch: {
-            'currentFriend': function (response) {
-                if (response) {
-                    this.resetOpenFriend();
-                    this.switchUserChat();
-                    this.focusOnInput();
-                }
-            },
-            'isFriendChatOpen': function (response) {
-                if (!response) {
-                    this.resetOpenFriend();
-                }
-            }
-        },
         mounted() {
             this.focusOnInput();
-            window.addEventListener('keyup', this.closeFromEsq);
             window.addEventListener('keydown', this.sendFromEnter);
         },
         beforeDestroy() {
-            window.removeEventListener('keyup', this.closeFromEsq);
             window.removeEventListener('keydown', this.sendFromEnter);
         }
     };
@@ -153,22 +125,11 @@
         }
     }
 
-    .friend {
+    .friend-chat {
         z-index: 1;
         background: #F8F8F8;
-        position: fixed;
-        width: 500px;
-        height: 500px;
-        right: 20px;
-        bottom: -610px;
-        transition: all .2s ease-in-out;
-        box-shadow: -2px 1px 2px 0 rgba(0, 0, 0, 0.09);
         border-radius: 5px;
         padding-bottom: 20px;
-
-        &.open {
-            transform: translate3d(0, -600px, 0);
-        }
 
         h2 {
             font-size: 1.4rem;
