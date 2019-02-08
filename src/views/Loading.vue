@@ -43,7 +43,7 @@
                     Api.getIdentity().then(response => {
                         if (response.status === 'OK') {
                             this.updateIdentity(response.result[0]);
-                            // this.$router.push('/files');
+                            this.$router.push('/files');
                         } else {
                             this.$router.push('/create-identity');
                         }
