@@ -43,7 +43,7 @@
                     Api.getIdentity().then(response => {
                         if (response.status === 'OK') {
                             this.updateIdentity(response.result[0]);
-                            this.$router.push('/files');
+                            // this.$router.push('/files');
                         } else {
                             this.$router.push('/create-identity');
                         }
@@ -68,12 +68,11 @@
     }
 
     .logo {
-        left: 26px;
+        left: 36px;
         position: absolute;
         width: 140px;
-        border: 8px solid $color-white;
         border-radius: 100%;
-        padding-top: 25px;
+        padding-top: 32px;
         text-align: center;
         fill: $color-blue-1;
     }
