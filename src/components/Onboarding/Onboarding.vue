@@ -1,11 +1,11 @@
 <template>
-    <div id="onboarding-steps">
+    <div class="onboarding">
         <div class="content">
-            <i class="steps" :class="this.steps[this.currentStep].image_class"></i>
-            <h1 v-html="this.steps[this.currentStep].title"></h1>
-            <p v-html="this.steps[this.currentStep].content"></p>
+            <i class="step-image" :class="this.steps[this.currentStep].image_class"></i>
+            <h2 class="title" v-html="this.steps[this.currentStep].title"></h2>
+            <p class="description" v-html="this.steps[this.currentStep].content"></p>
         </div>
-        <div class="navigation">
+        <div class="navigation" v-if="currentStep !== 0">
             <a class="skip" @click="skipOnboardingSteps">
                 <span>Skip</span>
             </a>
@@ -20,6 +20,11 @@
                 </span>
             </a>
         </div>
+        <div v-else>
+            <span class="button primary" @click="navigateToNextStep()">
+                Lets go!
+            </span>
+        </div>
     </div>
 </template>
 
@@ -28,7 +33,6 @@
 
     export default {
         name: 'Onboarding',
-        props: {},
         data() {
             return {
                 currentStep: 0,
@@ -36,7 +40,7 @@
                     {
                         slot: 'step1',
                         image_class: 'step1',
-                        title: 'Introduction',
+                        title: '1. Introduction',
                         content: '<p>Thank you for installing BitDust.</p><p>We will run you through a couple of important steps.</p>'
                     },
                     {
@@ -101,12 +105,37 @@
 </script>
 
 <style lang="scss" scoped>
-    .steps {
+    @import "../../assets/scss/includes.scss";
+
+    .onboarding {
         display: block;
-        width: 100px;
-        height: 100px;
+        width: 600px;
+        margin: 60px auto;
+        background: $color-white;
+        text-align: center;
+        padding: 40px 0;
+    }
+
+    .title {
+        @include metric;
+    }
+
+    .description {
+        font-size: 1rem;
+        margin: 20px 0;
+    }
+
+    .button {
+        display: inline-block;
+        margin: 20px 0;
+    }
+    .step-image {
+        display: block;
+        width: 140px;
+        height: 140px;
         background-repeat: no-repeat;
         background-size: contain;
+        margin: 40px auto;
     }
 
     .step1 {
