@@ -26,7 +26,7 @@
                     <p>Please try again later</p>
                 </div>
 
-                <button class="ui-button primary"
+                <button class="button primary"
                         @click="createIdentity"
                         :disabled="!isInputValid || isLoading">Create user
                 </button>
@@ -143,7 +143,7 @@
         }
     }
 
-    .ui-button {
+    .button {
         font-size: 2.2rem;
         display: block;
         width: 420px;

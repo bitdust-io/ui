@@ -1,8 +1,10 @@
 @import "colors";
 @import "fonts";
 
-.ui-button {
-  font-size: 32px;
+.button {
+  font-size: 1.4rem;
+  line-height: 2.4rem;
+  padding: 4px 40px 10px;
   color: $color-white;
   letter-spacing: 0;
   text-align: center;
