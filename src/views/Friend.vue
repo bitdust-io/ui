@@ -8,7 +8,8 @@
 
             <ul class="friends-list">
                 <li v-for="(friend, index) in getFriends"
-                    :key="index">
+                    :key="index"
+                    :class="{'online': friend.contact_state === 'CONNECTED'}">
                     <router-link
                         :to="{ name: 'friend', params: { id: friend.username }}">
                         {{friend.username}}
@@ -171,11 +172,11 @@
     .friend {
         display: flex;
         justify-content: space-between;
-        height: 100%;
+        height: calc(100% - 100px);
+        overflow: hidden;
     }
 
     .menu {
-        background: $color-gray-3;
         width: 300px;
     }
 
@@ -184,6 +185,7 @@
     }
 
     .search {
+        z-index: 10;
         position: fixed;
         left: 0;
         top: 0;
@@ -226,6 +228,10 @@
             text-transform: capitalize;
             font-size: 1.2rem;
             line-height: 2.4rem;
+
+            &.online a {
+                color: $color-green;
+            }
 
             &:hover {
                 opacity: .6;

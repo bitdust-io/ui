@@ -1,34 +1,12 @@
 <template>
     <div class="friend-messages">
 
-        <div v-if="userMessages.length === 0"
-             class="no-messages-here">
-            No new messages here...
-        </div>
-        <div class="messages">
-            <ul>
-                <li v-for="item in userMessages"
-                    :class="{'mine': item.sender.replace('master$', '') !== currentFriend.global_id}">
+        <div class="messages" ref="messages">
 
-                    <p class="message">
-                        {{item.data.message}}
-                    </p>
-
-                    <p class="message-time">
-                        {{new Date(item.time*1000).toLocaleString()}}
-                    </p>
-
-                    <div class="sender"
-                         v-if="item.sender.replace('master$', '') === currentFriend.global_id">
-                        <user-first-letter
-                            :name="currentFriend.username"/>
-                    </div>
-                </li>
-            </ul>
-            <div class="chat-history">
-                <h3>Older messages</h3>
+            <div ref="message">
                 <ul>
-                    <li v-for="message in oldMessages"
+                    <li v-for="(message, index) in oldMessages"
+                        :key="index"
                         :class="{'mine': message.doc.sender.glob_id.replace('master$', '') !== currentFriend.global_id}">
 
                         <p class="message">
@@ -38,11 +16,37 @@
                         <p class="message-time">
                             {{new Date(message.doc.payload.time*1000).toLocaleString()}}
                         </p>
+
+                        <div class="sender"
+                             v-if="message.doc.sender.glob_id.replace('master$', '') === currentFriend.global_id">
+                            <user-first-letter
+                                :name="currentFriend.username"/>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul>
+                    <li v-for="(message, index) in userMessages"
+                        :key="index"
+                        :class="{'mine': message.sender.replace('master$', '') !== currentFriend.global_id}">
+
+                        <p class="message">
+                            {{message.data.message}}
+                        </p>
+
+                        <p class="message-time">
+                            {{new Date(message.time*1000).toLocaleString()}}
+                        </p>
+
+                        <div class="sender"
+                             v-if="message.sender.replace('master$', '') === currentFriend.global_id">
+                            <user-first-letter
+                                :name="currentFriend.username"/>
+                        </div>
                     </li>
                 </ul>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -52,7 +56,7 @@
     import Api from '../../services/api';
 
     export default {
-        name: 'userMessages',
+        name: 'FriendMessages',
         props: {
             currentFriend: {
                 type: Object
@@ -66,10 +70,14 @@
         },
         components: {userFirstLetter},
         methods: {
-            loadChatHistory() {
-                Api.getMessageHistoryForUser(this.currentFriend).then(data => {
-                    this.oldMessages = data.result;
-                });
+            async loadChatHistory() {
+                let messages = await Api.getMessageHistoryForUser(this.currentFriend);
+                this.oldMessages = messages.result.reverse();
+            },
+            scrollDown() {
+                setTimeout(() => {
+                    this.$refs.messages.scrollTop = this.$refs.message.scrollHeight;
+                }, 120);
             }
         },
         computed: {
@@ -78,7 +86,7 @@
             ]),
             userMessages() {
                 if (!this.getMessages) return;
-                let messages = this.getMessages.filter(message => {
+                return this.getMessages.filter(message => {
                     if (!message || !this.currentFriend.global_id) return;
 
                     let newMessage = message.sender.replace('master$', '');
@@ -86,15 +94,19 @@
                     return newMessage.includes(this.currentFriend.global_id.toLowerCase()) ||
                         message.recipient.toLowerCase().includes(this.currentFriend.global_id.toLowerCase());
                 });
-                return messages.reverse();
             }
         },
         mounted() {
             this.loadChatHistory();
+            this.scrollDown();
         },
         watch: {
             currentFriend() {
                 this.loadChatHistory();
+                this.scrollDown();
+            },
+            getMessages() {
+                this.scrollDown();
             }
         }
     };
@@ -104,14 +116,14 @@
     @import "../../assets/scss/includes.scss";
 
     .friend-messages {
-        height: 360px;
-        padding: 20px;
+        position: relative;
+        height: calc(100% - 50px);
     }
 
     .messages {
-        height: 280px;
+        height: calc(100% - 50px);
+        padding: 20px 20px 40px;
         overflow: auto;
-        padding-bottom: 100px;
     }
 
     input {
@@ -125,7 +137,6 @@
 
     li {
         position: relative;
-        max-width: 80%;
         border-radius: 10px;
         list-style: none;
         font-size: 1.1rem;
@@ -136,7 +147,7 @@
 
         &.mine {
             margin-left: auto;
-            background: $color-purple-2;
+            background: $color-gray-2;
             color: $color-white;
         }
     }
@@ -158,11 +169,5 @@
     .message-time {
         text-align: right;
         font-size: .7rem;
-    }
-
-    .chat-history {
-        h3 {
-            font-size: .8rem;
-        }
     }
 </style>

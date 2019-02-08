@@ -4,12 +4,12 @@
 
 html, body, #app {
   height: 100%;
-  background: $color-gray-3;
 }
 
 body {
   position: relative;
   font-size: 1.5rem;
+  background: $color-gray-3;
 }
 
 * {
