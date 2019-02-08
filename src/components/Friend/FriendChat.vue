@@ -10,36 +10,34 @@
                   class="remove">remove</span>
         </div>
 
-        <user-messages :current-friend="currentFriend"/>
+        <friend-messages :current-friend="currentFriend"/>
 
-        <div class="flex">
+        <div class="message-sender">
 
             <textarea v-model="message"
+                      placeholder="Type here..."
+                      v-on:keydown="sendFromEnter"
                       ref="chat"
                       class="chat-input"
                       :disabled="isSending"
                       :class="{'icon-loading': isSending}"
-                      rows="1">
+                      :rows="lines">
             </textarea>
-
-            <button @click="sendMessage()"
-                    :disabled="!isSending && this.message.length === 0"
-                    class="send">Send
-            </button>
         </div>
 
     </div>
 </template>
 
 <script>
-    import {mapGetters, mapActions} from 'vuex';
-    import userMessages from './UserMessages';
+    import {mapActions} from 'vuex';
+    import friendMessages from './FriendMessages';
     import message from '../../services/message';
     import userFirstLetter from '../Globals/UserFirstLetter';
 
     export default {
         components: {
-            userMessages, userFirstLetter
+            friendMessages,
+            userFirstLetter
         },
         props: {
             currentFriend: {
@@ -50,14 +48,19 @@
             return {
                 message: '',
                 isSending: false,
-                isSwitched: false,
-                chat: ''
+                chat: '',
+                rows: 1
             };
+        },
+        computed: {
+            lines() {
+                let lines = this.message.split(/\r|\r\n|\n/);
+                return lines.length;
+            }
         },
         methods: {
             ...mapActions([
-                'removeFriend',
-                'addMessage'
+                'removeFriend'
             ]),
             sendMessage() {
                 if (this.message.length < 3) return;
@@ -81,8 +84,11 @@
                 }
             },
             sendFromEnter(ev) {
-                if (ev.code === 'Enter') {
-                    this.sendMessage();
+                if (ev.keyCode === 13) {
+                    this.rows++;
+                    if (!ev.shiftKey) {
+                        this.sendMessage();
+                    }
                 }
             },
             focusOnInput() {
@@ -93,17 +99,8 @@
                 }
             }
         },
-        computed: {
-            ...mapGetters([
-                'getIdentity'
-            ])
-        },
         mounted() {
             this.focusOnInput();
-            window.addEventListener('keydown', this.sendFromEnter);
-        },
-        beforeDestroy() {
-            window.removeEventListener('keydown', this.sendFromEnter);
         }
     };
 </script>
@@ -111,29 +108,28 @@
 <style scoped lang="scss">
     @import "../../assets/scss/includes.scss";
 
+    .friend-chat {
+        height: 100%;
+        position: relative;
+        z-index: 1;
+
+        h2 {
+            font-size: 1.4rem;
+            text-transform: capitalize;
+        }
+    }
+
     .friend-header {
-        background: $color-white;
         padding: 10px 20px;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        border-bottom: 1px solid $color-purple-2;
 
         > div {
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-    }
-
-    .friend-chat {
-        z-index: 1;
-        background: #F8F8F8;
-        border-radius: 5px;
-        padding-bottom: 20px;
-
-        h2 {
-            font-size: 1.4rem;
-            text-transform: capitalize;
         }
     }
 
@@ -164,18 +160,22 @@
         color: $color-blue-1;
     }
 
-    .chat-input {
-        border: none;
-        resize: none;
-        padding: 10px;
-        margin-left: 10px;
-        width: 350px;
-        background-position: right center;
-    }
-
-    .flex {
+    .message-sender {
+        position: absolute;
+        background: $color-gray-3;
+        bottom: 20px;
+        right: 20px;
+        left: 0;
         display: flex;
-        padding: 10px 20px 0 0;
+
+        .chat-input {
+            font-size: 1.1rem;
+            border-radius: 8px;
+            border: 2px solid $color-purple-1;
+            resize: none;
+            padding: 10px;
+            width: 100%;
+        }
     }
 
     .send {
@@ -201,28 +201,6 @@
             height: 20px;
             position: absolute;
             background: url("../../assets/icons/icon-send.svg") no-repeat center;
-        }
-    }
-
-    .switch {
-        animation: shake 0.3s cubic-bezier(.36, .07, .19, .97) both;
-    }
-
-    @keyframes shake {
-        10%, 90% {
-            transform: translate3d(-1px, -600px, 0);
-        }
-
-        20%, 80% {
-            transform: translate3d(2px, -600px, 0);
-        }
-
-        30%, 50%, 70% {
-            transform: translate3d(-6px, -600px, 0);
-        }
-
-        40%, 60% {
-            transform: translate3d(6px, -600px, 0);
         }
     }
 

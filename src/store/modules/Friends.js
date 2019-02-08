@@ -13,10 +13,10 @@ const getters = {
 };
 
 const mutations = {
-    UPDATE_FRIENDS(state, friendsList) {
+    updateFriends(state, friendsList) {
         state.friendsList = friendsList;
     },
-    UPDATE_LAST_FRIEND(state, friend) {
+    updateLastFriend(state, friend) {
         state.lastFriend = friend;
     }
 };
@@ -29,11 +29,11 @@ const actions = {
     },
     getApiFriends({commit}) {
         api.userList().then(friendsList => {
-            commit('UPDATE_FRIENDS', friendsList.result);
+            commit('updateFriends', friendsList.result);
         });
     },
     updateLastFriend({commit}, friend) {
-        commit('UPDATE_LAST_FRIEND', friend);
+        commit('updateLastFriend', friend);
     }
 };
 
