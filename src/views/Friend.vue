@@ -26,7 +26,6 @@
                 Please select a friend to chat !
             </div>
 
-
             <div class="search" v-if="isSearchOpen">
 
                 <label for="search">
@@ -36,18 +35,18 @@
                 <input v-model="search"
                        id="search"/>
 
-                <button class="ui-button primary"
+                <button class="button primary"
                         @click="searchUser">Search
                 </button>
 
-                <button class="ui-button slim"
+                <button class="button slim"
                         @click="closeSearch">Close
                 </button>
 
                 <div v-if="addFriendResponse"
                      class="add-friend-response">
-                        <span @click="addFriendResponse = null"
-                              class="close">X</span>
+                    <span @click="addFriendResponse = null"
+                          class="close">X</span>
                     {{addFriendResponse.result[0]}}
                 </div>
 
