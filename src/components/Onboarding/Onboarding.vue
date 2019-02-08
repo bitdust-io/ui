@@ -114,6 +114,7 @@
         background: $color-white;
         text-align: center;
         padding: 40px 0;
+        color: $color-gray-1;
     }
 
     .title {

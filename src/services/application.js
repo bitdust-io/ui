@@ -1,5 +1,5 @@
 import Api from './api';
-import message from './message';
+import Message from './message';
 import store from '../store/';
 import Router from '../router';
 
@@ -9,12 +9,14 @@ const Application = {
 
     bootstrap() {
         this.keepConnection();
+        this.messagesListen();
+        this.eventsListen();
     },
 
     async keepConnection() {
         try {
             const status = await Api.networkConnected();
-            store.commit('updateConnectionStatus', status);
+            store.dispatch('updateConnectionStatus', status);
         } catch (e) {
             apiNotResponding += 1;
             if (apiNotResponding > 5) {
@@ -27,16 +29,26 @@ const Application = {
         }, 1000);
     },
 
-    eventsListen() {
-        Api.eventsListen().then(resp => {
-            this.eventsListen();
-        });
+    async eventsListen() {
+        // try {
+        //     const currentEvent = await Api.eventsListen();
+        //     // console.log('Event:', currentEvent);
+        //     // store.dispatch('updateEvents', currentEvent);
+        // } catch (e) {
+        //     console.log('error receiving event', e);
+        // }
+        // this.eventsListen();
     },
 
-    messagesListen() {
-        message.getMessages().then(resp => {
-            this.messagesListen();
-        });
+    async messagesListen() {
+        try {
+            const currentMessage = await Message.getMessages();
+            console.log(currentMessage);
+            store.dispatch('updateMessages', currentMessage);
+        } catch (e) {
+            console.log('error receiving message', e);
+        }
+        this.messagesListen();
     }
 };
 
