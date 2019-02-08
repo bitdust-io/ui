@@ -2,7 +2,7 @@
     <div class="about">
         <h1>Settings</h1>
 
-        <button @click="backupKey" class="ui-button primary">Backup key</button>
+        <button @click="backupKey" class="button primary">Backup key</button>
     </div>
 </template>
 

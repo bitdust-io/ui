@@ -42,7 +42,7 @@
                     <p>{{errorMessage}}</p>
                 </div>
 
-                <button class="ui-button primary"
+                <button class="button primary"
                         :disabled="!isKeyValid"
                         @click="restoreIdentity">Restore
                 </button>
@@ -160,7 +160,7 @@
         padding: 4px;
     }
 
-    .ui-button {
+    .button {
 
         &:disabled {
             filter: grayscale(1);
