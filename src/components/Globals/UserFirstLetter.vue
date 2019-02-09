@@ -1,10 +1,20 @@
 <template>
-    <div class="avatar">{{userFirstLetter}}</div>
+    <div class="avatar" :style="{'background-color': color()}">
+        {{userFirstLetter}}
+    </div>
 </template>
 
 <script>
+    import ColorHash from 'color-hash';
+
     export default {
         props: ['name'],
+        methods: {
+            color() {
+                let colorHash = new ColorHash({saturation: 0.7});
+                return colorHash.hex(this.name);
+            }
+        },
         computed: {
             userFirstLetter() {
                 if (!this.name) return;
