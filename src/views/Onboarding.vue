@@ -9,12 +9,16 @@
             <a class="skip" @click="skipOnboardingSteps">
                 <span>Skip</span>
             </a>
-            <a class="back" :disabled="isPreviousStepEnabled" @click="navigateToPreviousStep()">
+            <a class="back"
+               :disabled="isPreviousStepEnabled"
+               @click="navigateToPreviousStep()">
                 <span>
                     <span class="arrow arrow-left"></span> Previous
                 </span>
             </a>
-            <a class="next" v-if="isNextStepEnabled" @click="navigateToNextStep()">
+            <a class="next"
+               v-if="isNextStepEnabled"
+               @click="navigateToNextStep()">
                 <span>
                     Next <span class="arrow arrow-right"></span>
                 </span>
@@ -78,6 +82,9 @@
                 ]
             };
         },
+        created() {
+            document.getElementsByTagName('html')[0].classList.add('intro-background');
+        },
         computed: {
             isNextStepEnabled() {
                 return this.currentStep !== this.steps.length - 1;
@@ -105,7 +112,7 @@
 </script>
 
 <style lang="scss" scoped>
-    @import "../../assets/scss/includes.scss";
+    @import "../assets/scss/includes.scss";
 
     .onboarding {
         display: block;
@@ -123,13 +130,15 @@
 
     .description {
         font-size: 1rem;
-        margin: 20px 0;
+        margin: 20px auto;
+        max-width: 80%;
     }
 
     .button {
         display: inline-block;
         margin: 20px 0;
     }
+
     .step-image {
         display: block;
         width: 140px;
@@ -140,22 +149,22 @@
     }
 
     .step1 {
-        background-image: url('../../assets/icons/onboarding/step1.svg');
+        background-image: url('../assets/icons/onboarding/step1.svg');
     }
 
     .step2 {
-        background-image: url('../../assets/icons/onboarding/step2.svg');
+        background-image: url('../assets/icons/onboarding/step2.svg');
     }
 
     .step3 {
-        background-image: url('../../assets/icons/onboarding/step3.svg');
+        background-image: url('../assets/icons/onboarding/step3.svg');
     }
 
     .step4 {
-        background-image: url('../../assets/icons/onboarding/step4.svg');
+        background-image: url('../assets/icons/onboarding/step4.svg');
     }
 
     .step5 {
-        background-image: url('../../assets/icons/onboarding/step5.svg');
+        background-image: url('../assets/icons/onboarding/step5.svg');
     }
 </style>

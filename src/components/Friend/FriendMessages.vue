@@ -118,6 +118,18 @@
     .friend-messages {
         position: relative;
         height: calc(100% - 50px);
+
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 100px;
+            z-index: 10;
+            background: linear-gradient(top, rgba(242, 242, 242, 1) 30%, rgba(242, 242, 242, 0) 100%);
+        }
     }
 
     .messages {
