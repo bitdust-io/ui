@@ -17,7 +17,13 @@
         </div>
     </div>
 </template>
-
+<script>
+    export default {
+        created() {
+            document.getElementsByTagName('html')[0].classList.remove('intro-background');
+        }
+    };
+</script>
 <style lang="scss" scoped>
 
     @import "../assets/scss/includes.scss";
@@ -29,7 +35,6 @@
     }
 
     .menu {
-        background: $color-gray-3;
         width: 300px;
     }
 

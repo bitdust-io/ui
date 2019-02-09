@@ -5,7 +5,7 @@ import CreateIdentity from '../views/CreateIdentity';
 import Files from '../views/Files';
 import RecoverIdentity from '../views/Recover-identity';
 import LoadingIdentity from '../views/Loading-identity';
-import Onboarding from '../components/Onboarding/Onboarding';
+import Onboarding from '../views/Onboarding';
 import Friend from '../views/Friend';
 import Dead from '../views/Dead';
 import Settings from '../views/Settings';
