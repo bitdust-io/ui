@@ -2,7 +2,8 @@
     <div class="friend">
         <div class="menu">
 
-            <h2 @click="openSearch">
+
+            <h2 @click="openSearch" class="button primary">
                 Search other users
             </h2>
 
@@ -155,6 +156,7 @@
             if (!this.getCurrentFriend && this.getLastFriend) {
                 this.$router.push({name: 'friend', params: {id: this.getLastFriend.username}});
             }
+            document.getElementsByTagName('html')[0].classList.remove('intro-background');
         },
         watch: {
             getCurrentFriend(friend) {
@@ -168,6 +170,13 @@
 
 <style lang="scss" scoped>
     @import "../assets/scss/includes.scss";
+
+    h2.button {
+        max-width: 60%;
+        font-size: 1rem;
+        padding: 0;
+        margin: 20px;
+    }
 
     .friend {
         display: flex;
@@ -217,19 +226,18 @@
         display: flex;
         flex-flow: wrap;
 
-        li {
-            position: relative;
+        li a {
             margin: 10px 10px 0 0;
             min-width: 260px;
-            background: $color-white;
-            padding: 10px 10px 10px 30px;
+            padding: 5px 10px 5px 30px;
             cursor: pointer;
             display: flex;
             text-transform: capitalize;
             font-size: 1.2rem;
             line-height: 2.4rem;
+            text-decoration: none;
 
-            &.online a {
+            .online & {
                 color: $color-green;
             }
 

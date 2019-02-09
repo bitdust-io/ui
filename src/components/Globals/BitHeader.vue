@@ -111,9 +111,12 @@
         padding: 5px;
 
         a {
+            font-size: 1rem;
             color: $color-white;
+            text-decoration: none;
+
             &.active {
-                color: red;
+                color: $color-gray-2;
             }
         }
     }

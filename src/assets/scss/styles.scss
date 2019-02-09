@@ -6,6 +6,11 @@ html, body, #app {
   height: 100%;
 }
 
+#app {
+  //height: calc(100% - 100px);
+  overflow: auto;
+}
+
 body {
   position: relative;
   font-size: 1.5rem;
@@ -40,6 +45,7 @@ body {
     background-size: 100%;
   }
   &:before, &:after {
+    z-index: -1;
     content: '';
     position: absolute;
   }
