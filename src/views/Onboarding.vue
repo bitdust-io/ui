@@ -9,19 +9,17 @@
             <a class="skip" @click="skipOnboardingSteps">
                 <span>Skip</span>
             </a>
-            <a class="back"
-               :disabled="isPreviousStepEnabled"
-               @click="navigateToPreviousStep()">
-                <span>
-                    <span class="arrow arrow-left"></span> Previous
-                </span>
-            </a>
             <a class="next"
                v-if="isNextStepEnabled"
                @click="navigateToNextStep()">
-                <span>
-                    Next <span class="arrow arrow-right"></span>
-                </span>
+                <span>Next</span>
+                <span class="arrow arrow-right"></span>
+            </a>
+            <a class="previous"
+               :disabled="isPreviousStepEnabled"
+               @click="navigateToPreviousStep()">
+                <span class="arrow arrow-left"></span>
+                <span>Previous</span>
             </a>
         </div>
         <div v-else>
@@ -146,6 +144,43 @@
         background-repeat: no-repeat;
         background-size: contain;
         margin: 40px auto;
+    }
+
+    .navigation {
+        font-size: 1rem;
+        a {
+            cursor: pointer;
+            &:hover {
+                span {
+                    border-color: $color-purple-1;
+                    color: $color-purple-1;
+                    font-weight: bold;
+                }
+            }
+        }
+        .skip {
+            float: left;
+            margin-left: 25px;
+        }
+        .previous, .next {
+            float: right;
+            margin-right: 25px;
+        }
+        .arrow {
+            border-bottom: 1px solid $color-gray-1;
+            border-right: 1px solid $color-gray-1;
+            width: 8px;
+            height: 8px;
+            display: inline-block;
+            position: relative;
+            top: -1px;
+        }
+        .arrow-left  {
+            transform: rotate(135deg);
+        }
+        .arrow-right {
+            transform:rotate(315deg)
+        }
     }
 
     .step1 {
