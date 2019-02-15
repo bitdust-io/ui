@@ -5,6 +5,11 @@ const Api = {
         return this.makeGet('message/history', query);
     },
 
+    getKey(includePrivate, globalID) {
+        const query = 'include_private=' + includePrivate + '&key_id=master';
+        return this.makeGet('key/get', query);
+    },
+
     getKeys() {
         return this.makeGet('key/list');
     },
