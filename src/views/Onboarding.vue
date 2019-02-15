@@ -32,6 +32,8 @@
 
 <script>
     import Router from '@/router';
+    import {mapGetters} from 'vuex';
+    import Api from '../services/api';
 
     export default {
         name: 'Onboarding',
@@ -52,7 +54,7 @@
                         content: `<p>Every file you upload in the BitDust network is securely encrypted using a private key. A private key is a unique 256-bit number that is paired with a public key to set off algorithms for data
                                     encryption and decryption. It provides a secure way to access your account and upload/share files, making sure that you are the only one that can access your data. Never share your private key with
                                     any person or software that you do not intend to take control over your files. In addition it is important to back up your private key so you can retrieve your identity in the future.</p>
-                                    <textarea rows="4" readonly>qzsz3t7nkqnpcz-n5w3kcgafh00mm2qdm3cu0-m4fwvtqz sz3t7nkqnpcz n5w3kcgafh00mm-2qdm3cu0m4fw-vtqzsz3t7nkqnp-czn5w3kcgafh00mm2</textarea>
+                                    <textarea id="master_key" rows="4" readonly>qzsz3t7nkqnpcz-n5w3kcgafh00mm2qdm3cu0-m4fwvtqz sz3t7nkqnpcz n5w3kcgafh00mm-2qdm3cu0m4fw-vtqzsz3t7nkqnp-czn5w3kcgafh00mm2</textarea>
                                     <p>Please store the back up of your private key in a secure place.</p>`
                     },
                     {
@@ -82,14 +84,29 @@
         },
         created() {
             document.getElementsByTagName('html')[0].classList.add('intro-background');
+            this.localData = {
+                masterPrivateKey: null
+            };
+        },
+        updated() {
+            if (this.currentStep === 1) {
+                document.getElementById('master_key').innerText = this.localData.masterPrivateKey;
+            }
         },
         computed: {
+            ...mapGetters([
+                'connectionStatus',
+                'getIdentity'
+            ]),
             isNextStepEnabled() {
                 return this.currentStep !== this.steps.length - 1;
             },
             isPreviousStepEnabled() {
                 return this.currentStep !== 0;
             }
+        },
+        mounted() {
+            this.getMasterPrivateKey();
         },
         methods: {
             skipOnboardingSteps() {
@@ -104,6 +121,15 @@
                 if (this.currentStep > 0) {
                     this.currentStep--;
                 }
+            },
+            getMasterPrivateKey() {
+                const includePrivate = 1;
+                const globalID = this.$store.getters.getIdentity.global_id;
+                Api.getKey(includePrivate, globalID).then(response => {
+                    this.localData.masterPrivateKey = response.result[0]['private'];
+                }).catch(err => {
+                    console.log(err);
+                });
             }
         }
     };
@@ -120,16 +146,21 @@
         text-align: center;
         padding: 40px 0;
         color: $color-gray-1;
+        .description {
+            font-size: 1rem;
+            margin: 20px auto;
+            max-width: 80%;
+            /deep/ textarea {
+                width: 85%;
+                height: 200px;
+                margin: 15px;
+                padding: 15px;
+            }
+        }
     }
 
     .title {
         @include metric;
-    }
-
-    .description {
-        font-size: 1rem;
-        margin: 20px auto;
-        max-width: 80%;
     }
 
     .button {
