@@ -176,7 +176,8 @@ const Api = {
             method: 'POST',
             body: JSON.stringify({
                 'remote_path': remotePath,
-                'local_path': filePath
+                'local_path': filePath,
+                'open_share': '1'
             })
         }).then(res => res.json());
     },
@@ -195,7 +196,8 @@ const Api = {
             return fetch(this.makeApiEndpoint('file/download/start'), {
                 method: 'POST',
                 body: JSON.stringify({
-                    'remote_path': filePath
+                    'remote_path': filePath,
+                    'open_share': '1'
                 })
             });
         });
