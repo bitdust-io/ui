@@ -128,7 +128,7 @@
             width: 100%;
             height: 100px;
             z-index: 10;
-            background: linear-gradient(top, rgba(242, 242, 242, 1) 30%, rgba(242, 242, 242, 0) 100%);
+            background: linear-gradient(to top, rgba(242, 242, 242, 1) 30%, rgba(242, 242, 242, 0) 100%);
         }
     }
 
