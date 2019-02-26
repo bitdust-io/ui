@@ -2,7 +2,6 @@
     <div class="friend">
         <div class="menu">
 
-
             <h2 @click="openSearch" class="button primary">
                 Search other users
             </h2>
