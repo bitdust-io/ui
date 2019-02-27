@@ -53,11 +53,11 @@
         },
         methods: {
             isVisible(name) {
-                let visibleRouters = [
-                    'files',
-                    'friend',
-                    'settings'
-                ];
+                // let visibleRouters = [
+                //     'files',
+                //     'friend',
+                //     'settings'
+                // ];
                 return true;
                 // return visibleRouters.indexOf(name) > -1;
             }
@@ -111,12 +111,15 @@
         padding: 5px;
 
         a {
-            font-size: 1rem;
+            font-size: 1.2rem;
             color: $color-white;
             text-decoration: none;
+            padding: 5px;
+            margin: 2px;
+            background: $color-purple-1;
 
             &.active {
-                color: $color-gray-2;
+                color: $color-blue-1;
             }
         }
     }

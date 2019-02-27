@@ -21,7 +21,8 @@
             You don't have any file uploaded yet, try to upload your first ;)
         </div>
         <ul>
-            <li v-for="file in filteredList">
+            <li v-for="(file, index) in filteredList"
+                :key="index">
                 <file-extension :file="file.path"/>
                 <span class="file-name"
                       @click="openFile(file.path)">{{file.name}}</span>
@@ -52,7 +53,10 @@
                 'deleteFile',
                 'openFile',
                 'getApiFiles'
-            ])
+            ]),
+            setFileLoading(value) {
+                this.isFilesLoading = value;
+            }
         },
         computed: {
             ...mapGetters([
@@ -61,7 +65,7 @@
             ...mapState(['Files']),
             filteredList() {
                 if (!this.getFiles) return;
-                this.isFilesLoading = false;
+                this.setFileLoading(false);
                 return this.getFiles.filter(file => {
                     if (file.name.charAt(0) === '.') return;
                     return file.name.toLowerCase().includes(this.search.toLowerCase());
