@@ -34,8 +34,7 @@
     "sass-loader": "^7.0.1",
     "vue-template-compiler": "^2.5.17"
   },
-  "gitHooks": {
-  },
+  "gitHooks": {},
   "lint-staged": {
     "*.js": [
       "vue-cli-service lint",
