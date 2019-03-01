@@ -1,5 +1,6 @@
 <template>
-    <div class="user-identity">
+    <div class="user-identity"
+         :class="{active: getIdentity.name}">
         <user-first-letter :name="getIdentity.name"/>
         <div class="user-name">{{getIdentity.name}}</div>
     </div>
@@ -7,7 +8,6 @@
 
 <script>
     import {mapGetters, mapActions} from 'vuex';
-    import Api from '@/services/api';
     import userFirstLetter from './UserFirstLetter';
 
     export default {
@@ -20,20 +20,7 @@
         methods: {
             ...mapActions([
                 'updateIdentity'
-            ]),
-            checkIdentity() {
-                return !!this.getIdentity.name;
-            }
-        },
-        created() {
-            if (this.checkIdentity()) return;
-            Api.getIdentity().then(resp => {
-                if (resp.status === 'OK') {
-                    this.updateIdentity(resp.result[0]);
-                }
-            }).catch(err => {
-                console.log(err);
-            });
+            ])
         }
     };
 </script>
@@ -44,6 +31,14 @@
     .user-identity {
         display: flex;
         align-items: center;
+        transform: scale(.1);
+        transition: all .2s ease;
+        opacity: 0;
+
+        &.active {
+            transform: none;
+            opacity: 1;
+        }
     }
 
     .user-name {
