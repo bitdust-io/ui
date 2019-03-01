@@ -57,7 +57,7 @@
                     {
                         slot: 'step1',
                         image_class: 'step1',
-                        title: '1. Introduction',
+                        title: 'Introduction',
                         content: '<p>Thank you for installing BitDust.</p><p>We will run you through a couple of important steps.</p>'
                     },
                     {
