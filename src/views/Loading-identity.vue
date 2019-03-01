@@ -29,9 +29,7 @@
         },
         watch: {
             connectionStatus(response) {
-                if (response.status === 'OK') {
-                    this.$router.push('/onboarding');
-                }
+                if (response.status === 'OK') this.$router.push('/onboarding');
             }
         }
     };

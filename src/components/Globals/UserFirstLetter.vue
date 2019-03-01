@@ -1,5 +1,6 @@
 <template>
-    <div class="avatar" :style="{'background-color': color()}">
+    <div class="avatar"
+         :style="{'background-color': color()}">
         {{userFirstLetter}}
     </div>
 </template>
@@ -38,5 +39,10 @@
         line-height: 38px;
         font-size: 1.4rem;
         margin-right: 10px;
+        transition: all .2s ease-in-out;
+
+        &:hover {
+            border-radius: 0;
+        }
     }
 </style>
