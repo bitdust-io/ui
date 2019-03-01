@@ -8,16 +8,21 @@ let apiNotResponding = 0;
 const Application = {
 
     bootstrap() {
+        this.keepHeath();
         this.keepConnection();
+        this.getIdentity();
         this.messagesListen();
-        this.eventsListen();
+        // this.eventsListen();
     },
 
-    async keepConnection() {
+    async keepHeath() {
         try {
-            const status = await Api.networkConnected();
-            store.dispatch('updateConnectionStatus', status);
+            const status = await Api.processHealth();
+            store.dispatch('updateHealthStatus', status);
+            apiNotResponding = 0;
         } catch (e) {
+            store.dispatch('updateHealthStatus', {status: 'ERROR'});
+            console.log('Error trying to connect health check');
             apiNotResponding += 1;
             if (apiNotResponding > 5) {
                 Router.push('/dead');
@@ -25,8 +30,42 @@ const Application = {
         }
 
         setTimeout(() => {
+            this.keepHeath();
+        }, 2000);
+    },
+
+    async keepConnection() {
+        if (store.state.Application.healthStatus.status === 'OK' &&
+            store.state.Application.identity.name) {
+            try {
+                const status = await Api.networkConnected();
+                store.dispatch('updateConnectionStatus', status);
+            } catch (error) {
+                store.dispatch('updateConnectionStatus', {status: 'ERROR'});
+                console.log('Error trying to connect to network');
+            }
+        }
+
+        setTimeout(() => {
             this.keepConnection();
-        }, 1000);
+        }, 2000);
+    },
+
+    async getIdentity() {
+        if (!store.state.Application.identity.name &&
+            store.state.Application.healthStatus.status === 'OK') {
+            try {
+                const status = await Api.getIdentity();
+                store.dispatch('updateIdentity', status.result[0]);
+            } catch (error) {
+                store.dispatch('updateIdentity', {status: 'ERROR'});
+                console.log('Error trying to get identity');
+            }
+        }
+
+        setTimeout(() => {
+            this.getIdentity();
+        }, 2000);
     },
 
     async eventsListen() {
@@ -41,14 +80,19 @@ const Application = {
     },
 
     async messagesListen() {
-        try {
-            const currentMessage = await Message.getMessages();
-            console.log(currentMessage);
-            store.dispatch('updateMessages', currentMessage);
-        } catch (e) {
-            console.log('error receiving message', e);
+        if (store.state.Application.connectionStatus.status === 'OK') {
+            try {
+                const currentMessage = await Message.getMessages();
+                console.log(currentMessage);
+                store.dispatch('updateMessages', currentMessage);
+            } catch (e) {
+                console.log('error receiving message');
+            }
         }
-        this.messagesListen();
+
+        setTimeout(() => {
+            this.messagesListen();
+        }, 500);
     }
 };
 
