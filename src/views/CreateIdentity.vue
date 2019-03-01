@@ -17,13 +17,13 @@
                        placeholder="Type your username">
 
                 <p class="note">
-                    Note: only lowercase letters and numbers. Min 3 and max 20 characters
+                    Note: only lowercase letters and numbers, min 3 and max 20 characters
                 </p>
 
                 <div v-if="error"
                      class="error">
                     <p>{{errorMessage}}</p>
-                    <p>Please try again later</p>
+                    <p>Please restart Bitdust and try again</p>
                 </div>
 
                 <button class="button primary"
@@ -46,6 +46,7 @@
 <script>
     import Api from '../services/api';
     import Icon from '@/components/Globals/Icon';
+    import {mapActions} from 'vuex';
 
     export default {
         name: 'create-identity',
@@ -69,6 +70,7 @@
             }
         },
         methods: {
+            ...mapActions(['updateIdentity']),
             validateUserName(value) {
                 const REGEX = /^[a-z0-9]{3,20}$/;
                 return REGEX.test(value);
@@ -83,6 +85,7 @@
                     Api.createIdentity(this.identityName).then(resp => {
                         this.isLoading = false;
                         if (resp.status === 'OK') {
+                            this.updateIdentity(resp.result[0]);
                             this.$router.push('loading-identity');
                         } else {
                             this.error = true;
