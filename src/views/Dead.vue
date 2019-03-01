@@ -11,13 +11,13 @@
         name: 'dead',
         computed: {
             ...mapGetters([
-                'connectionStatus'
+                'healthStatus'
             ])
         },
         watch: {
-            'connectionStatus': function (response) {
+            'healthStatus': function (response) {
                 if (response.status === 'OK') {
-                    this.$router.push('home');
+                    this.$router.push('loading');
                 }
             }
         }
