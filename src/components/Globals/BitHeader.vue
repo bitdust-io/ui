@@ -14,7 +14,8 @@
 
         <div class="header-right">
             <user-identity/>
-            <div class="connection-status" :class="connectionStatus.status">
+            <div class="connection-status"
+                 :class="connectionStatus.status">
             </div>
         </div>
     </header>
@@ -82,6 +83,7 @@
         display: flex;
         justify-content: space-between;
         background-image: linear-gradient(-120deg, $color-blue-1 0%, $color-purple-1 100%);
+        align-items: center;
 
         .header-right {
             display: flex;
@@ -91,35 +93,43 @@
         }
 
         .connection-status {
-            width: 20px;
-            height: 20px;
-            border: 1px solid $color-white;
-            border-radius: 50%;
-            margin-left: 10px;
-            margin-top: 4px;
+            width: 15px;
+            height: 15px;
+            margin-left: 14px;
+            margin-top: 6px;
+            background: $color-white;
+            transition: all 1s ease-in-out;
+            animation: spin 2s linear infinite;
         }
 
         .OK {
             background: $color-green;
+            border-radius: 50%;
         }
         .ERROR {
             background: red;
         }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
     }
 
     #nav {
         padding: 5px;
 
         a {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: $color-white;
             text-decoration: none;
             padding: 5px;
             margin: 2px;
-            background: $color-purple-1;
 
             &.active {
-                color: $color-blue-1;
+                color: $color-red;
             }
         }
     }
