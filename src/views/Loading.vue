@@ -12,7 +12,6 @@
 
 <script>
     import {mapGetters, mapActions} from 'vuex';
-    import Api from '../services/api';
     import Icon from '@/components/Globals/Icon';
 
     export default {
@@ -22,7 +21,8 @@
         },
         computed: {
             ...mapGetters([
-                'connectionStatus'
+                'connectionStatus',
+                'getIdentity'
             ])
         },
         components: {
@@ -34,23 +34,11 @@
             ])
         },
         watch: {
+            getIdentity(identity) {
+                if (identity.status === 'ERROR') this.$router.push('/create-identity');
+            },
             connectionStatus(response) {
-                if (response.status !== 'OK') {
-                    if (response.reason === 'identity_not_exist') {
-                        this.$router.push('/create-identity');
-                    }
-                } else {
-                    Api.getIdentity().then(response => {
-                        if (response.status === 'OK') {
-                            this.updateIdentity(response.result[0]);
-                            this.$router.push('/files');
-                        } else {
-                            this.$router.push('/create-identity');
-                        }
-                    }).catch(err => {
-                        console.log(err);
-                    });
-                }
+                if (response.status === 'OK') this.$router.push('/files');
             }
         }
     };
