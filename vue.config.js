@@ -1,7 +1,7 @@
 module.exports = {
     runtimeCompiler: true,
     lintOnSave: undefined,
-    baseUrl: './',
+    publicPath: './',
     devServer: {
         host: 'localhost'
     }
