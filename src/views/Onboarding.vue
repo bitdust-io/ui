@@ -5,27 +5,40 @@
             <h2 class="title" v-html="this.steps[this.currentStep].title"></h2>
             <p class="description" v-html="this.steps[this.currentStep].content"></p>
         </div>
-        <div class="navigation" v-if="currentStep !== 0">
-            <a class="skip" @click="skipOnboardingSteps">
+        <div class="navigation"
+             v-if="currentStep !== 0 && isNextStepEnabled">
+            <a class="skip"
+               @click="skipOnboardingSteps">
                 <span>Skip</span>
             </a>
             <a class="next"
-               v-if="isNextStepEnabled"
                @click="navigateToNextStep()">
                 <span>Next</span>
                 <span class="arrow arrow-right"></span>
             </a>
+            <a class="previous"
+               @click="navigateToPreviousStep()">
+                <span class="arrow arrow-left"></span>
+                <span>Previous</span>
+            </a>
+        </div>
+        <div v-if="currentStep === 0">
+            <span class="button primary"
+                  @click="navigateToNextStep()">
+                Lets go!
+            </span>
+        </div>
+        <div class="navigation last"
+             v-if="!isNextStepEnabled">
+            <span class="button primary" @click="skipOnboardingSteps()">
+                Let’s upload!
+            </span>
             <a class="previous"
                :disabled="isPreviousStepEnabled"
                @click="navigateToPreviousStep()">
                 <span class="arrow arrow-left"></span>
                 <span>Previous</span>
             </a>
-        </div>
-        <div v-else>
-            <span class="button primary" @click="navigateToNextStep()">
-                Lets go!
-            </span>
         </div>
     </div>
 </template>
@@ -54,7 +67,9 @@
                         content: `<p>Every file you upload in the BitDust network is securely encrypted using a private key. A private key is a unique 256-bit number that is paired with a public key to set off algorithms for data
                                     encryption and decryption. It provides a secure way to access your account and upload/share files, making sure that you are the only one that can access your data. Never share your private key with
                                     any person or software that you do not intend to take control over your files. In addition it is important to back up your private key so you can retrieve your identity in the future.</p>
-                                    <textarea id="master_key" rows="4" readonly>qzsz3t7nkqnpcz-n5w3kcgafh00mm2qdm3cu0-m4fwvtqz sz3t7nkqnpcz n5w3kcgafh00mm-2qdm3cu0m4fw-vtqzsz3t7nkqnp-czn5w3kcgafh00mm2</textarea>
+                                    <textarea id="master_key"
+                                    rows="4"
+                                    readonly></textarea>
                                     <p>Please store the back up of your private key in a secure place.</p>`
                     },
                     {
@@ -66,13 +81,13 @@
                                     Off course you can also manually select your family members and tweak other settings, providing you with full control over your data. To ensure redundancy every file you upload is copied twice.
                                     For example if you upload 5 mb of pictures you are actually using 10 mb (2X5Mb) to store your pictures.</p>`
                     },
-                    {
-                        slot: 'step4',
-                        image_class: 'step4',
-                        title: 'BitDust Token',
-                        content: `<p>The BitDust token is the native token of the BitDust network. The BitDust token can be earned if you contribute to the network and is required if you want to use the network.
-                                    As a customer you need the BitDust token to pay for the Gigabyte Hours you consume. Every transaction of the BitDust token is tracked via the internal BitDust blockchain.</p>`
-                    },
+                    // {
+                    //     slot: 'step4',
+                    //     image_class: 'step4',
+                    //     title: 'BitDust Token',
+                    //     content: `<p>The BitDust token is the native token of the BitDust network. The BitDust token can be earned if you contribute to the network and is required if you want to use the network.
+                    //                 As a customer you need the BitDust token to pay for the Gigabyte Hours you consume. Every transaction of the BitDust token is tracked via the internal BitDust blockchain.</p>`
+                    // },
                     {
                         slot: 'step5',
                         image_class: 'step5',
@@ -146,6 +161,7 @@
         text-align: center;
         padding: 40px 0;
         color: $color-gray-1;
+
         .description {
             font-size: 1rem;
             margin: 20px auto;
@@ -165,7 +181,8 @@
 
     .button {
         display: inline-block;
-        margin: 20px 0;
+        margin: 20px auto;
+        max-width: 300px;
     }
 
     .step-image {
@@ -179,6 +196,13 @@
 
     .navigation {
         font-size: 1rem;
+
+        &.last {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
         a {
             cursor: pointer;
             &:hover {
@@ -206,11 +230,11 @@
             position: relative;
             top: -1px;
         }
-        .arrow-left  {
+        .arrow-left {
             transform: rotate(135deg);
         }
         .arrow-right {
-            transform:rotate(315deg)
+            transform: rotate(315deg)
         }
     }
 
