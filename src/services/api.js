@@ -67,6 +67,10 @@ const Api = {
         return this.makeGet('friend/list');
     },
 
+    processHealth() {
+        return this.makeGet('process/health');
+    },
+
     networkConnected() {
         return this.makeGet('network/connected');
     },
