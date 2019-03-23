@@ -2,10 +2,6 @@
     <div class="friend-chat">
 
         <div class="friend-header">
-            <div>
-                <user-first-letter :name="currentFriend.username"/>
-                <h2>{{currentFriend.username}}</h2>
-            </div>
             <span @click="removeFriend(currentFriend.global_id)"
                   class="remove">remove</span>
         </div>
@@ -32,12 +28,10 @@
     import {mapActions} from 'vuex';
     import friendMessages from './FriendMessages';
     import message from '../../services/message';
-    import userFirstLetter from '../Globals/UserFirstLetter';
 
     export default {
         components: {
-            friendMessages,
-            userFirstLetter
+            friendMessages
         },
         props: {
             currentFriend: {
@@ -149,8 +143,9 @@
 
     .remove {
         cursor: pointer;
-        color: $color-purple-1;
+        color: $color-red;
         font-size: .8rem;
+        padding: 4px;
     }
 
     .close {
