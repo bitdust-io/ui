@@ -6,27 +6,31 @@
         </label>
         <input v-model="search"
                placeholder="type a file name"
-               id="search"/>
+               id="search" />
 
         <div v-if="Files.filesErrorLoading"
              class="loading-wrapper">
             <img src="../../assets/images/loading.svg"
-                 class="loading"/>
+                 class="loading" />
             <p>
                 Loading...
             </p>
         </div>
-        <div v-if="filteredList.length === 0 && !Files.filesErrorLoading"
+        <div v-if="filteredList.length === 0 && !Files.filesErrorLoading && search.length === 0"
              class="no-files">
             You don't have any file uploaded yet, try to upload your first ;)
+        </div>
+        <div class="no-files"
+             v-if="search.length !== 0 && filteredList.length === 0">
+            No files founded
         </div>
         <ul>
             <li v-for="(file, index) in filteredList"
                 :key="index">
-                <file-extension :file="file.path"/>
+                <file-extension :file="file.path" />
                 <span class="file-name"
                       @click="openFile(file.path)">{{file.name}}</span>
-                <file-detail :file="file"/>
+                <file-detail :file="file" />
             </li>
         </ul>
     </div>
@@ -99,6 +103,7 @@
 
     .search {
         font-size: .9rem;
+        cursor: pointer;
     }
 
     ul {

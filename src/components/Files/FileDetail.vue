@@ -1,14 +1,16 @@
 <template>
     <div class="file-detail">
-        <span class="icon-menu"></span>
+        <span class="icon-menu">
+            <font-awesome-icon icon="bars" />
+        </span>
         <div class="file-detail-content">
             <ul class="file-detail-list">
                 <li @click="downloadFile()">
-                    <i class="icon-download-file"></i>
+                    <font-awesome-icon class="icon" icon="cloud-download-alt" />
                     Download
                 </li>
                 <li @click="deleteFile(file)" class="delete">
-                    <i class="icon-delete-file"></i>
+                    <font-awesome-icon icon="trash-alt" />
                     Delete
                 </li>
             </ul>
@@ -36,13 +38,8 @@
         },
         methods: {
             ...mapActions([
-                'getApiFiles',
-                'deleteFile',
-                'closeFile'
+                'deleteFile'
             ]),
-            shareFile() {
-                alert('Sharing this file: ' + this.file.name + '\n \n Wait, Vessel is working on it ;)');
-            },
             downloadFile() {
                 this.downloadIsLoading = true;
                 this.downloadSuccess = false;
@@ -125,14 +122,11 @@
     }
 
     .icon-menu {
-        background: url("../../assets/images/icons/icon-file-detail.svg") no-repeat center;
-        position: relative;
         padding: 10px;
         cursor: pointer;
-        display: inline-block;
     }
 
-    [class^="icon-"], [class*=" icon-"] {
+    .icon {
         width: 20px;
         height: 20px;
         display: inline-block;

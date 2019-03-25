@@ -3,23 +3,27 @@
         <div class="menu">
             <ul>
                 <li :class="{'active': (activeTab ==='myFiles')}"
-                    @click="setMenuActive('myFiles')">MY FILES
+                    @click="setMenuActive('myFiles')">
+                    <font-awesome-icon icon="user-circle" />
+                    MY FILES
                 </li>
 
                 <li :class="{'active': (activeTab ==='myShares')}"
-                    @click=" setMenuActive('myShares')">SHARED WITH ME
+                    @click=" setMenuActive('myShares')">
+                    <font-awesome-icon icon="share-alt" />
+                    SHARED WITH ME
                 </li>
             </ul>
         </div>
         <div class="main">
             <div v-show="this.activeTab === 'myFiles'">
-                <files-upload/>
-                <file-list/>
+                <files-upload />
+                <file-list />
             </div>
             <div v-show="this.activeTab === 'myShares'">
-                <files-shared/>
+                <files-shared />
             </div>
-            <file-open/>
+            <file-open />
         </div>
     </div>
 </template>
@@ -64,20 +68,29 @@
     }
 
     .menu {
-        width: 300px;
+        width: 250px;
 
         ul {
+            padding: 20px;
 
             li {
                 list-style: none;
                 cursor: pointer;
                 padding: 10px;
-                margin-right: 10px;
                 font-size: .9rem;
+                border-radius: 10px;
 
                 &.active {
                     color: $color-white;
                     background: $color-purple-1;
+                }
+
+                svg {
+                    margin-right: 10px;
+                }
+
+                &:hover {
+                    opacity: .8;
                 }
             }
         }
@@ -85,5 +98,6 @@
 
     .main {
         flex: 1;
+        margin: 20px 0 0 20px;
     }
 </style>

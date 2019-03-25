@@ -1,5 +1,6 @@
 <template>
     <div class="dropbox">
+        <font-awesome-icon icon="cloud-upload-alt" />
         UPLOAD FILE
         <input type="file"
                :name="uploadFieldName"
@@ -31,7 +32,7 @@
     .dropbox {
         float: right;
         margin-right: 15px;
-        background: $color-blue-2;
+        background: $color-blue-1;
         box-shadow: 0 4px 13px 0 rgba(0, 0, 0, 0.05);
         border-radius: 100px;
         color: $color-white;
@@ -39,6 +40,12 @@
         padding: 10px 20px;
         position: relative;
         cursor: pointer;
+        transition: all .3s ease-in-out;
+
+        &:hover {
+            background: $color-purple-1;
+            border-radius: 0;
+        }
     }
 
     .input-file {
@@ -50,10 +57,6 @@
         width: 100%;
         position: absolute;
         cursor: pointer;
-    }
-
-    .dropbox:hover {
-        background: $color-blue-2;
     }
 
     .dropbox p {

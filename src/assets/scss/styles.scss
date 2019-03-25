@@ -2,12 +2,18 @@
 @import './colors';
 @import './buttons';
 
+*, *::after, *::before {
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-app-region: no-drag;
+  cursor: default;
+}
+
 html, body, #app {
   height: 100%;
 }
 
 #app {
-  //height: calc(100% - 100px);
   overflow: auto;
 }
 

@@ -3,25 +3,24 @@
 
         <div class="messages" ref="messages">
 
-            <div ref="message">
+            <div ref="message" class="messages-wrapper">
                 <ul>
                     <li v-for="(message, index) in oldMessages"
                         :key="index"
                         :class="{'mine': message.doc.sender.glob_id.replace('master$', '') !== currentFriend.global_id}">
 
-                        <p class="message">
-                            {{message.doc.payload.data.message}}
-                        </p>
+                        <div>
+                            <p class="user">
+                                {{message.doc.sender.glob_id.replace('master$', '').replace(/\@(.*)/g, '')}}
+                            </p>
 
+                            <p class="message">
+                                {{message.doc.payload.data.message}}
+                            </p>
+                        </div>
                         <p class="message-time">
                             {{new Date(message.doc.payload.time*1000).toLocaleString()}}
                         </p>
-
-                        <div class="sender"
-                             v-if="message.doc.sender.glob_id.replace('master$', '') === currentFriend.global_id">
-                            <user-first-letter
-                                :name="currentFriend.username"/>
-                        </div>
                     </li>
                 </ul>
 
@@ -37,12 +36,6 @@
                         <p class="message-time">
                             {{new Date(message.time*1000).toLocaleString()}}
                         </p>
-
-                        <div class="sender"
-                             v-if="message.sender.replace('master$', '') === currentFriend.global_id">
-                            <user-first-letter
-                                :name="currentFriend.username"/>
-                        </div>
                     </li>
                 </ul>
             </div>
@@ -52,7 +45,6 @@
 
 <script>
     import {mapGetters} from 'vuex';
-    import userFirstLetter from '../Globals/UserFirstLetter';
     import Api from '../../services/api';
 
     export default {
@@ -68,16 +60,16 @@
                 oldMessages: []
             };
         },
-        components: {userFirstLetter},
         methods: {
             async loadChatHistory() {
                 let messages = await Api.getMessageHistoryForUser(this.currentFriend);
                 this.oldMessages = messages.result.reverse();
+                this.scrollDown();
             },
             scrollDown() {
                 setTimeout(() => {
                     this.$refs.messages.scrollTop = this.$refs.message.scrollHeight;
-                }, 120);
+                }, 100);
             }
         },
         computed: {
@@ -98,7 +90,6 @@
         },
         mounted() {
             this.loadChatHistory();
-            this.scrollDown();
         },
         watch: {
             currentFriend() {
@@ -127,8 +118,8 @@
             right: 0;
             width: 100%;
             height: 100px;
-            z-index: 10;
-            background: linear-gradient(to top, rgba(242, 242, 242, 1) 30%, rgba(242, 242, 242, 0) 100%);
+            z-index: 1;
+            background: linear-gradient(to top, rgba(242, 242, 242, 0) 30%, rgba(242, 242, 242, 1) 100%);
         }
     }
 
@@ -148,29 +139,40 @@
     }
 
     li {
-        position: relative;
-        border-radius: 10px;
-        list-style: none;
-        font-size: 1.1rem;
-        padding: 3px 16px;
-        margin: 10px 10px 20px 20px;
+        font-size: 1rem;
+        margin: 10px 0;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
         background: $color-white;
-        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.20);
+
+        > div {
+            width: 100%;
+        }
+
+        .user {
+            text-transform: capitalize;
+            font-weight: bold;
+            color: $color-gray-1;
+            font-size: .9rem;
+            margin-bottom: 6px;
+        }
+
+        .message {
+            word-wrap: break-word;
+            width: 90%;
+        }
 
         &.mine {
-            margin-left: auto;
-            background: $color-gray-2;
-            color: $color-white;
+            background: none;
         }
     }
 
     .sender {
-        left: -30px;
-        top: 24px;
+        left: -24px;
+        top: 1px;
         position: absolute;
-        transform: scale(.6);
-        opacity: .4;
-        filter: grayscale(100%);
+        transform: scale(.4);
     }
 
     .no-messages-here {
@@ -179,7 +181,7 @@
     }
 
     .message-time {
-        text-align: right;
+        color: $color-gray-1;
         font-size: .7rem;
     }
 </style>
