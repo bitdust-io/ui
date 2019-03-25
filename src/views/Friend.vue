@@ -174,7 +174,7 @@
         max-width: 60%;
         font-size: 1rem;
         padding: 0;
-        margin: 20px;
+        margin: 21px;
     }
 
     .friend {
@@ -202,7 +202,6 @@
         bottom: 0;
         background: rgba(255, 255, 255, .9);
         padding: 50px;
-
     }
 
     .icon-add {
