@@ -182,6 +182,7 @@
         justify-content: space-between;
         height: calc(100% - 100px);
         overflow: hidden;
+        padding-top: 40px;
     }
 
     .menu {
