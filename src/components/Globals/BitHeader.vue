@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <header v-if="visible">
+        <header :class="{'visible': visible}">
             <div class="logo">
                 <img src="../../assets/logo/bitdust-logo-white.svg" />
             </div>
@@ -103,6 +103,12 @@
         justify-content: space-between;
         background-image: linear-gradient(-120deg, $color-blue-1 0%, $color-purple-1 100%);
         align-items: center;
+        margin-top: -100px;
+        transition: margin-top .3s ease;
+
+        &.visible {
+            margin-top: 0;
+        }
 
         .logo img {
             width: 140px;

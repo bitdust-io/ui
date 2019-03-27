@@ -1,0 +1,79 @@
+<template>
+    <div>
+        <label class="switch">
+            <input type="checkbox" class="switch-input">
+            <span class="switch-label" data-on="On" data-off="Off"></span>
+            <span class="switch-handle"></span>
+        </label>
+        <slot></slot>
+    </div>
+</template>
+
+<script>
+    export default {
+        name: 'UiSwitch'
+    };
+</script>
+<style lang="scss" scoped>
+    @import "../../assets/scss/includes.scss";
+
+    .switch {
+        background: $color-purple-1;
+        border-radius: 18px;
+        cursor: pointer;
+        display: inline-block;
+        height: 22px;
+        padding: 1px;
+        position: relative;
+        vertical-align: top;
+        width: 50px;
+    }
+
+    .switch-input {
+        left: 0;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+    }
+
+    .switch-label {
+        background: $color-gray-4;
+        border-radius: inherit;
+        display: block;
+        height: 20px;
+        position: relative;
+        transition: all 0.15s ease-out 0s;
+    }
+
+    .switch-input:checked ~ .switch-label {
+        background: $color-purple-1;
+    }
+
+    .switch-handle {
+        background-color: $color-gray-3;
+        border-radius: 100%;
+        height: 14px;
+        left: 6px;
+        position: absolute;
+        top: 4px;
+        transition: left 0.15s ease-out 0s;
+        width: 14px;
+    }
+
+    .switch-handle::before {
+        background: $color-purple-1;
+        border-radius: 6px;
+        content: '';
+        height: 12px;
+        left: 50%;
+        margin: -6px 0 0 -6px;
+        position: absolute;
+        top: 50%;
+        width: 12px;
+    }
+
+    .switch-input:checked ~ .switch-handle {
+        left: 28px;
+    }
+
+</style>
