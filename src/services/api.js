@@ -168,7 +168,11 @@ const Api = {
         });
     },
 
-    async getPath() {
+    getConfigList() {
+        return this.makeGet('config/list');
+    },
+
+    getPath() {
         return this.makeGet('config/get/paths/restore');
     },
 

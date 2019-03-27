@@ -3,7 +3,8 @@ import Message from './message';
 import store from '../store/';
 import Router from '../router';
 
-let apiNotResponding = 0;
+let apiHealthNotResponding = 0;
+let apiConnectionNotResponding = 0;
 
 const Application = {
 
@@ -19,14 +20,14 @@ const Application = {
         try {
             const status = await Api.processHealth();
             store.dispatch('updateHealthStatus', status);
-            apiNotResponding = 0;
         } catch (e) {
             store.dispatch('updateHealthStatus', {status: 'ERROR'});
             console.log('Error trying to connect health check');
-            apiNotResponding += 1;
-            if (apiNotResponding > 5) {
-                Router.push('/dead');
-            }
+            apiHealthNotResponding += 1;
+        }
+
+        if (apiHealthNotResponding > 5) {
+            Router.push('/dead');
         }
 
         setTimeout(() => {
@@ -40,9 +41,17 @@ const Application = {
             try {
                 const status = await Api.networkConnected();
                 store.dispatch('updateConnectionStatus', status);
+                if (status.status === 'ERROR') {
+                    apiConnectionNotResponding += 1;
+                }
             } catch (error) {
                 store.dispatch('updateConnectionStatus', {status: 'ERROR'});
                 console.log('Error trying to connect to network');
+                apiConnectionNotResponding += 1;
+            }
+
+            if (apiConnectionNotResponding > 10) {
+                Router.push('/dead');
             }
         }
 
