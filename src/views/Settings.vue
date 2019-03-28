@@ -155,6 +155,8 @@
                 border-radius: 10px;
                 flex: 1;
                 margin: 6px 10px;
+                word-wrap: break-word;
+                width: 100%;
 
                 &:first-child {
                     flex: .5;
