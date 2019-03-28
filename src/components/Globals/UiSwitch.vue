@@ -1,7 +1,13 @@
 <template>
     <div>
         <label class="switch">
-            <input type="checkbox" class="switch-input">
+            <input
+                v-model="modelValue"
+                :name="name"
+                :value="inputValue"
+                type="checkbox"
+                class="switch-input"
+            >
             <span class="switch-label" data-on="On" data-off="Off"></span>
             <span class="switch-handle"></span>
         </label>
@@ -11,7 +17,36 @@
 
 <script>
     export default {
-        name: 'UiSwitch'
+        name: 'UiSwitch',
+        props: {
+            checked: {
+                type: Boolean,
+                required: false,
+                default: false
+            },
+            value: {
+                type: Boolean,
+                required: false
+            },
+            inputValue: {
+                type: Boolean,
+                required: true
+            },
+            name: {
+                type: [String],
+                required: true
+            }
+        },
+        computed: {
+            modelValue: {
+                set(value) {
+                    this.$emit('input', value);
+                },
+                get() {
+                    return this.inputValue;
+                }
+            }
+        }
     };
 </script>
 <style lang="scss" scoped>
@@ -20,13 +55,12 @@
     .switch {
         background: $color-purple-1;
         border-radius: 18px;
-        cursor: pointer;
-        display: inline-block;
+        display: block;
         height: 22px;
         padding: 1px;
         position: relative;
-        vertical-align: top;
-        width: 50px;
+        width: 44px;
+        margin: 5px 0;
     }
 
     .switch-input {
@@ -53,7 +87,7 @@
         background-color: $color-gray-3;
         border-radius: 100%;
         height: 14px;
-        left: 6px;
+        left: 4px;
         position: absolute;
         top: 4px;
         transition: left 0.15s ease-out 0s;
@@ -73,7 +107,7 @@
     }
 
     .switch-input:checked ~ .switch-handle {
-        left: 28px;
+        left: 26px;
     }
 
 </style>

@@ -172,6 +172,13 @@ const Api = {
         return this.makeGet('config/list');
     },
 
+    setConfig(config) {
+        return this.makePost('config/set', {
+            key: config.key,
+            value: config.value
+        });
+    },
+
     getPath() {
         return this.makeGet('config/get/paths/restore');
     },

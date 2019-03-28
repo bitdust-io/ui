@@ -22,7 +22,7 @@ const getters = {
     },
     getPropertyForKey: state => {
         return keyName => {
-            return state.list.filter(item => getKeyName(item.key) === keyName)
+            return state.list.filter(item => getKeyName(item.key) === keyName);
         };
     }
 };
