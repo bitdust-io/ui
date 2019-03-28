@@ -56,7 +56,13 @@ export default new Router({
         {
             path: '/settings',
             name: 'settings',
-            component: Settings
+            component: Settings,
+            children: [
+                {
+                    path: ':id',
+                    name: 'settings'
+                }
+            ]
         },
         {
             path: '/dead',

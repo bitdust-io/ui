@@ -110,6 +110,7 @@
             margin: 0 0 15px;
             line-height: 22px;
             cursor: pointer;
+            align-items: center;
 
             &:last-child {
                 margin: 0;
@@ -117,6 +118,10 @@
 
             &:hover {
                 text-decoration: underline;
+            }
+
+            svg {
+                margin-right: 10px;
             }
         }
     }
