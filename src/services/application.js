@@ -20,6 +20,7 @@ const Application = {
         try {
             const status = await Api.processHealth();
             store.dispatch('updateHealthStatus', status);
+            apiHealthNotResponding = 0;
         } catch (e) {
             store.dispatch('updateHealthStatus', {status: 'ERROR'});
             console.log('Error trying to connect health check');
@@ -32,7 +33,7 @@ const Application = {
 
         setTimeout(() => {
             this.keepHeath();
-        }, 2000);
+        }, 1000);
     },
 
     async keepConnection() {
@@ -57,7 +58,7 @@ const Application = {
 
         setTimeout(() => {
             this.keepConnection();
-        }, 2000);
+        }, 1000);
     },
 
     async getIdentity() {
@@ -74,7 +75,7 @@ const Application = {
 
         setTimeout(() => {
             this.getIdentity();
-        }, 2000);
+        }, 1000);
     },
 
     async eventsListen() {
