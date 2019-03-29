@@ -10,7 +10,7 @@ const Api = {
         return this.makeGet('key/get', query);
     },
 
-    getKeys() {
+    getConfigKeys() {
         return this.makeGet('key/list');
     },
 
@@ -170,6 +170,10 @@ const Api = {
 
     getConfigList() {
         return this.makeGet('config/list');
+    },
+
+    getServiceList() {
+        return this.makeGet('service/list');
     },
 
     setConfig(config) {
