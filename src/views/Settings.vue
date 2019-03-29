@@ -1,54 +1,97 @@
 <template>
-    <div class="settings">
+    <grid-content>
+        <div slot="menu">
 
-        <div class="menu">
             <ul class="link-list">
-                <router-link v-for="item in getKeys"
-                             :key="item"
-                             :to="'/settings/'+item"
-                             class="link"
-                             active-class="active"
-                >
-                    {{item}}
-                </router-link>
+                <li>
+                    <router-link
+                        :to="'/settings/services'"
+                        class="link"
+                        active-class="active"
+                    >
+                        Services
+                    </router-link>
+                </li>
+
+                <li v-for="item in getConfigKeys"
+                    :key="item">
+                    <router-link
+                        :to="'/settings/'+item"
+                        class="link"
+                        active-class="active"
+                    >
+                        {{item}}
+                    </router-link>
+                </li>
                 <li>
                     <button @click="backupKey" class="button slim is-small">Backup key</button>
                 </li>
             </ul>
         </div>
-        <div class="main">
 
-            <ul class="settings-list">
-                <li v-for="(item, index) in getPropertyForKey(currentKey)"
+        <div slot="main">
+            <ul class="settings-list"
+                v-if="this.currentKey !=='services'">
+                <li v-for="(item, index) in getConfigForKey(currentKey)"
                     :key="index">
-                    {{item.key}}
-                    <ui-switch
-                        v-model="settings[item.key]"
-                        @input="onChange(item)"
-                        :input-value="item.value === 'true'"
-                        :name="item.key"
-                        v-if="item.type === 'boolean'"
-                    />
-                    <div class="info">
-                        <p class="label" v-if="item.type !== 'boolean' && item.value">{{item.value}}</p>
-                        <p class="label" v-if="item.label">
-                            {{item.label}}
-                        </p>
-                        <p class="label" v-if="item.info">
-                            {{item.info}}
-                        </p>
-                    </div>
+
+                    <config-item :item="item"
+                                 @onChange="onChange" />
                 </li>
             </ul>
-        </div>
+            <ul v-else
+                class="settings-list"
+            >
+                <li v-for="(item, index) in Settings.serviceList"
+                    :key="index">
+                    {{item.name.replace('service_', '')}}
 
-    </div>
+                    <config-item :item="getServiceConfigForKey(item.name)"
+                                 v-if="getServiceConfigForKey(item.name)"
+                                 @onChange="onChange" />
+
+                    <ul>
+                        <li v-for="(subItem, index) in item.depends"
+                            :key="index">
+
+                            <div>
+                                {{subItem.replace('service_', '')}}
+                            </div>
+
+                            <config-item :item="getServiceConfigForKey(subItem)"
+                                         v-if="getServiceConfigForKey(subItem)"
+                                         @onChange="onChange" />
+
+                            <div v-if="getServiceByKey(subItem)"
+                                 class="status">
+                                <div>
+                                    <span>State</span>
+                                    <span>{{getServiceByKey(subItem).state}}</span>
+                                </div>
+                                <div>
+                                    <span>Installed</span>
+                                    <span>{{getServiceByKey(subItem).installed}}</span>
+                                </div>
+                                <div>
+                                    <span>Enabled</span>
+                                    <span>{{getServiceByKey(subItem).enabled}}</span>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </grid-content>
 </template>
 
 <script>
     import Api from '../services/api';
     import {mapActions, mapState, mapGetters} from 'vuex';
-    import UiSwitch from '../components/Globals/UiSwitch';
+    import ConfigItem from '../components/Globals/ConfigItem';
+    import GridContent from '../components/Globals/GridContent';
 
     export default {
         name: 'Settings',
@@ -59,29 +102,33 @@
             };
         },
         components: {
-            UiSwitch
+            ConfigItem,
+            GridContent
         },
         computed: {
             ...mapState(['Settings']),
             ...mapGetters([
-                'getKeys',
-                'getPropertyForKey'
+                'getConfigKeys',
+                'getConfigForKey',
+                'getServiceByKey',
+                'getServiceConfigForKey',
+                'connectionStatus'
             ])
         },
-        mounted() {
-            this.updateSettingsList();
-            this.currentKey = this.getKeys[0];
+        created() {
+            this.updateConfigList();
+            this.updateServiceList();
+            this.currentKey = 'services';
         },
         methods: {
-            ...mapActions(['updateSettingsList']),
+            ...mapActions([
+                'updateConfigList',
+                'updateServiceList'
+            ]),
             backupKey() {
                 Api.identityBackup();
             },
-            onChange(data) {
-                let config = {
-                    value: this.settings[data.key],
-                    key: data.key
-                };
+            onChange(config) {
                 Api.setConfig(config);
             }
         },
@@ -89,86 +136,26 @@
             '$route'(to) {
                 this.currentKey = to.params.id;
             },
-            getKeys(data) {
+            getConfigKeys(data) {
                 if (data.indexOf(this.$route.params.id) === -1) {
-                    this.$router.push('/settings/' + data[0]);
+                    this.$router.push('/settings/services');
                 } else {
                     this.currentKey = this.$route.params.id;
                 }
+            },
+            connectionStatus(response) {
+                if (response.status === 'OK') this.updateServiceList();
             }
         }
     };
 </script>
 
 <style lang="scss" scoped>
-
     @import "../assets/scss/includes.scss";
 
-    .settings {
-        display: flex;
-        justify-content: space-between;
-        height: calc(100% - 100px);
-        padding-top: 40px;
-    }
-
-    .menu {
-        width: 250px;
-
-        .link-list {
-            padding: 20px;
-            list-style: none;
-        }
-
-        .link {
-            cursor: pointer;
-            text-transform: uppercase;
-            display: block;
-            text-decoration: none;
-            color: $color-purple-1;
-            font-size: 1rem;
-            padding: 10px;
-            transition: all .3s ease;
-            border: 0;
-            margin: 10px 0;
-
-            &.active {
-                border-left: 4px solid $color-purple-1;
-            }
-
-            &:hover {
-                opacity: .8;
-            }
-        }
-    }
-
     .settings-list {
-        padding: 20px;
+        padding: 60px 0 20px;
         max-width: 800px;
-
-        .info {
-            display: flex;
-
-            .label {
-                padding: 5px 10px;
-                display: block;
-                background: $color-gray-4;
-                border-radius: 10px;
-                flex: 1;
-                margin: 6px 10px;
-                word-wrap: break-word;
-                width: 100%;
-
-                &:first-child {
-                    flex: .5;
-                    margin-left: 0;
-                }
-
-                &:last-child {
-                    flex: 3;
-                }
-
-            }
-        }
 
         li {
             border: 1px solid $color-gray-4;
@@ -190,11 +177,31 @@
         }
     }
 
-    .main {
-        flex: 1;
-        height: 100%;
-        overflow: scroll;
-        padding-bottom: 200px;
+    .status {
+        background: #ebebeb;
+        padding: 10px;
+        border-radius: 8px;
+        display: flex;
+
+        div {
+            display: flex;
+            margin: 10px;
+            border: 1px solid $color-gray-2;
+        }
+
+        span {
+            padding: 2px 8px;
+            background: white;
+            background: $color-gray-1;
+            color: $color-white;
+
+            &:first-child {
+                background: $color-gray-4;
+                color: $color-gray-1;
+                padding-right: 14px;
+                padding-left: 6px;
+            }
+        }
     }
 
 </style>
