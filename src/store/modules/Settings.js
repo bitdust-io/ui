@@ -1,7 +1,8 @@
 import api from '../../services/api';
 
 const state = {
-    list: []
+    configList: [],
+    serviceList: []
 };
 
 function getKeyName(key) {
@@ -9,34 +10,58 @@ function getKeyName(key) {
     return regex.exec(key)[0];
 }
 
+function getServiceKeyName(key) {
+    const regex = /\/(.*)(\/)/g;
+    return regex.exec(key)[1];
+}
+
 const getters = {
-    getKeys: state => {
+    getConfigKeys: state => {
         let results = [];
-        state.list.filter(item => {
+        state.configList.filter(item => {
             let itemKey = getKeyName(item.key);
-            if (!results.find(result => result === itemKey)) {
+            if (!results.find(result => result === itemKey || itemKey === 'services')) {
                 results.push(itemKey);
             }
         });
         return results;
     },
-    getPropertyForKey: state => {
+    getServiceByKey: state => {
+        return key => {
+            key = key.replace('service_', '');
+            return state.serviceList.find(item => key === getServiceKeyName(item.config_path));
+        };
+    },
+    getConfigForKey: state => {
         return keyName => {
-            return state.list.filter(item => getKeyName(item.key) === keyName);
+            return state.configList.filter(item => getKeyName(item.key) === keyName);
+        };
+    },
+    getServiceConfigForKey: (state, getters) => {
+        return key => {
+            key = key.replace('service_', '').replace('_', '-');
+            return getters.getConfigForKey('services').find(item => getServiceKeyName(item.key) === key);
         };
     }
 };
 
 const mutations = {
-    updateSettingsList(state, value) {
-        state.list = value;
+    updateConfigList(state, value) {
+        state.configList = value;
+    },
+    updateServiceList(state, value) {
+        state.serviceList = value;
     }
 };
 
 const actions = {
-    async updateSettingsList({commit}) {
+    async updateConfigList({commit}) {
         const {result} = await api.getConfigList();
-        commit('updateSettingsList', result);
+        commit('updateConfigList', result);
+    },
+    async updateServiceList({commit}) {
+        const {result} = await api.getServiceList();
+        commit('updateServiceList', result);
     }
 };
 

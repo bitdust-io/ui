@@ -112,7 +112,7 @@
 
         .logo img {
             width: 140px;
-            margin-left: 20px;
+            margin-left: 40px;
         }
 
         .header-right {
