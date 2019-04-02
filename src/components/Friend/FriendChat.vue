@@ -103,9 +103,6 @@
     @import "../../assets/scss/includes.scss";
 
     .friend-chat {
-        height: 100%;
-        position: relative;
-        z-index: 1;
 
         h2 {
             font-size: 1.4rem;
@@ -148,18 +145,12 @@
         padding: 4px;
     }
 
-    .close {
-        cursor: pointer;
-        font-size: .8rem;
-        color: $color-blue-1;
-    }
-
     .message-sender {
         position: absolute;
         background: $color-gray-3;
         bottom: 20px;
         right: 20px;
-        left: 0;
+        left: 300px;
         display: flex;
 
         .chat-input {
