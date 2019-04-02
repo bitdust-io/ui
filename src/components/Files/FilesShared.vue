@@ -6,15 +6,15 @@
         </label>
         <input v-model="search"
                placeholder="type a file name"
-               id="search"/>
+               id="search" />
 
         <ul>
             <li v-for="(file, index) in filteredList"
                 :key="index">
-                <file-extension :file="file.path"/>
+                <file-extension :file="file.path" />
                 <span class="file-name"
-                      @click="openFile(file.path)">{{file.name}}</span>
-                <file-detail :file="file"/>
+                      @click="open(file.path)">{{file.name}}</span>
+                <file-detail :file="file" />
             </li>
         </ul>
         <div v-if="isFileOpen">
@@ -42,9 +42,11 @@
         methods: {
             ...mapActions([
                 'deleteFile',
-                'openFile',
                 'getApiSharedFiles'
-            ])
+            ]),
+            open(file) {
+                this.$emit('open', file);
+            }
         },
         computed: {
             ...mapGetters([
