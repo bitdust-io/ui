@@ -1,10 +1,10 @@
 <template>
     <div class="loading">
         <div class="logo-wrapper">
-            <icon name="logo" class="logo"/>
+            <icon name="logo" class="logo" />
             <icon name="loading"
                   class="rotating"
-                  size="xl"/>
+                  size="xl" />
         </div>
         <h1>You are being connected</h1>
     </div>
