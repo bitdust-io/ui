@@ -60,7 +60,7 @@ export default new Router({
             children: [
                 {
                     path: ':id',
-                    name: 'settings'
+                    name: 'setting'
                 }
             ]
         },
