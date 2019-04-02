@@ -1,7 +1,7 @@
 <template>
     <div class="dropbox">
         <font-awesome-icon icon="cloud-upload-alt" />
-        UPLOAD FILE
+        UPLOAD
         <input type="file"
                :name="uploadFieldName"
                @change="createFile($event.target)"
@@ -30,8 +30,7 @@
     @import "../../assets/scss/includes.scss";
 
     .dropbox {
-        float: right;
-        margin-right: 15px;
+        margin-bottom: 20px;
         background: $color-blue-1;
         box-shadow: 0 4px 13px 0 rgba(0, 0, 0, 0.05);
         border-radius: 100px;
@@ -40,7 +39,8 @@
         padding: 10px 20px;
         position: relative;
         cursor: pointer;
-        transition: all .3s ease-in-out;
+        transition: all .2s ease-in-out;
+        text-align: center;
 
         &:hover {
             background: $color-purple-1;
@@ -59,8 +59,4 @@
         cursor: pointer;
     }
 
-    .dropbox p {
-        font-size: 1.2em;
-        text-align: center;
-    }
 </style>
