@@ -29,7 +29,7 @@
                 :key="index">
                 <file-extension :file="file.path" />
                 <span class="file-name"
-                      @click="openFile(file.path)">{{file.name}}</span>
+                      @click="open(file.path)">{{file.name}}</span>
                 <file-detail :file="file" />
             </li>
         </ul>
@@ -55,11 +55,13 @@
         methods: {
             ...mapActions([
                 'deleteFile',
-                'openFile',
                 'getApiFiles'
             ]),
             setFileLoading(value) {
                 this.isFilesLoading = value;
+            },
+            open(file) {
+                this.$emit('open', file);
             }
         },
         computed: {
