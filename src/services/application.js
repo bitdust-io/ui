@@ -4,22 +4,31 @@ import store from '../store/';
 import Router from '../router';
 
 let apiHealthNotResponding = 0;
-let apiConnectionNotResponding = 0;
 
 const Application = {
 
     bootstrap() {
         this.keepHeath();
-        this.keepConnection();
-        this.getIdentity();
         this.messagesListen();
         // this.eventsListen();
     },
 
     async keepHeath() {
         try {
-            const status = await Api.processHealth();
+            const {status} = await Api.processHealth();
             store.dispatch('updateHealthStatus', status);
+            if (status === 'OK') {
+                if (!store.state.Application.identity.name) {
+                    const identityStatus = await Api.getIdentity();
+                    store.dispatch('updateIdentity', identityStatus.result[0]);
+                }
+
+                if (store.state.Application.identity.name) {
+                    const networkStatus = await Api.networkConnected();
+                    store.dispatch('updateConnectionStatus', networkStatus);
+                }
+            }
+
             apiHealthNotResponding = 0;
         } catch (e) {
             store.dispatch('updateHealthStatus', {status: 'ERROR'});
@@ -36,57 +45,16 @@ const Application = {
         }, 1000);
     },
 
-    async keepConnection() {
-        if (store.state.Application.healthStatus.status === 'OK' &&
-            store.state.Application.identity.name) {
-            try {
-                const status = await Api.networkConnected();
-                store.dispatch('updateConnectionStatus', status);
-                if (status.status === 'ERROR') {
-                    apiConnectionNotResponding += 1;
-                }
-            } catch (error) {
-                store.dispatch('updateConnectionStatus', {status: 'ERROR'});
-                console.log('Error trying to connect to network');
-                apiConnectionNotResponding += 1;
-            }
-
-            if (apiConnectionNotResponding > 10) {
-                Router.push('/dead');
-            }
-        }
-
-        setTimeout(() => {
-            this.keepConnection();
-        }, 1000);
-    },
-
-    async getIdentity() {
-        if (!store.state.Application.identity.name &&
-            store.state.Application.healthStatus.status === 'OK') {
-            try {
-                const status = await Api.getIdentity();
-                store.dispatch('updateIdentity', status.result[0]);
-            } catch (error) {
-                store.dispatch('updateIdentity', {status: 'ERROR'});
-                console.log('Error trying to get identity');
-            }
-        }
-
-        setTimeout(() => {
-            this.getIdentity();
-        }, 1000);
-    },
-
     async eventsListen() {
-        // try {
-        //     const currentEvent = await Api.eventsListen();
-        //     // console.log('Event:', currentEvent);
-        //     // store.dispatch('updateEvents', currentEvent);
-        // } catch (e) {
-        //     console.log('error receiving event', e);
-        // }
-        // this.eventsListen();
+        try {
+            const {result} = await Api.eventsListen();
+            console.log('Event:', result[0]);
+            // TODO Set to store the events or to a service that handles notifications
+            // store.dispatch('updateEvents', currentEvent);
+        } catch (e) {
+            console.log('error receiving event', e);
+        }
+        this.eventsListen();
     },
 
     async messagesListen() {
@@ -102,7 +70,7 @@ const Application = {
 
         setTimeout(() => {
             this.messagesListen();
-        }, 500);
+        }, 100);
     }
 };
 
