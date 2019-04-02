@@ -30,8 +30,9 @@
         flex: 1;
         height: 100%;
         overflow: scroll;
-        padding-bottom: 200px;
+        padding-bottom: 100px;
         padding-left: 40px;
+        padding-top: 60px;
     }
 
     .menu {
@@ -40,6 +41,7 @@
 
         .link-list {
             list-style: none;
+            display: inline-block;
         }
 
         .link {
