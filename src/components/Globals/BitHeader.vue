@@ -76,7 +76,8 @@
                 let visibleRouters = [
                     'files',
                     'friend',
-                    'settings'
+                    'settings',
+                    'setting'
                 ];
                 return visibleRouters.indexOf(name) > -1;
             }
@@ -164,7 +165,7 @@
             text-transform: uppercase;
             position: relative;
             z-index: 1;
-            transition: all .4s ease-in-out;
+            transition: all .2s ease-in-out;
 
             &.active {
                 color: $color-gray-3;
