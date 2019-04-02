@@ -1,16 +1,19 @@
 <template>
-    <div class="friend">
-        <div class="menu">
+    <grid-content>
+        <div slot="menu">
 
-            <h2 @click="openSearch" class="button primary">
+            <h2 @click="openSearch"
+                class="button primary is-small">
                 Search other users
             </h2>
 
-            <ul class="friends-list">
+            <ul class="link-list">
                 <li v-for="(friend, index) in getFriends"
                     :key="index"
                     :class="{'online': friend.contact_state === 'CONNECTED'}">
                     <router-link
+                        class="link"
+                        active-class="active"
                         :to="{ name: 'friend', params: { id: friend.username }}">
                         {{friend.username}}
                     </router-link>
@@ -19,10 +22,10 @@
 
         </div>
 
-        <div class="main">
+        <div slot="main">
 
             <friend-chat :current-friend="getCurrentFriend"
-                         v-if="getCurrentFriend"/>
+                         v-if="getCurrentFriend" />
             <div v-else>
                 Please select a friend to chat !
             </div>
@@ -34,7 +37,7 @@
                 </label>
 
                 <input v-model="search"
-                       id="search"/>
+                       id="search" />
 
                 <button class="button primary"
                         @click="searchUser">Search
@@ -85,13 +88,14 @@
                 </div>
             </div>
         </div>
-    </div>
+    </grid-content>
 </template>
 
 <script>
     import {mapGetters, mapActions} from 'vuex';
     import api from '../services/api';
     import FriendChat from '../components/Friend/FriendChat';
+    import GridContent from '../components/Globals/GridContent';
 
     export default {
         name: 'Friend',
@@ -106,7 +110,8 @@
             };
         },
         components: {
-            FriendChat
+            FriendChat,
+            GridContent
         },
         computed: {
             ...mapGetters([
@@ -170,27 +175,10 @@
 <style lang="scss" scoped>
     @import "../assets/scss/includes.scss";
 
-    h2.button {
-        max-width: 60%;
+    .button {
         font-size: 1rem;
         padding: 0;
-        margin: 21px;
-    }
-
-    .friend {
-        display: flex;
-        justify-content: space-between;
-        height: calc(100% - 100px);
-        overflow: hidden;
-        padding-top: 40px;
-    }
-
-    .menu {
-        width: 300px;
-    }
-
-    .main {
-        flex: 1;
+        margin-bottom: 20px;
     }
 
     .search {
