@@ -32,7 +32,7 @@ const mutations = {
         state.isFileOpen = value;
     },
     UPDATE_CURRENT_FILE(state, file) {
-        state.currentFile = state.filesList.filter(item => item.name === file)[0] || state.sharedFilesList.filter(item => item.name === file)[0];
+        state.currentFile = state.filesList.find(item => item.name === file) || state.sharedFilesList.find(item => item.name === file);
     },
     UPDATE_CURRENT_FILE_DATA(state, file) {
         state.currentFile.versions = file;
@@ -46,9 +46,8 @@ const actions = {
     updateCurrentFileData({commit}, data) {
         commit('UPDATE_CURRENT_FILE_DATA', data);
     },
-    openFile({commit}, file) {
-        commit('UPDATE_CURRENT_FILE', file);
-        commit('UPDATE_IS_FILE_OPEN', true);
+    updateCurrentFile({commit}, data) {
+        commit('UPDATE_CURRENT_FILE', data);
     },
     closeFile({commit}) {
         commit('UPDATE_IS_FILE_OPEN', false);
