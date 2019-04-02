@@ -16,8 +16,8 @@
             ])
         },
         watch: {
-            'healthStatus': function (response) {
-                if (response.status === 'OK' && this.connectionStatus.status === 'OK') {
+            healthStatus(response) {
+                if (response === 'OK') {
                     this.$router.push('loading');
                 }
             }
