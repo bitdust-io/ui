@@ -1,5 +1,50 @@
 <template>
     <grid-content>
+        <div slot="main">
+            <ul class="settings-list"
+                v-if="this.currentKey !=='services'">
+                <li v-for="(item, index) in getConfigForKey(currentKey)"
+                    :key="index">
+
+                    <ui-config-boolean :item="item"
+                                       @onChange="onChange" />
+                </li>
+            </ul>
+            <ul v-else
+                class="settings-list"
+            >
+                <li v-for="(item, index) in Settings.serviceList"
+                    :key="index">
+                    {{item.name.replace('service_', '')}}
+
+                    <ui-config-boolean :item="getServiceConfigForKey(item.name)"
+                                       v-if="getServiceConfigForKey(item.name)"
+                                       @onChange="onChange" />
+
+                    <ui-status :status="item" />
+
+                    <ul>
+                        <li v-for="(subItem, index) in item.depends"
+                            :key="index">
+
+                            <div>
+                                {{subItem.replace('service_', '')}}
+                            </div>
+
+                            <ui-config-boolean :item="getServiceConfigForKey(subItem)"
+                                               v-if="getServiceConfigForKey(subItem)"
+                                               @onChange="onChange" />
+
+                            <ui-status :status="getServiceByKey(subItem)" />
+
+                        </li>
+
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+
         <div slot="menu">
 
             <ul class="link-list">
@@ -28,69 +73,14 @@
                 </li>
             </ul>
         </div>
-
-        <div slot="main">
-            <ul class="settings-list"
-                v-if="this.currentKey !=='services'">
-                <li v-for="(item, index) in getConfigForKey(currentKey)"
-                    :key="index">
-
-                    <config-item :item="item"
-                                 @onChange="onChange" />
-                </li>
-            </ul>
-            <ul v-else
-                class="settings-list"
-            >
-                <li v-for="(item, index) in Settings.serviceList"
-                    :key="index">
-                    {{item.name.replace('service_', '')}}
-
-                    <config-item :item="getServiceConfigForKey(item.name)"
-                                 v-if="getServiceConfigForKey(item.name)"
-                                 @onChange="onChange" />
-
-                    <ul>
-                        <li v-for="(subItem, index) in item.depends"
-                            :key="index">
-
-                            <div>
-                                {{subItem.replace('service_', '')}}
-                            </div>
-
-                            <config-item :item="getServiceConfigForKey(subItem)"
-                                         v-if="getServiceConfigForKey(subItem)"
-                                         @onChange="onChange" />
-
-                            <div v-if="getServiceByKey(subItem)"
-                                 class="status">
-                                <div>
-                                    <span>State</span>
-                                    <span>{{getServiceByKey(subItem).state}}</span>
-                                </div>
-                                <div>
-                                    <span>Installed</span>
-                                    <span>{{getServiceByKey(subItem).installed}}</span>
-                                </div>
-                                <div>
-                                    <span>Enabled</span>
-                                    <span>{{getServiceByKey(subItem).enabled}}</span>
-                                </div>
-                            </div>
-                        </li>
-
-                    </ul>
-                </li>
-
-            </ul>
-        </div>
     </grid-content>
 </template>
 
 <script>
     import Api from '../services/api';
     import {mapActions, mapState, mapGetters} from 'vuex';
-    import ConfigItem from '../components/Globals/ConfigItem';
+    import UiConfigBoolean from '../components/Settings/UiConfigBoolean';
+    import UiStatus from '../components/Settings/UiStatus';
     import GridContent from '../components/Globals/GridContent';
 
     export default {
@@ -102,7 +92,8 @@
             };
         },
         components: {
-            ConfigItem,
+            UiConfigBoolean,
+            UiStatus,
             GridContent
         },
         computed: {
@@ -154,7 +145,6 @@
     @import "../assets/scss/includes.scss";
 
     .settings-list {
-        padding: 60px 0 20px;
         max-width: 800px;
 
         li {
@@ -173,33 +163,6 @@
             &.active {
                 color: $color-white;
                 background: $color-purple-1;
-            }
-        }
-    }
-
-    .status {
-        background: #ebebeb;
-        padding: 10px;
-        border-radius: 8px;
-        display: flex;
-
-        div {
-            display: flex;
-            margin: 10px;
-            border: 1px solid $color-gray-2;
-        }
-
-        span {
-            padding: 2px 8px;
-            background: white;
-            background: $color-gray-1;
-            color: $color-white;
-
-            &:first-child {
-                background: $color-gray-4;
-                color: $color-gray-1;
-                padding-right: 14px;
-                padding-left: 6px;
             }
         }
     }

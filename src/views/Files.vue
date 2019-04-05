@@ -25,13 +25,12 @@
                 <file-list @open="openModal" />
             </div>
             <div v-show="this.activeTab === 'myShares'">
-                <files-shared @open="openModal"/>
+                <files-shared @open="openModal" />
             </div>
         </div>
     </grid-content>
 </template>
 <script>
-    import {mapActions} from 'vuex';
     import fileList from '../components/Files/FileList';
     import filesShared from '../components/Files/FilesShared';
     import filesUpload from '../components/Files/FileUpload';
