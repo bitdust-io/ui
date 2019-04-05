@@ -21,10 +21,10 @@
 </template>
 
 <script>
-    import UiSwitch from './UiSwitch';
+    import UiSwitch from '@/components/Globals/UiSwitch';
 
     export default {
-        name: 'ConfigItem',
+        name: 'UiConfigBoolean',
         data() {
             return {
                 settings: {}

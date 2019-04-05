@@ -11,6 +11,7 @@ function getKeyName(key) {
 }
 
 function getServiceKeyName(key) {
+    if (!key) return;
     const regex = /\/(.*)(\/)/g;
     return regex.exec(key)[1];
 }
@@ -28,8 +29,7 @@ const getters = {
     },
     getServiceByKey: state => {
         return key => {
-            key = key.replace('service_', '');
-            return state.serviceList.find(item => key === getServiceKeyName(item.config_path));
+            return state.serviceList.find(item => key === item.name);
         };
     },
     getConfigForKey: state => {
