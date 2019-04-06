@@ -5,7 +5,6 @@ const constants = {};
 const state = {
     filesList: [],
     sharedFilesList: [],
-    isFileOpen: false,
     currentFile: {},
     filesErrorLoading: true
 };
@@ -13,7 +12,6 @@ const state = {
 const getters = {
     getFiles: state => state.filesList,
     getSharedFiles: state => state.sharedFilesList,
-    isFileOpen: state => state.isFileOpen,
     currentFile: state => state.currentFile,
     hasFilePath(path) {
         if (!state.filesList) return [];
@@ -27,9 +25,6 @@ const mutations = {
     },
     UPDATE_FILE_LIST(state, value) {
         state.filesList = value;
-    },
-    UPDATE_IS_FILE_OPEN(state, value) {
-        state.isFileOpen = value;
     },
     UPDATE_CURRENT_FILE(state, file) {
         state.currentFile = state.filesList.find(item => item.name === file) || state.sharedFilesList.find(item => item.name === file);
@@ -49,16 +44,13 @@ const actions = {
     updateCurrentFile({commit}, data) {
         commit('UPDATE_CURRENT_FILE', data);
     },
-    closeFile({commit}) {
-        commit('UPDATE_IS_FILE_OPEN', false);
-    },
     deleteFile({commit, dispatch}, currentFile) {
         if (confirm('Are you sure ?')) {
             api.deleteFile(currentFile.key_id + ':' + currentFile.path).then(data => {
                 console.log('file removed', data);
-                if (data.ok) {
+                if (data.status === 'OK') {
                     dispatch('getApiFiles');
-                    dispatch('closeFile');
+                    dispatch('updateOpenModal', false);
                 }
             });
         }
