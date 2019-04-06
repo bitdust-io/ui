@@ -3,7 +3,7 @@
         <div @click="stopPropagation($event)"
              class="file-open-container">
             <div class="flex">
-                <file-extension :file="currentFile.path"/>
+                <file-extension :file="currentFile.path" />
                 <h1>{{currentFile.name}}</h1>
             </div>
 
@@ -61,7 +61,8 @@
                     Download {{currentFile.path}} Success
                 </div>
                 <div v-if="downloadError">
-                    Download {{currentFile.path}} Error
+                    Download {{currentFile.path}} Error:
+                    <span class="share-text">{{errorMessage}}</span>
                 </div>
             </div>
             <hr />
@@ -91,7 +92,8 @@
                 downloadIsLoading: false,
                 isSharingOpen: false,
                 selectedFriend: '',
-                isSharing: false
+                isSharing: false,
+                errorMessage: undefined
 
             };
         },
@@ -120,9 +122,10 @@
                 this.downloadSuccess = false;
                 this.downloadError = false;
                 Api.downloadFile(this.currentFile.remote_path).then(resp => {
-                    if (resp.ok) {
+                    if (resp.status === 'OK') {
                         this.downloadSuccess = true;
                     } else {
+                        this.errorMessage = resp.errors[0];
                         this.downloadError = true;
                     }
                     this.downloadIsLoading = false;
@@ -157,7 +160,6 @@
         },
         computed: {
             ...mapGetters([
-                'isFileOpen',
                 'currentFile',
                 'getFriends',
                 'connectionStatus'
