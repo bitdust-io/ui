@@ -105,6 +105,10 @@ const Api = {
         return this.makeGet('identity/get');
     },
 
+    getUser() {
+        return this.makeGet('config/get/personal/nickname');
+    },
+
     eventsSend(eventId) {
         return this.makePost('event/send' + eventId, {
             'request': 'hello'

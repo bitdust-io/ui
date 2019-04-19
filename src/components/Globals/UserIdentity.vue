@@ -1,8 +1,8 @@
 <template>
     <div class="user-identity"
          :class="{active: getIdentity.name}">
-        <user-first-letter :name="getIdentity.name"/>
-        <div class="user-name">{{getIdentity.name}}</div>
+        <user-first-letter :name="getUser.value" />
+        <div class="user-name">{{getUser.value}}</div>
     </div>
 </template>
 
@@ -14,13 +14,18 @@
         components: {userFirstLetter},
         computed: {
             ...mapGetters([
-                'getIdentity'
+                'getIdentity',
+                'getUser'
             ])
         },
         methods: {
             ...mapActions([
-                'updateIdentity'
+                'updateIdentity',
+                'updateUserFromApi'
             ])
+        },
+        created() {
+            this.updateUserFromApi();
         }
     };
 </script>
