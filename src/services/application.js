@@ -17,15 +17,22 @@ const Application = {
         try {
             const {status} = await Api.processHealth();
             store.dispatch('updateHealthStatus', status);
+
             if (status === 'OK') {
                 if (!store.state.Application.identity.name) {
-                    const identityStatus = await Api.getIdentity();
-                    store.dispatch('updateIdentity', identityStatus.result[0]);
-                }
-
-                if (store.state.Application.identity.name) {
-                    const networkStatus = await Api.networkConnected();
-                    store.dispatch('updateConnectionStatus', networkStatus);
+                    try {
+                        const identityStatus = await Api.getIdentity();
+                        store.dispatch('updateIdentity', identityStatus.result[0]);
+                    } catch (e) {
+                        store.dispatch('updateIdentity', {status: 'ERROR'});
+                    }
+                } else {
+                    try {
+                        const networkStatus = await Api.networkConnected();
+                        store.dispatch('updateConnectionStatus', networkStatus);
+                    } catch (e) {
+                        store.dispatch('updateConnectionStatus', {status: 'ERROR'});
+                    }
                 }
             }
 

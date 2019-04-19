@@ -1,13 +1,17 @@
+import Api from "../../services/api";
+
 const state = {
     healthStatus: {},
     connectionStatus: {},
-    identity: {}
+    identity: {},
+    user: undefined
 };
 
 const getters = {
     healthStatus: state => state.healthStatus,
     connectionStatus: state => state.connectionStatus,
-    getIdentity: state => state.identity
+    getIdentity: state => state.identity,
+    getUser: state => state.user
 };
 
 const mutations = {
@@ -19,6 +23,9 @@ const mutations = {
     },
     updateIdentity(state, value) {
         state.identity = value;
+    },
+    updateUser(state, value) {
+        state.user = value;
     }
 };
 
@@ -31,6 +38,10 @@ const actions = {
     },
     updateIdentity({commit}, value) {
         commit('updateIdentity', value);
+    },
+    async updateUserFromApi({commit}) {
+        const {result} = await Api.getUser();
+        commit('updateUser', result[0]);
     }
 };
 
