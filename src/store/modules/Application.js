@@ -50,7 +50,7 @@ const actions = {
         commit('updateUser', result[0]);
     },
     updateEvent({commit}, value) {
-        commit('updateUser', value);
+        commit('updateEvent', value);
     }
 };
 
