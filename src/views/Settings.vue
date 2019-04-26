@@ -14,7 +14,8 @@
                 class="settings-list"
             >
                 <li v-for="(item, index) in Settings.serviceList"
-                    :key="index">
+                    :key="index"
+                    class="main">
                     {{item.name.replace('service_', '')}}
 
                     <ui-config-boolean :item="getServiceConfigForKey(item.name)"
@@ -23,22 +24,15 @@
 
                     <ui-status :status="item" />
 
-                    <ul>
+                    <h3>Depends on</h3>
+
+                    <ul class="depends">
                         <li v-for="(subItem, index) in item.depends"
                             :key="index">
-
                             <div>
                                 {{subItem.replace('service_', '')}}
                             </div>
-
-                            <ui-config-boolean :item="getServiceConfigForKey(subItem)"
-                                               v-if="getServiceConfigForKey(subItem)"
-                                               @onChange="onChange" />
-
-                            <ui-status :status="getServiceByKey(subItem)" />
-
                         </li>
-
                     </ul>
                 </li>
 
@@ -147,14 +141,23 @@
     .settings-list {
         max-width: 800px;
 
+        h3 {
+            font-size: .8rem;
+            margin-top: 15px;
+        }
+
         li {
             border: 1px solid $color-gray-4;
             margin: 10px 0;
             display: block;
             list-style: none;
-            padding: 20px;
+
+        }
+
+        .main {
             font-size: .9rem;
             border-radius: 10px;
+            padding: 20px;
 
             &:hover {
                 box-shadow: 0 0 30px -10px rgba(0, 0, 0, .6);
@@ -163,6 +166,15 @@
             &.active {
                 color: $color-white;
                 background: $color-purple-1;
+            }
+
+            .depends {
+                display: flex;
+
+                li {
+                    padding: 10px;
+                    margin-right: 10px;
+                }
             }
         }
     }
