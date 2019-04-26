@@ -2,33 +2,37 @@
 @import "fonts";
 
 .button {
-  font-size: 1.4rem;
-  line-height: 2.4rem;
-  padding: 4px 40px 10px;
-  color: $color-white;
-  letter-spacing: 0;
-  text-align: center;
-  border-radius: 8px;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
+    font-size: 1.4rem;
+    line-height: 2.4rem;
+    padding: 4px 40px 10px;
+    color: $color-white;
+    letter-spacing: 0;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
 
-  &.primary {
-    background: $color-purple-1;
-  }
+    &:disabled {
+        cursor: not-allowed;
+    }
 
-  &.slim {
-    border: 1px solid $color-gray-2;
-    color: $color-purple-1;
-  }
+    &.primary {
+        background: $color-purple-1;
+    }
 
-  &.is-small {
-    font-size: .9rem;
-    line-height: 1rem;
-    padding: 4px 10px;
-  }
+    &.slim {
+        border: 1px solid $color-gray-2;
+        color: $color-purple-1;
+    }
 
-  &:hover {
-    opacity: .8;
-  }
+    &.is-small {
+        font-size: .9rem;
+        line-height: 1rem;
+        padding: 4px 10px;
+    }
+
+    &:hover {
+        opacity: .8;
+    }
 }
