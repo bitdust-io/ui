@@ -19,11 +19,6 @@
     export default {
         name: 'UiSwitch',
         props: {
-            checked: {
-                type: Boolean,
-                required: false,
-                default: false
-            },
             value: {
                 type: Boolean,
                 required: false
