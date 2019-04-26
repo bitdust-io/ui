@@ -62,9 +62,13 @@
         },
         methods: {
             async loadChatHistory() {
-                let messages = await Api.getMessageHistoryForUser(this.currentFriend);
-                this.oldMessages = messages.result.reverse();
-                this.scrollDown();
+                try {
+                    let messages = await Api.getMessageHistoryForUser(this.currentFriend);
+                    this.oldMessages = messages.result.reverse();
+                    this.scrollDown();
+                } catch (e) {
+                    console.log('Error getting history');
+                }
             },
             scrollDown() {
                 setTimeout(() => {

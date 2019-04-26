@@ -175,6 +175,11 @@
 <style lang="scss" scoped>
     @import "../assets/scss/includes.scss";
 
+    .link-list {
+        .online {
+            background: greenyellow;
+        }
+    }
     .button {
         font-size: 1rem;
         padding: 0;
