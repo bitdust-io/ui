@@ -1,6 +1,7 @@
 <template>
     <div class="user-identity"
-         :class="{active: getIdentity.name}">
+         :class="{active: getUser.value}"
+         v-if="getUser">
         <user-first-letter :name="getUser.value" />
         <div class="user-name">{{getUser.value}}</div>
     </div>
@@ -14,18 +15,13 @@
         components: {userFirstLetter},
         computed: {
             ...mapGetters([
-                'getIdentity',
                 'getUser'
             ])
         },
         methods: {
             ...mapActions([
-                'updateIdentity',
                 'updateUserFromApi'
             ])
-        },
-        created() {
-            this.updateUserFromApi();
         }
     };
 </script>
