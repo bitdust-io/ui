@@ -1,9 +1,13 @@
 <template>
     <grid-content>
         <div slot="main">
+            <div v-if="this.currentKey ==='suppliers'">
+                <suppliers />
+            </div>
             <ul class="settings-list"
                 v-if="this.currentKey !=='services'">
                 <li v-for="(item, index) in getConfigForKey(currentKey)"
+                    class="main"
                     :key="index">
 
                     <ui-config-boolean :item="item"
@@ -44,6 +48,15 @@
             <ul class="link-list">
                 <li>
                     <router-link
+                        :to="'/settings/suppliers'"
+                        class="link"
+                        active-class="active"
+                    >
+                        Suppliers
+                    </router-link>
+                </li>
+                <li>
+                    <router-link
                         :to="'/settings/services'"
                         class="link"
                         active-class="active"
@@ -75,6 +88,7 @@
     import {mapActions, mapState, mapGetters} from 'vuex';
     import UiConfigBoolean from '../components/Settings/UiConfigBoolean';
     import UiStatus from '../components/Settings/UiStatus';
+    import Suppliers from '../components/Settings/Suppliers';
     import GridContent from '../components/Globals/GridContent';
 
     export default {
@@ -88,7 +102,8 @@
         components: {
             UiConfigBoolean,
             UiStatus,
-            GridContent
+            GridContent,
+            Suppliers
         },
         computed: {
             ...mapState(['Settings']),
