@@ -64,6 +64,7 @@
             async loadChatHistory() {
                 try {
                     let messages = await Api.getMessageHistoryForUser(this.currentFriend);
+                    this.oldMessages = [];
                     this.oldMessages = messages.result.reverse();
                     this.scrollDown();
                 } catch (e) {

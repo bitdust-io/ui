@@ -27,7 +27,6 @@ const mutations = {
         state.identity = value;
     },
     updateUser(state, value) {
-        debugger;
         state.user = value;
     },
     updateEvent(state, value) {
