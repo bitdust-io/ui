@@ -1,17 +1,17 @@
 <template>
     <grid-content>
         <div slot="main">
-            <div v-if="this.currentKey ==='suppliers'">
+            <div v-if="currentKey ==='suppliers'">
                 <suppliers />
             </div>
             <ul class="settings-list"
-                v-if="this.currentKey !=='services'">
+                v-if="currentKey !=='services'">
                 <li v-for="(item, index) in getConfigForKey(currentKey)"
                     class="main"
                     :key="index">
 
-                    <ui-config-boolean :item="item"
-                                       @onChange="onChange" />
+                    <ui-config :item="item"
+                               @onChange="onChange" />
                 </li>
             </ul>
             <ul v-else
@@ -20,24 +20,32 @@
                 <li v-for="(item, index) in Settings.serviceList"
                     :key="index"
                     class="main">
-                    {{item.name.replace('service_', '')}}
-
-                    <ui-config-boolean :item="getServiceConfigForKey(item.name)"
-                                       v-if="getServiceConfigForKey(item.name)"
-                                       @onChange="onChange" />
+                    <h2>
+                        {{item.name.replace(/service_|_/g, ' ')}}
+                    </h2>
 
                     <ui-status :status="item" />
 
-                    <h3>Depends on</h3>
+                    <div v-for="config in item.configs"
+                         :key="config.key"
+                         class="config">
 
-                    <ul class="depends">
-                        <li v-for="(subItem, index) in item.depends"
-                            :key="index">
-                            <div>
-                                {{subItem.replace('service_', '')}}
-                            </div>
-                        </li>
-                    </ul>
+                        <ui-config :item="config"
+                                   @onChange="onChange" />
+                    </div>
+
+                    <div class="depends-on">
+                        <h3>Depends on</h3>
+
+                        <ul class="depends">
+                            <li v-for="(subItem, index) in item.depends"
+                                :key="index">
+                                <div>
+                                    {{subItem.replace('service_', '')}}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
 
             </ul>
@@ -86,7 +94,7 @@
 <script>
     import Api from '../services/api';
     import {mapActions, mapState, mapGetters} from 'vuex';
-    import UiConfigBoolean from '../components/Settings/UiConfigBoolean';
+    import UiConfig from '../components/Settings/UiConfig';
     import UiStatus from '../components/Settings/UiStatus';
     import Suppliers from '../components/Settings/Suppliers';
     import GridContent from '../components/Globals/GridContent';
@@ -100,7 +108,7 @@
             };
         },
         components: {
-            UiConfigBoolean,
+            UiConfig,
             UiStatus,
             GridContent,
             Suppliers
@@ -134,7 +142,7 @@
         },
         watch: {
             '$route'(to) {
-                this.currentKey = to.params.id;
+                to.params.id ? this.currentKey = to.params.id : this.$router.push('/settings/services');
             },
             getConfigKeys(data) {
                 if (data.indexOf(this.$route.params.id) === -1) {
@@ -156,11 +164,6 @@
     .settings-list {
         max-width: 800px;
 
-        h3 {
-            font-size: .8rem;
-            margin-top: 15px;
-        }
-
         li {
             border: 1px solid $color-gray-4;
             margin: 10px 0;
@@ -174,6 +177,13 @@
             border-radius: 10px;
             padding: 20px;
 
+            h2 {
+                font-size: 1rem;
+                text-transform: capitalize;
+                margin: 10px 0;
+                font-weight: bold;
+            }
+
             &:hover {
                 box-shadow: 0 0 30px -10px rgba(0, 0, 0, .6);
             }
@@ -183,12 +193,39 @@
                 background: $color-purple-1;
             }
 
-            .depends {
+            .depends-on {
                 display: flex;
+                align-items: center;
+                border: 1px solid $color-gray-2;
+                padding: 10px;
+                border-radius: 10px;
 
-                li {
-                    padding: 10px;
+                h3 {
+                    font-size: .8rem;
+                    font-weight: 700;
                     margin-right: 10px;
+                    color: $color-purple-1;
+                }
+
+                .depends {
+                    display: flex;
+
+                    li {
+                        padding: 10px;
+                        margin-right: 10px;
+                    }
+                }
+            }
+
+
+            .config {
+                border: 1px solid $color-gray-2;
+                border-radius: 10px;
+                margin: 10px 0;
+                padding: 10px;
+
+                /deep/ .label {
+                    margin: 5px;
                 }
             }
         }

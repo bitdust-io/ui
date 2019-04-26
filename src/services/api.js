@@ -177,7 +177,7 @@ const Api = {
     },
 
     getServiceList() {
-        return this.makeGet('service/list');
+        return this.makeGet('service/list', 'config=1');
     },
 
     setConfig(config) {
