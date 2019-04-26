@@ -1,7 +1,6 @@
 <template>
     <grid-content>
         <div slot="main">
-            {{this.currentKey}}
             <ul class="settings-list"
                 v-if="this.currentKey !=='services'">
                 <li v-for="(item, index) in getConfigForKey(currentKey)"
