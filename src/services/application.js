@@ -10,7 +10,7 @@ const Application = {
     bootstrap() {
         this.keepHeath();
         this.messagesListen();
-        // this.eventsListen();
+        this.eventsListen();
     },
 
     async keepHeath() {
@@ -57,8 +57,7 @@ const Application = {
         try {
             const {result} = await Api.eventsListen();
             console.log('Event:', result[0]);
-            // TODO Set to store the events or to a service that handles notifications
-            // store.dispatch('updateEvents', currentEvent);
+            store.dispatch('updateEvent', result[0]);
         } catch (e) {
             console.log('error receiving event', e);
         }
