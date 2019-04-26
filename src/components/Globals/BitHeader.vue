@@ -1,6 +1,6 @@
 <template>
     <div>
-
+        <notifications />
         <header :class="{'visible': visible}">
             <div class="logo">
                 <img src="../../assets/logo/bitdust-logo-white.svg" />
@@ -34,6 +34,7 @@
     import {mapGetters} from 'vuex';
     import UserIdentity from './UserIdentity';
     import Bubbles from '@/components/Globals/Bubbles';
+    import Notifications from './Notifications';
 
     const icons = {
         files: 'folder-open',
@@ -84,7 +85,8 @@
         },
         components: {
             UserIdentity,
-            Bubbles
+            Bubbles,
+            Notifications
         },
         watch: {
             '$route'(to, from) {
@@ -137,6 +139,7 @@
             background: $color-green;
             border-radius: 50%;
         }
+
         .ERROR {
             background: red;
         }
