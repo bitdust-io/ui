@@ -106,7 +106,6 @@
 
     .notifications {
         display: flex;
-        align-content: start;
 
         & > div {
             z-index: 10;

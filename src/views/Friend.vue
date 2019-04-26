@@ -3,7 +3,7 @@
         <div slot="menu">
 
             <h2 @click="openSearch"
-                class="button primary is-small">
+                class="button primary">
                 Search other users
             </h2>
 
@@ -40,6 +40,7 @@
                        id="search" />
 
                 <button class="button primary"
+                        :disabled="this.search.length < 3"
                         @click="searchUser">Search
                 </button>
 
@@ -134,7 +135,9 @@
                 this.isSearchOpen = false;
             },
             searchUser() {
+                if (this.search.length < 3) return;
                 api.searchUser(this.search).then(resp => {
+                    debugger;
                     this.searchResults = resp.result;
                     if (resp.result[0].result === 'exist') {
                         this.observeSearchResult(resp.result[0].nickname);
@@ -180,6 +183,7 @@
             background: greenyellow;
         }
     }
+
     .button {
         font-size: 1rem;
         padding: 0;
