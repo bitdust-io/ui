@@ -76,14 +76,11 @@
         },
         watch: {
             getEvent(response) {
-                if (!response.result) return;
-                response.result.forEach(resultItem => {
-                    if (resultItem.id === this.SHARED_FILE) {
-                        this.hasNewFile = true;
-                        this.fileFrom = resultItem.data.customer_idurl;
-                        this.getApiSharedFiles();
-                    }
-                });
+                if (response.id === this.SHARED_FILE) {
+                    this.hasNewFile = true;
+                    this.fileFrom = response.data.customer_idurl;
+                    this.getApiSharedFiles();
+                }
             },
             getMessages(response) {
                 if (!response) return;
