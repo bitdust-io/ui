@@ -4,12 +4,24 @@
         <ui-switch
             v-model="settings[item.key]"
             @input="onChange(item)"
-            :input-value="item.value === 'true'"
+            :input-value="item.value === true"
             :name="item.key"
             v-if="item.type === 'boolean'"
         />
+
+        <ui-select
+            v-model="settings[item.key]"
+            @input="onChange(item)"
+            :input-value="item.value || item.default"
+            :name="item.key"
+            :options="item.possible_values"
+            v-if="item.possible_values"
+        />
+
         <div class="info">
-            <p class="label" v-if="item.type !== 'boolean' && item.value">{{item.value}}</p>
+            <p class="label" v-if="item.value">
+                {{item.value}}
+            </p>
             <p class="label" v-if="item.label">
                 {{item.label}}
             </p>
@@ -22,6 +34,7 @@
 
 <script>
     import UiSwitch from '@/components/Globals/UiSwitch';
+    import UiSelect from '@/components/Globals/UiSelect';
 
     export default {
         name: 'UiConfigBoolean',
@@ -37,7 +50,8 @@
             }
         },
         components: {
-            UiSwitch
+            UiSwitch,
+            UiSelect
         },
         methods: {
             onChange(data) {
