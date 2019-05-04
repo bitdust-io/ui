@@ -54,14 +54,16 @@ const Application = {
     },
 
     async eventsListen() {
-        try {
-            const {result} = await Api.eventsListen();
-            console.log('Event:', result[0]);
-            store.dispatch('updateEvent', result[0]);
-        } catch (e) {
-            console.log('error receiving event', e);
+        if (store.state.Application.connectionStatus.status === 'OK') {
+            try {
+                const {result} = await Api.eventsListen();
+                console.log('Event:', result[0]);
+                store.dispatch('updateEvent', result[0]);
+            } catch (e) {
+                console.log('error receiving event', e);
+            }
+            this.eventsListen();
         }
-        this.eventsListen();
     },
 
     async messagesListen() {
