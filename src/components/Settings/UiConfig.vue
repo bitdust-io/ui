@@ -18,6 +18,14 @@
             v-if="item.possible_values"
         />
 
+        <ui-input
+            v-if="item.type === 'folder path'"
+            v-model="settings[item.key]"
+            @input="onChange(item)"
+            :input-value="item.value || item.default"
+            :name="item.key"
+        />
+
         <div class="info">
             <p class="label" v-if="item.value">
                 {{item.value}}
@@ -35,6 +43,7 @@
 <script>
     import UiSwitch from '@/components/Globals/UiSwitch';
     import UiSelect from '@/components/Globals/UiSelect';
+    import UiInput from '@/components/Globals/UiInput';
 
     export default {
         name: 'UiConfigBoolean',
@@ -51,7 +60,8 @@
         },
         components: {
             UiSwitch,
-            UiSelect
+            UiSelect,
+            UiInput
         },
         methods: {
             onChange(data) {

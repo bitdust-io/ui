@@ -137,7 +137,6 @@
             searchUser() {
                 if (this.search.length < 3) return;
                 api.searchUser(this.search).then(resp => {
-                    debugger;
                     this.searchResults = resp.result;
                     if (resp.result[0].result === 'exist') {
                         this.observeSearchResult(resp.result[0].nickname);
