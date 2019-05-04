@@ -6,7 +6,7 @@
                   class="remove">remove</span>
         </div>
 
-        <friend-messages :current-friend="currentFriend"/>
+        <friend-messages :current-friend="currentFriend" />
 
         <div class="message-sender">
 
@@ -15,8 +15,6 @@
                       v-on:keydown="sendFromEnter"
                       ref="chat"
                       class="chat-input"
-                      :disabled="isSending"
-                      :class="{'icon-loading': isSending}"
                       :rows="lines">
             </textarea>
         </div>
@@ -48,7 +46,7 @@
         },
         computed: {
             lines() {
-                let lines = this.message.split(/\r|\r\n|\n/);
+                const lines = this.message.split(/\r|\r\n|\n/);
                 return lines.length;
             }
         },
@@ -56,30 +54,30 @@
             ...mapActions([
                 'removeFriend'
             ]),
+            hasText(value) {
+                const regex = /^\w+$/g;
+                const test = new RegExp(regex);
+                return test.test(value);
+            },
             sendMessage() {
-                if (this.message.length < 3) return;
+                if (!this.hasText(this.message) || this.message.length < 1) return;
                 this.isSending = true;
                 message.sendMessage({
                     message: this.message,
                     user: this.currentFriend
                 }).then(resp => {
                     this.isSending = false;
-                    this.resetOpenFriend();
                 }).catch(() => {
                     // TODO Handle error
                 });
+                this.resetOpenFriend();
             },
             resetOpenFriend() {
                 this.message = '';
-                if (this.$refs.chat) {
-                    this.$nextTick(() => {
-                        this.$refs.chat.focus();
-                    });
-                }
+                this.focusOnInput();
             },
             sendFromEnter(ev) {
                 if (ev.keyCode === 13) {
-                    this.rows++;
                     if (!ev.shiftKey) {
                         this.sendMessage();
                     }
