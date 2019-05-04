@@ -29,9 +29,15 @@
                         :key="index"
                         :class="{'mine': message.sender.replace('master$', '') !== currentFriend.global_id}">
 
-                        <p class="message">
-                            {{message.data.message}}
-                        </p>
+                        <div>
+                            <p class="user">
+                                {{message.sender.replace('master$', '').replace(/\@(.*)/g, '')}}
+                            </p>
+
+                            <p class="message">
+                                {{message.data.message}}
+                            </p>
+                        </div>
 
                         <p class="message-time">
                             {{new Date(message.time*1000).toLocaleString()}}
