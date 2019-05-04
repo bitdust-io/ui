@@ -124,8 +124,7 @@
             ])
         },
         created() {
-            this.updateConfigList();
-            this.updateServiceList();
+            this.updateLists();
             this.currentKey = 'services';
         },
         methods: {
@@ -138,6 +137,11 @@
             },
             onChange(config) {
                 Api.setConfig(config);
+                this.updateLists();
+            },
+            updateLists() {
+                this.updateConfigList();
+                this.updateServiceList();
             }
         },
         watch: {
@@ -216,7 +220,6 @@
                     }
                 }
             }
-
 
             .config {
                 border: 1px solid $color-gray-2;
