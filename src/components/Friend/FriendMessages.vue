@@ -1,9 +1,11 @@
 <template>
     <div class="friend-messages">
 
-        <div class="messages" ref="messages">
+        <div class="messages">
 
-            <div ref="message" class="messages-wrapper">
+            <div ref="message"
+                 class="messages-wrapper"
+            >
                 <ul>
                     <li v-for="(message, index) in oldMessages"
                         :key="index"
@@ -14,9 +16,7 @@
                                 {{message.doc.sender.glob_id.replace('master$', '').replace(/\@(.*)/g, '')}}
                             </p>
 
-                            <p class="message">
-                                {{message.doc.payload.data.message}}
-                            </p>
+                            <p class="message">{{message.doc.payload.data.message}}</p>
                         </div>
                         <p class="message-time">
                             {{new Date(message.doc.payload.time*1000).toLocaleString()}}
@@ -34,9 +34,8 @@
                                 {{message.sender.replace('master$', '').replace(/\@(.*)/g, '')}}
                             </p>
 
-                            <p class="message">
-                                {{message.data.message}}
-                            </p>
+                            <p class="message">{{message.data.message}}</p>
+
                         </div>
 
                         <p class="message-time">
@@ -77,10 +76,13 @@
                     console.log('Error getting history');
                 }
             },
-            scrollDown() {
+            scrollDown(isSmooth = false) {
                 setTimeout(() => {
-                    this.$refs.messages.scrollTop = this.$refs.message.scrollHeight;
-                }, 100);
+                    this.main.scroll({
+                        top: this.$refs.message.scrollHeight,
+                        behavior: isSmooth ? 'smooth' : 'instant'
+                    });
+                }, 40);
             }
         },
         computed: {
@@ -100,15 +102,16 @@
             }
         },
         mounted() {
+            this.main = document.getElementById('main');
+            this.main.classList.add('chat');
             this.loadChatHistory();
         },
         watch: {
             currentFriend() {
                 this.loadChatHistory();
-                this.scrollDown();
             },
             getMessages() {
-                this.scrollDown();
+                this.scrollDown(true);
             }
         }
     };
@@ -119,7 +122,7 @@
 
     .friend-messages {
         position: relative;
-        height: calc(100% - 50px);
+        /*height: calc(90% - 50px);*/
 
         &:before {
             content: '';
@@ -135,9 +138,7 @@
     }
 
     .messages {
-        height: calc(100% - 50px);
-        padding: 20px 20px 40px;
-        overflow: auto;
+        padding: 20px 20px 0;
     }
 
     input {
@@ -171,6 +172,7 @@
 
         .message {
             word-wrap: break-word;
+            white-space: pre-line;
             width: 90%;
         }
 
