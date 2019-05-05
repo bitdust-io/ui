@@ -4,7 +4,9 @@
         <div class="menu">
             <slot name="menu" />
         </div>
-        <div class="main">
+        <div class="main"
+             ref="main"
+             id="main">
             <slot name="main" />
         </div>
     </div>
@@ -33,6 +35,11 @@
         padding-bottom: 100px;
         padding-left: 40px;
         padding-top: 60px;
+
+        &.chat {
+            height: calc(100% - 80px);
+            padding-bottom: 20px;
+        }
     }
 
     .menu {
