@@ -3,8 +3,9 @@
         <div slot="menu">
 
             <h2 @click="openSearch"
-                class="button primary">
-                Search other users
+                class="button-search button primary">
+                <font-awesome-icon icon="search" />
+                Search friends
             </h2>
 
             <ul class="link-list">
@@ -27,65 +28,76 @@
             <friend-chat :current-friend="getCurrentFriend"
                          v-if="getCurrentFriend" />
             <div v-else>
-                Please select a friend to chat !
+                Select a friend to chat !
             </div>
 
-            <div class="search" v-if="isSearchOpen">
+            <div class="search"
+                 v-if="isSearchOpen">
 
-                <label for="search">
-                    Search by name:
-                </label>
+                <div class="inner-container">
 
-                <input v-model="search"
-                       id="search" />
+                    <span class="close-main"
+                          @click="closeSearch">
+                        <font-awesome-icon icon="times" />
+                    </span>
 
-                <button class="button primary"
-                        :disabled="this.search.length < 3"
-                        @click="searchUser">Search
-                </button>
+                    <label for="search">
+                        Search friends
+                    </label>
 
-                <button class="button slim"
-                        @click="closeSearch">Close
-                </button>
+                    <div class="input-wrapper">
+                        <input v-model="search"
+                               placeholder="Type your friend name"
+                               id="search" />
 
-                <div v-if="addFriendResponse"
-                     class="add-friend-response">
+                        <button class="button primary"
+                                :disabled="this.search.length < 3"
+                                @click="searchUser">Search
+                        </button>
+                    </div>
+
+                    <div v-if="addFriendResponse"
+                         class="add-friend-response">
                     <span @click="addFriendResponse = null"
                           class="close">X</span>
-                    {{addFriendResponse.result[0]}}
-                </div>
+                        {{addFriendResponse.result[0]}}
+                    </div>
 
-                <ul class="friends-list">
-                    <li v-for="result in searchResults"
-                        :key="result.nickname">
-                        <div v-if="result.result === 'exist'">
-                            <span class="icon-add" @click="addFriend(result.idurl)"></span>
-                            <div>
-                                <p>{{result.nickname}}</p>
-                                <p>{{result.idurl}}</p>
-                            </div>
-                        </div>
-                        <div v-if="result.result === 'not exist'">
-                            <h4>
-                                No results for
-                            </h4>
-                            <p>{{result.nickname}}</p>
-                        </div>
-                    </li>
-                </ul>
-
-                <div v-if="observeSearchAlias.length > 1">
-                    <h2>Other results</h2>
                     <ul class="friends-list">
                         <li v-for="result in searchResults"
                             :key="result.nickname">
-                            <span class="icon-add" @click="addFriend(result.idurl)"></span>
-                            <div>
+                            <div v-if="result.result === 'exist'">
+                                <div class="item"
+                                     @click="addFriend(result.idurl)">
+                                    <font-awesome-icon icon="user-plus"
+                                                       class="icon" />
+                                    <p>{{result.nickname}}</p>
+                                </div>
+                            </div>
+                            <div v-if="result.result === 'not exist'">
+                                <h4>
+                                    No results for
+                                </h4>
                                 <p>{{result.nickname}}</p>
-                                <p>{{result.idurl}}</p>
                             </div>
                         </li>
                     </ul>
+
+                    <div v-if="observeSearchAlias.length > 1">
+                        <h2>Other results</h2>
+                        <ul class="friends-list">
+                            <li v-for="result in searchResults"
+                                :key="result.nickname">
+
+                                <div class="item"
+                                     @click="addFriend(result.idurl)">
+                                    <font-awesome-icon icon="user-plus"
+                                                       class="icon" />
+                                    <p>{{result.nickname}}</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -196,22 +208,43 @@
         top: 0;
         right: 0;
         bottom: 0;
-        background: rgba(255, 255, 255, .9);
+        background: rgba(255, 255, 255, .95);
         padding: 50px;
-    }
 
-    .icon-add {
-        cursor: pointer;
-        margin-right: 15px;
-        float: left;
-        width: 30px;
-        height: 30px;
-        background: url("../assets/icons/icon-add.svg") center no-repeat;
-        background-size: 24px;
-
-        &:hover {
-            opacity: .6
+        .inner-container {
+            position: relative;
         }
+
+        .close-main {
+            position: absolute;
+            right: 0;
+            top: 0;
+            cursor: pointer;
+            font-size: 2rem;
+        }
+
+        label {
+            font-size: 1.6rem;
+            display: block;
+            font-weight: bold;
+        }
+
+        .input-wrapper {
+
+            margin-top: 20px;
+
+            input {
+                min-width: 300px;
+                padding: 8px;
+                font-size: 1rem;
+            }
+
+            .button {
+                margin-left: 10px;
+                padding: 2px 20px;
+            }
+        }
+
     }
 
     .friends-list {
@@ -221,23 +254,40 @@
         display: flex;
         flex-flow: wrap;
 
-        li a {
-            margin: 10px 10px 0 0;
-            min-width: 260px;
-            padding: 5px 10px 5px 30px;
-            cursor: pointer;
-            display: flex;
-            text-transform: capitalize;
-            font-size: 1.2rem;
-            line-height: 2.4rem;
-            text-decoration: none;
+        li {
 
-            .online & {
-                color: $color-green;
+            .item {
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+
+                &:hover {
+                    color: $color-purple-1;
+                }
+
+                .icon {
+                    margin-right: 10px;
+                }
             }
 
-            &:hover {
-                opacity: .6;
+            a {
+                margin: 10px 10px 0 0;
+                min-width: 260px;
+                padding: 5px 10px 5px 30px;
+                cursor: pointer;
+                display: flex;
+                text-transform: capitalize;
+                font-size: 1.2rem;
+                line-height: 2.4rem;
+                text-decoration: none;
+
+                .online & {
+                    color: $color-green;
+                }
+
+                &:hover {
+                    opacity: .6;
+                }
             }
         }
     }
