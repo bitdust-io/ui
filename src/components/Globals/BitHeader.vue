@@ -20,6 +20,7 @@
             </div>
 
             <div class="header-right">
+                <files-monitor />
                 <user-identity />
                 <div class="connection-status"
                      :class="connectionStatus.status">
@@ -34,6 +35,7 @@
     import {mapGetters} from 'vuex';
     import UserIdentity from './UserIdentity';
     import Bubbles from '@/components/Globals/Bubbles';
+    import FilesMonitor from '@/components/Globals/FilesMonitor';
     import Notifications from './Notifications';
 
     const icons = {
@@ -86,7 +88,8 @@
         components: {
             UserIdentity,
             Bubbles,
-            Notifications
+            Notifications,
+            FilesMonitor
         },
         watch: {
             '$route'(to, from) {
