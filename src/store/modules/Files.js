@@ -6,10 +6,13 @@ const state = {
     filesList: [],
     sharedFilesList: [],
     currentFile: {},
-    filesErrorLoading: true
+    filesErrorLoading: true,
+    downloads: [],
+    uploads: []
 };
 
 const getters = {
+    getDownloads: state => state.downloads,
     getFiles: state => state.filesList,
     getSharedFiles: state => state.sharedFilesList,
     currentFile: state => state.currentFile,
@@ -34,10 +37,16 @@ const mutations = {
     },
     UPDATE_FILES_ERROR_LOADING(state, value) {
         state.filesErrorLoading = value;
+    },
+    updateDownloads(state, value) {
+        state.downloads = value;
     }
 };
 
 const actions = {
+    updateDownloads({commit}, data) {
+        commit('updateDownloads', data);
+    },
     updateCurrentFileData({commit}, data) {
         commit('UPDATE_CURRENT_FILE_DATA', data);
     },

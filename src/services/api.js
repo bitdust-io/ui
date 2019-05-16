@@ -166,6 +166,10 @@ const Api = {
         });
     },
 
+    getDownloads() {
+        return this.makeGet('file/download');
+    },
+
     downloadFile(filePath) {
         return this.makePost('file/download/start', {
             'remote_path': filePath
