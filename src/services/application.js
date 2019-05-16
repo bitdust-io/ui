@@ -50,7 +50,7 @@ const Application = {
 
         setTimeout(() => {
             this.keepHeath();
-        }, 1000);
+        }, 500);
     },
 
     async eventsListen() {
