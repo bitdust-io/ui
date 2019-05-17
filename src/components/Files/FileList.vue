@@ -10,12 +10,12 @@
 
         <div v-if="Files.filesErrorLoading"
              class="loading-wrapper">
-            <img src="../../assets/images/loading.svg"
-                 class="loading" />
-            <p>
-                Loading...
-            </p>
+            <icon name="loading"
+                  class="rotating"
+                  size="lg" />
+            Loading files
         </div>
+
         <div v-if="filteredList.length === 0 && !Files.filesErrorLoading && search.length === 0"
              class="no-files">
             You don't have any file uploaded yet, try to upload your first ;)
@@ -40,6 +40,7 @@
     import {mapGetters, mapActions, mapState} from 'vuex';
     import FileDetail from './FileDetail';
     import FileExtension from './FileExtension';
+    import Icon from '@/components/Globals/Icon';
 
     export default {
         data() {
@@ -50,7 +51,8 @@
         },
         components: {
             FileDetail,
-            FileExtension
+            FileExtension,
+            Icon
         },
         methods: {
             ...mapActions([
@@ -94,12 +96,14 @@
     }
 
     .loading-wrapper {
-        margin-top: 30px;
-        text-align: center;
+        display: flex;
+        justify-content: center;
+        margin-top: 80px;
+        font-size: 1rem;
+        padding-top: 20px;
 
-        .loading {
-            margin: auto;
-            display: block;
+        i {
+            margin-top: -55px;
         }
     }
 
@@ -149,6 +153,7 @@
         white-space: nowrap;
         cursor: pointer;
         padding-right: 10px;
+
         &:hover {
             opacity: .6;
         }
