@@ -12,12 +12,18 @@ const mutations = {
     updateMessages(state, message) {
         if (!message.result || !message.result.length) return;
         state.messages.push(message.result[0]);
+    },
+    resetMessages(state) {
+        state.messages = [];
     }
 };
 
 const actions = {
     updateMessages({commit}, value) {
         commit('updateMessages', value);
+    },
+    resetMessages({commit}) {
+        commit('resetMessages');
     }
 };
 
