@@ -170,6 +170,10 @@ const Api = {
         return this.makeGet('file/download');
     },
 
+    getUploads() {
+        return this.makeGet('file/upload');
+    },
+
     downloadFile(filePath) {
         return this.makePost('file/download/start', {
             'remote_path': filePath
