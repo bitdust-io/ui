@@ -49,7 +49,7 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex';
+    import {mapGetters, mapActions} from 'vuex';
     import Api from '../../services/api';
 
     export default {
@@ -66,6 +66,7 @@
             };
         },
         methods: {
+            ...mapActions(['resetMessages']),
             async loadChatHistory() {
                 try {
                     let messages = await Api.getMessageHistoryForUser(this.currentFriend);
@@ -108,6 +109,7 @@
         },
         watch: {
             currentFriend() {
+                this.resetMessages();
                 this.loadChatHistory();
             },
             getMessages() {
