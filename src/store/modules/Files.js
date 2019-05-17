@@ -8,10 +8,14 @@ const state = {
     currentFile: {},
     filesErrorLoading: true,
     downloads: [],
-    uploads: []
+    uploads: {
+        running: [],
+        pending: []
+    }
 };
 
 const getters = {
+    getUploads: state => state.uploads,
     getDownloads: state => state.downloads,
     getFiles: state => state.filesList,
     getSharedFiles: state => state.sharedFilesList,
@@ -19,6 +23,13 @@ const getters = {
     hasFilePath(path) {
         if (!state.filesList) return [];
         return state.filesList.filter(file => file.path === path);
+    },
+    isFileLocked: state => {
+        return id => {
+            return state.downloads.find(file => file.key_id === id) ||
+                state.uploads.running.find(file => file.key_id === id) ||
+                state.uploads.pending.find(file => file.path_id.indexOf(id) > -1);
+        };
     }
 };
 
@@ -40,10 +51,16 @@ const mutations = {
     },
     updateDownloads(state, value) {
         state.downloads = value;
+    },
+    updateUploads(state, value) {
+        state.uploads = value;
     }
 };
 
 const actions = {
+    updateUploads({commit}, data) {
+        commit('updateUploads', data);
+    },
     updateDownloads({commit}, data) {
         commit('updateDownloads', data);
     },

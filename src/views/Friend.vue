@@ -3,7 +3,7 @@
         <div slot="menu">
 
             <h2 @click="openSearch"
-                class="button-search button primary">
+                class="button primary">
                 <font-awesome-icon icon="search" />
                 Search friends
             </h2>
@@ -48,6 +48,7 @@
                     <div class="input-wrapper">
                         <input v-model="search"
                                placeholder="Type your friend name"
+                               v-on:keydown="searchUser"
                                id="search" />
 
                         <button class="button primary"
@@ -58,8 +59,11 @@
 
                     <div v-if="addFriendResponse"
                          class="add-friend-response">
-                    <span @click="addFriendResponse = null"
-                          class="close">X</span>
+
+                        <span @click="addFriendResponse = null">
+                            <font-awesome-icon icon="times" />
+                        </span>
+
                         {{addFriendResponse.result[0]}}
                     </div>
 
@@ -76,9 +80,8 @@
                             </div>
                             <div v-if="result.result === 'not exist'">
                                 <h4>
-                                    No results for
+                                    No results for: {{result.nickname}}
                                 </h4>
-                                <p>{{result.nickname}}</p>
                             </div>
                         </li>
                     </ul>
@@ -98,6 +101,7 @@
                             </li>
                         </ul>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -221,6 +225,10 @@
             top: 0;
             cursor: pointer;
             font-size: 2rem;
+
+            &:hover {
+                color: $color-purple-1;
+            }
         }
 
         label {
@@ -242,6 +250,7 @@
             .button {
                 margin-left: 10px;
                 padding: 2px 20px;
+                outline: none;
             }
         }
 
@@ -289,6 +298,18 @@
                     opacity: .6;
                 }
             }
+        }
+    }
+
+    .add-friend-response {
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+
+        span {
+            margin-right: 10px;
+            cursor: pointer;
+            font-size: 1.4rem;
         }
     }
 
