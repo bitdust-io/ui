@@ -7,11 +7,14 @@
                 <h1>{{currentFile.name}}</h1>
             </div>
 
-            <div class="buttons">
+            <div class="buttons"
+                 :class="{'disabled': isFileLocked(currentFile.key_id)}">
                 <button @click="openShareFile(currentFile.path)"
+
                         class="button slim">
                     Share
                 </button>
+
                 <button @click="downloadFile"
                         class="button primary">
                     Download
@@ -55,13 +58,13 @@
                 </p>
 
                 <div v-if="downloadIsLoading">
-                    Loading
+                    Requesting file.
                 </div>
                 <div v-if="downloadSuccess">
-                    Download {{currentFile.path}} Success
+                    Download started.
                 </div>
                 <div v-if="downloadError">
-                    Download {{currentFile.path}} Error:
+                    Download {{currentFile.path}} error:
                     <span class="share-text">{{errorMessage}}</span>
                 </div>
             </div>
@@ -152,17 +155,21 @@
                     this.resetOpenFile();
                 });
             },
-            updateFileInfo() {
-                Api.getFileInfo(this.currentFile).then(data => {
-                    this.updateCurrentFileData(data.result[0].versions);
-                });
+            async updateFileInfo() {
+                try {
+                    const {result} = await Api.getFileInfo(this.currentFile);
+                    this.updateCurrentFileData(result[0].versions);
+                } catch (e) {
+                    console.log(e);
+                }
             }
         },
         computed: {
             ...mapGetters([
                 'currentFile',
                 'getFriends',
-                'connectionStatus'
+                'connectionStatus',
+                'isFileLocked'
             ])
         },
         watch: {
@@ -230,6 +237,7 @@
             cursor: pointer;
             transform: scale(.8);
             border-radius: 10px;
+
             > div {
                 margin: auto;
             }
@@ -242,6 +250,12 @@
 
     .buttons {
         margin: 20px 10px;
+
+        &.disabled * {
+            opacity: .5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
 
         .button {
             font-size: 1rem;
