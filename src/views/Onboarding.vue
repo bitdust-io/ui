@@ -166,6 +166,7 @@
             font-size: 1rem;
             margin: 20px auto;
             max-width: 80%;
+
             /deep/ textarea {
                 width: 85%;
                 height: 200px;
@@ -205,6 +206,7 @@
 
         a {
             cursor: pointer;
+
             &:hover {
                 span {
                     border-color: $color-purple-1;
@@ -213,14 +215,17 @@
                 }
             }
         }
+
         .skip {
             float: left;
             margin-left: 25px;
         }
+
         .previous, .next {
             float: right;
             margin-right: 25px;
         }
+
         .arrow {
             border-bottom: 1px solid $color-gray-1;
             border-right: 1px solid $color-gray-1;
@@ -230,9 +235,11 @@
             position: relative;
             top: -1px;
         }
+
         .arrow-left {
             transform: rotate(135deg);
         }
+
         .arrow-right {
             transform: rotate(315deg)
         }
