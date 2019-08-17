@@ -1,12 +1,12 @@
 <template>
     <div class="file-monitor">
-        <div v-if="getDownloads.length > 0"
+        <div v-if="getDownloads && getDownloads.length > 0"
              class="status">
             <font-awesome-icon icon="cloud-download-alt" />
             {{getDownloads.length}}
         </div>
 
-        <div v-if="getUploads.running.length > 0 || getUploads.pending.length > 0"
+        <div v-if="getUploads && (getUploads.running.length > 0 || getUploads.pending.length > 0)"
              class="status">
             <font-awesome-icon icon="cloud-upload-alt" />
             {{getUploads.running.length}} / {{getUploads.pending.length}}
