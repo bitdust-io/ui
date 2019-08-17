@@ -48,12 +48,13 @@
                     <div class="input-wrapper">
                         <input v-model="search"
                                placeholder="Type your friend name"
-                               v-on:keydown="searchUser"
-                               id="search" />
+                               id="search"/>
 
-                        <button class="button primary"
-                                :disabled="this.search.length < 3"
-                                @click="searchUser">Search
+                        <button
+                            :class="{'is-loading': isLoading}"
+                            :disabled="this.search.length < 3 || isLoading"
+                            class="button primary"
+                            @click="searchUser">Search
                         </button>
                     </div>
 
@@ -61,7 +62,7 @@
                          class="add-friend-response">
 
                         <span @click="addFriendResponse = null">
-                            <font-awesome-icon icon="times" />
+                            <font-awesome-icon icon="times"/>
                         </span>
 
                         {{addFriendResponse.result[0]}}
@@ -74,7 +75,7 @@
                                 <div class="item"
                                      @click="addFriend(result.idurl)">
                                     <font-awesome-icon icon="user-plus"
-                                                       class="icon" />
+                                                       class="icon"/>
                                     <p>{{result.nickname}}</p>
                                 </div>
                             </div>
@@ -95,7 +96,7 @@
                                 <div class="item"
                                      @click="addFriend(result.idurl)">
                                     <font-awesome-icon icon="user-plus"
-                                                       class="icon" />
+                                                       class="icon"/>
                                     <p>{{result.nickname}}</p>
                                 </div>
                             </li>
@@ -123,7 +124,8 @@
                 search: '',
                 searchResults: '',
                 observeSearchAlias: [],
-                addFriendResponse: ''
+                addFriendResponse: '',
+                isLoading: false
             };
         },
         components: {
@@ -150,16 +152,21 @@
             closeSearch() {
                 this.isSearchOpen = false;
             },
-            searchUser() {
+            async searchUser() {
                 if (this.search.length < 3) return;
-                api.searchUser(this.search).then(resp => {
-                    this.searchResults = resp.result;
-                    if (resp.result[0].result === 'exist') {
-                        this.observeSearchResult(resp.result[0].nickname);
+                this.isLoading = true;
+                try {
+                    const {result} = await api.searchUser(this.search);
+                    this.searchResults = result;
+                    if (result[0].result === 'exist') {
+                        this.observeSearchResult(result[0].nickname);
                     } else {
                         this.observeSearchAlias = [];
                     }
-                });
+                } catch (e) {
+                    console.log('Error searching', e);
+                }
+                this.isLoading = false;
             },
             observeSearchResult(id) {
                 api.observeUser(id).then(data => {
@@ -203,6 +210,10 @@
         font-size: 1rem;
         padding: 0;
         margin-bottom: 20px;
+
+        &.is-loading {
+          background: $color-gray-1;
+        }
     }
 
     .search {
