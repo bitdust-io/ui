@@ -11,7 +11,7 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex';
+    import {mapGetters, mapActions} from 'vuex';
     import Icon from '@/components/Globals/Icon';
 
     export default {
@@ -24,12 +24,18 @@
                 'connectionStatus'
             ])
         },
+        methods: {
+            ...mapActions(['updateUserFromApi'])
+        },
         components: {
             Icon
         },
         watch: {
             connectionStatus(response) {
-                if (response.status === 'OK') this.$router.push('/onboarding');
+                if (response.status === 'OK') {
+                    this.updateUserFromApi();
+                    this.$router.push('/onboarding');
+                }
             }
         }
     };
