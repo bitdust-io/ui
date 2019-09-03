@@ -18,7 +18,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        overflow-y: scroll;
+        overflow: hidden;
         pointer-events: none;
 
         div {
@@ -39,12 +39,14 @@
                 left: 25%;
                 animation: moveclouds 15s linear infinite, sideWays 4s ease-in-out infinite alternate;
             }
+
             &:nth-child(2) {
                 left: 10%;
                 transform: scale(1.6);
                 opacity: 0.2;
                 animation: moveclouds 25s linear infinite, sideWays 5s ease-in-out infinite alternate;
             }
+
             &:nth-child(3) {
                 background: $color-blue-2;
                 left: 85%;
@@ -52,12 +54,14 @@
                 opacity: 0.3;
                 animation: moveclouds 20s linear infinite, sideWays 4s ease-in-out infinite alternate;
             }
+
             &:nth-child(4) {
                 left: 60%;
                 transform: scale(0.9);
                 opacity: 0.25;
                 animation: moveclouds 18s linear infinite, sideWays 2s ease-in-out infinite alternate;
             }
+
             &:nth-child(5) {
                 background: $color-blue-2;
                 left: 40%;
