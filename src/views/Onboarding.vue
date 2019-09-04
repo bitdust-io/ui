@@ -4,6 +4,16 @@
             <i class="step-image" :class="this.steps[this.currentStep].image_class"></i>
             <h2 class="title" v-html="this.steps[this.currentStep].title"></h2>
             <p class="description" v-html="this.steps[this.currentStep].content"></p>
+            <div v-if="currentStep === 1"
+                 class="download">
+                <p v-if="isDownload">
+                    Your key was saved on:
+                    {{ isDownload }}
+                </p>
+                <button @click="backupKey"
+                        class="button primary is-small">Click here to download
+                </button>
+            </div>
         </div>
         <div class="navigation"
              v-if="currentStep !== 0 && isNextStepEnabled">
@@ -52,6 +62,7 @@
         name: 'Onboarding',
         data() {
             return {
+                isDownload: null,
                 currentStep: 0,
                 steps: [
                     {
@@ -67,9 +78,6 @@
                         content: `<p>Every file you upload in the BitDust network is securely encrypted using a private key. A private key is a unique 256-bit number that is paired with a public key to set off algorithms for data
                                     encryption and decryption. It provides a secure way to access your account and upload/share files, making sure that you are the only one that can access your data. Never share your private key with
                                     any person or software that you do not intend to take control over your files. In addition it is important to back up your private key so you can retrieve your identity in the future.</p>
-                                    <textarea id="master_key"
-                                    rows="4"
-                                    readonly></textarea>
                                     <p>Please store the back up of your private key in a secure place.</p>`
                     },
                     {
@@ -81,15 +89,8 @@
                                     Off course you can also manually select your family members and tweak other settings, providing you with full control over your data. To ensure redundancy every file you upload is copied twice.
                                     For example if you upload 5 mb of pictures you are actually using 10 mb (2X5Mb) to store your pictures.</p>`
                     },
-                    // {
-                    //     slot: 'step4',
-                    //     image_class: 'step4',
-                    //     title: 'BitDust Token',
-                    //     content: `<p>The BitDust token is the native token of the BitDust network. The BitDust token can be earned if you contribute to the network and is required if you want to use the network.
-                    //                 As a customer you need the BitDust token to pay for the Gigabyte Hours you consume. Every transaction of the BitDust token is tracked via the internal BitDust blockchain.</p>`
-                    // },
                     {
-                        slot: 'step5',
+                        slot: 'step4',
                         image_class: 'step5',
                         title: 'Upload Your First File',
                         content: `<p>We will now show you how you can upload your first file. In addition we will run you through other features.</p>`
@@ -99,19 +100,10 @@
         },
         created() {
             document.getElementsByTagName('html')[0].classList.add('intro-background');
-            this.localData = {
-                masterPrivateKey: null
-            };
-        },
-        updated() {
-            if (this.currentStep === 1) {
-                document.getElementById('master_key').innerText = this.localData.masterPrivateKey;
-            }
         },
         computed: {
             ...mapGetters([
-                'connectionStatus',
-                'getIdentity'
+                'connectionStatus'
             ]),
             isNextStepEnabled() {
                 return this.currentStep !== this.steps.length - 1;
@@ -120,10 +112,12 @@
                 return this.currentStep !== 0;
             }
         },
-        mounted() {
-            this.getMasterPrivateKey();
-        },
         methods: {
+            async backupKey() {
+                Api.identityBackup();
+                const {result} = await Api.getPath();
+                this.isDownload = result[0].value;
+            },
             skipOnboardingSteps() {
                 Router.push('/files');
             },
@@ -136,15 +130,6 @@
                 if (this.currentStep > 0) {
                     this.currentStep--;
                 }
-            },
-            getMasterPrivateKey() {
-                const includePrivate = 1;
-                const globalID = this.$store.getters.getIdentity.global_id;
-                Api.getKey(includePrivate, globalID).then(response => {
-                    this.localData.masterPrivateKey = response.result[0]['private'];
-                }).catch(err => {
-                    console.log(err);
-                });
             }
         }
     };
@@ -169,9 +154,11 @@
 
             /deep/ textarea {
                 width: 85%;
-                height: 200px;
+                height: 100px;
                 margin: 15px;
                 padding: 15px;
+                max-width: 100%;
+                min-width: 100%;
             }
         }
     }
@@ -184,6 +171,18 @@
         display: inline-block;
         margin: 20px auto;
         max-width: 300px;
+
+        .download & {
+            padding: 16px;
+            font-size: 1.2rem;
+        }
+    }
+
+    .download {
+        p {
+            font-size: 1rem;
+            color: $color-red;
+        }
     }
 
     .step-image {
@@ -197,6 +196,7 @@
 
     .navigation {
         font-size: 1rem;
+        color: $color-purple-1;
 
         &.last {
             display: flex;
@@ -206,6 +206,7 @@
 
         a {
             cursor: pointer;
+            font-weight: bold;
 
             &:hover {
                 span {

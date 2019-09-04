@@ -18,41 +18,6 @@
                    type="file"
                    name="file"
                    id="file"/>
-
-            <p class="page-subtitle">
-                or
-            </p>
-
-            <div class="content">
-
-                <label class="ui-label"
-                       for="privateKey">
-                    Paste your private key below:
-                </label>
-
-                <textarea class="ui-input"
-                          v-model="privateKey"
-                          name="privateKey"
-                          id="privateKey"
-                          placeholder="Paste here...">
-                </textarea>
-
-                <div v-if="error"
-                     class="error">
-                    <p>{{errorMessage}}</p>
-                </div>
-
-                <button class="button primary"
-                        :disabled="!isKeyValid"
-                        @click="restoreIdentity">Restore
-                </button>
-
-                <router-link to="/create-identity"
-                             class="text-link">
-                    Go back
-                </router-link>
-            </div>
-
         </form>
     </div>
 </template>
@@ -82,8 +47,8 @@
                 // TODO Add proper key regex validation
                 return value.length > 10 && value.indexOf('END RSA PRIVATE KEY') > -1;
             },
-            restoreIdentity(e) {
-                e.preventDefault();
+            restoreIdentity(event) {
+                event.preventDefault();
                 if (event.target.files && event.target.files[0]) {
                     let file = event.target.files[0].path;
                     if (!file) {
