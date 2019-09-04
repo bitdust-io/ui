@@ -2,12 +2,12 @@
 
     <div class="container">
         <div class="menu">
-            <slot name="menu" />
+            <slot name="menu"/>
         </div>
         <div class="main"
              ref="main"
              id="main">
-            <slot name="main" />
+            <slot name="main"/>
         </div>
     </div>
 </template>
@@ -31,7 +31,7 @@
     .main {
         flex: 1;
         height: 100%;
-        overflow: scroll;
+        overflow-y: scroll;
         padding-bottom: 100px;
         padding-left: 40px;
         padding-top: 60px;

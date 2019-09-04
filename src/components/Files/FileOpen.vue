@@ -180,6 +180,7 @@
         mounted() {
             this.resetOpenFile();
             this.updateCurrentFile(this.extraProps.fileName);
+            this.updateFileInfo();
         }
     };
 </script>
