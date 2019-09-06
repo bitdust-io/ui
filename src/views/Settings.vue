@@ -2,7 +2,7 @@
     <grid-content>
         <div slot="main">
             <div v-if="currentKey ==='suppliers'">
-                <suppliers />
+                <suppliers/>
             </div>
             <ul class="settings-list"
                 v-if="currentKey !=='services'">
@@ -11,7 +11,7 @@
                     :key="index">
 
                     <ui-config :item="item"
-                               @onChange="onChange" />
+                               @onChange="onChange"/>
                 </li>
             </ul>
             <ul v-else
@@ -24,14 +24,14 @@
                         {{item.name.replace(/service_|_/g, ' ')}}
                     </h2>
 
-                    <ui-status :status="item" />
+                    <ui-status :status="item"/>
 
                     <div v-for="config in item.configs"
                          :key="config.key"
                          class="config">
 
                         <ui-config :item="config"
-                                   @onChange="onChange" />
+                                   @onChange="onChange"/>
                     </div>
 
                     <div class="depends-on">
@@ -55,19 +55,17 @@
 
             <ul class="link-list">
                 <li>
-                    <router-link
-                        :to="'/settings/suppliers'"
-                        class="link"
-                        active-class="active"
+                    <router-link :to="'/settings/suppliers'"
+                                 class="link"
+                                 active-class="active"
                     >
                         Suppliers
                     </router-link>
                 </li>
                 <li>
-                    <router-link
-                        :to="'/settings/services'"
-                        class="link"
-                        active-class="active"
+                    <router-link :to="'/settings/services'"
+                                 class="link"
+                                 active-class="active"
                     >
                         Services
                     </router-link>
@@ -76,17 +74,25 @@
                 <li v-for="item in getConfigKeys"
                     :key="item">
                     <router-link
-                        :to="'/settings/'+item"
-                        class="link"
-                        active-class="active"
+                            :to="'/settings/'+item"
+                            class="link"
+                            active-class="active"
                     >
                         {{item}}
                     </router-link>
                 </li>
                 <li>
-                    <button @click="backupKey" class="button slim is-small">Backup key</button>
+                    <button @click="backupKey"
+                            class="button slim is-small">Backup key
+                    </button>
                 </li>
             </ul>
+
+            <p v-if="isDownload"
+               class="download">
+                Your key was saved on:
+                {{ isDownload }}
+            </p>
         </div>
     </grid-content>
 </template>
@@ -104,7 +110,8 @@
         data() {
             return {
                 currentKey: undefined,
-                settings: {}
+                settings: {},
+                isDownload: false
             };
         },
         components: {
@@ -132,8 +139,10 @@
                 'updateConfigList',
                 'updateServiceList'
             ]),
-            backupKey() {
+            async backupKey() {
                 Api.identityBackup();
+                const {result} = await Api.getPath();
+                this.isDownload = result[0].value;
             },
             onChange(config) {
                 Api.setConfig(config);
@@ -232,6 +241,12 @@
                 }
             }
         }
+    }
+
+    .download {
+        font-size: .9rem;
+        color: $color-red;
+        margin-top: 10px;
     }
 
 </style>
