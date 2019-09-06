@@ -12,10 +12,9 @@
                 <li v-for="(friend, index) in getFriends"
                     :key="index"
                     :class="{'online': friend.contact_state === 'CONNECTED'}">
-                    <router-link
-                            class="link"
-                            active-class="active"
-                            :to="{ name: 'friend', params: { id: friend.username }}">
+                    <router-link class="link"
+                                 active-class="active"
+                                 :to="{ name: 'friend', params: { id: friend.username }}">
                         {{friend.username}}
                     </router-link>
                 </li>
