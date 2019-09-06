@@ -51,13 +51,18 @@
 
                     <div class="input-wrapper">
                         <input v-model="search"
+                               v-on:keydown.enter="searchUser"
                                placeholder="Type your friend name"
                                id="search"/>
 
                         <button :class="{'is-loading': isLoading}"
                                 :disabled="this.search.length < 3 || isLoading"
-                                class="button primary"
-                                @click="searchUser">Search
+                                class="button primary search-user"
+                                @click="searchUser">
+                            <font-awesome-icon v-if="isLoading"
+                                               icon="spinner"
+                                               class="loading rotating"/>
+                            <span>Search</span>
                         </button>
                     </div>
 
@@ -217,10 +222,6 @@
         font-size: 1rem;
         padding: 0;
         margin-bottom: 20px;
-
-        &.is-loading {
-            background: $color-gray-1;
-        }
     }
 
     .search {
@@ -265,10 +266,23 @@
                 font-size: 1rem;
             }
 
-            .button {
+            .search-user {
                 margin-left: 10px;
                 padding: 2px 20px;
                 outline: none;
+                position: relative;
+                transition: padding .2s ease;
+
+                &.is-loading {
+                    background: $color-gray-1;
+                    padding: 2px 20px 2px 36px;
+                }
+
+                .loading {
+                    position: absolute;
+                    left: 13px;
+                    top: 13px;
+                }
             }
         }
 
