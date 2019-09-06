@@ -11,7 +11,8 @@
         <div class="message-sender"
              v-if="currentFriend.contact_state === 'CONNECTED'">
 
-            <textarea placeholder="Type here..."
+            <textarea v-model="userMessage"
+                      placeholder="Type here..."
                       v-on:keydown="sendFromEnter"
                       ref="chat"
                       :disabled="isSending"
