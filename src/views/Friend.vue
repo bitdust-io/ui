@@ -4,7 +4,7 @@
 
             <h2 @click="openSearch"
                 class="button primary">
-                <font-awesome-icon icon="search" />
+                <font-awesome-icon icon="search"/>
                 Search friends
             </h2>
 
@@ -12,21 +12,25 @@
                 <li v-for="(friend, index) in getFriends"
                     :key="index"
                     :class="{'online': friend.contact_state === 'CONNECTED'}">
-                    <router-link
-                        class="link"
-                        active-class="active"
-                        :to="{ name: 'friend', params: { id: friend.username }}">
+                    <router-link class="link"
+                                 active-class="active"
+                                 :to="{ name: 'friend', params: { id: friend.username }}">
                         {{friend.username}}
                     </router-link>
                 </li>
             </ul>
+
+            <p class="info">
+                <font-awesome-icon icon="info-circle"/>
+                You can only send messages to a friend that is online.
+            </p>
 
         </div>
 
         <div slot="main">
 
             <friend-chat :current-friend="getCurrentFriend"
-                         v-if="getCurrentFriend" />
+                         v-if="getCurrentFriend"/>
             <div v-else>
                 Select a friend to chat !
             </div>
@@ -38,7 +42,7 @@
 
                     <span class="close-main"
                           @click="closeSearch">
-                        <font-awesome-icon icon="times" />
+                        <font-awesome-icon icon="times"/>
                     </span>
 
                     <label for="search">
@@ -50,11 +54,10 @@
                                placeholder="Type your friend name"
                                id="search"/>
 
-                        <button
-                            :class="{'is-loading': isLoading}"
-                            :disabled="this.search.length < 3 || isLoading"
-                            class="button primary"
-                            @click="searchUser">Search
+                        <button :class="{'is-loading': isLoading}"
+                                :disabled="this.search.length < 3 || isLoading"
+                                class="button primary"
+                                @click="searchUser">Search
                         </button>
                     </div>
 
@@ -135,7 +138,8 @@
         computed: {
             ...mapGetters([
                 'getFriends',
-                'getLastFriend'
+                'getLastFriend',
+                'connectionStatus'
             ]),
             getCurrentFriend() {
                 return this.getFriends.find(friend => friend.username === this.$route.params.id);
@@ -188,6 +192,9 @@
             document.getElementsByTagName('html')[0].classList.remove('intro-background');
         },
         watch: {
+            connectionStatus() {
+                this.getApiFriends();
+            },
             getCurrentFriend(friend) {
                 if (friend) {
                     this.updateLastFriend(friend);
@@ -212,7 +219,7 @@
         margin-bottom: 20px;
 
         &.is-loading {
-          background: $color-gray-1;
+            background: $color-gray-1;
         }
     }
 
@@ -322,6 +329,14 @@
             cursor: pointer;
             font-size: 1.4rem;
         }
+    }
+
+    .info {
+        font-size: .8rem;
+        margin-top: 20px;
+        background: $color-gray-4;
+        padding: 10px;
+
     }
 
 </style>
