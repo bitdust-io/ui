@@ -6,9 +6,10 @@
                   class="remove">remove friend</span>
         </div>
 
-        <friend-messages :current-friend="currentFriend" />
+        <friend-messages :current-friend="currentFriend"/>
 
-        <div class="message-sender">
+        <div class="message-sender"
+             v-if="currentFriend.contact_state === 'CONNECTED'">
 
             <textarea v-model="userMessage"
                       placeholder="Type here..."
@@ -18,9 +19,8 @@
                       class="chat-input"
                       :rows="lines">
             </textarea>
-            <button
-                @click="sendMessage"
-                class="send"
+            <button @click="sendMessage"
+                    class="send"
             >
                 Send
             </button>
@@ -107,7 +107,7 @@
                 }
             },
             focusOnInput() {
-                if (this.$refs.chat) {
+                if (this.$refs.chat && this.currentFriend.contact_state === 'CONNECTED') {
                     this.$nextTick(() => {
                         this.$refs.chat.focus();
                     });
