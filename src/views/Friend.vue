@@ -51,6 +51,7 @@
 
                     <div class="input-wrapper">
                         <input v-model="search"
+                               ref="searchInput"
                                v-on:keydown.enter="searchUser"
                                placeholder="Type your friend name"
                                id="search"/>
@@ -157,6 +158,9 @@
             ]),
             openSearch() {
                 this.isSearchOpen = true;
+                this.$nextTick(() => {
+                    this.$refs.searchInput.focus();
+                });
             },
             closeSearch() {
                 this.isSearchOpen = false;
