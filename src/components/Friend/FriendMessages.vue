@@ -108,7 +108,7 @@
             this.loadChatHistory();
         },
         watch: {
-            currentFriend() {
+            $route() {
                 this.resetMessages();
                 this.loadChatHistory();
             },
@@ -124,7 +124,6 @@
 
     .friend-messages {
         position: relative;
-        /*height: calc(90% - 50px);*/
 
         &:before {
             content: '';
