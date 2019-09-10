@@ -118,7 +118,7 @@
             this.focusOnInput();
         },
         watch: {
-            currentFriend() {
+            $route() {
                 this.focusOnInput();
                 this.resetOpenFriend();
             }
