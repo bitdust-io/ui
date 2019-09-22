@@ -73,10 +73,9 @@
 
                 <li v-for="item in getConfigKeys"
                     :key="item">
-                    <router-link
-                            :to="'/settings/'+item"
-                            class="link"
-                            active-class="active"
+                    <router-link :to="'/settings/'+item"
+                                 class="link"
+                                 active-class="active"
                     >
                         {{item}}
                     </router-link>
