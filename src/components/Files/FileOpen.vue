@@ -3,7 +3,7 @@
         <div @click="stopPropagation($event)"
              class="file-open-container">
             <div class="flex">
-                <file-extension :file="currentFile.path" />
+                <file-extension :file="currentFile.path"/>
                 <h1>{{currentFile.name}}</h1>
             </div>
 
@@ -34,7 +34,7 @@
                             @click="selectFriendToShare(friend)"
                             :class="{active: selectedFriend.global_id === friend.global_id}">
 
-                            <user-first-letter :name="friend.username" />
+                            <user-first-letter :name="friend.username"/>
                             {{friend.username}}
 
                         </li>
@@ -68,7 +68,7 @@
                     <span class="share-text">{{errorMessage}}</span>
                 </div>
             </div>
-            <hr />
+            <hr/>
 
             <div v-for="(version , index) in currentFile.versions"
                  :key="index"
@@ -101,7 +101,7 @@
             };
         },
         props: {
-            extraProps: {
+            data: {
                 type: Object
             }
         },
@@ -112,7 +112,6 @@
         methods: {
             ...mapActions([
                 'deleteFile',
-                'closeFile',
                 'getApiFriends',
                 'updateCurrentFileData',
                 'updateCurrentFile'
@@ -179,7 +178,7 @@
         },
         mounted() {
             this.resetOpenFile();
-            this.updateCurrentFile(this.extraProps.fileName);
+            this.updateCurrentFile(this.data.fileName);
             this.updateFileInfo();
         }
     };
