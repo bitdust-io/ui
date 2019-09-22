@@ -69,6 +69,7 @@
 
             &:hover {
                 opacity: .8;
+                color: $color-gray-1;
             }
         }
     }

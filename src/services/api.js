@@ -130,8 +130,23 @@ const Api = {
         return this.makePost('share/create');
     },
 
-    getSharedKeys() {
+    getShareList(config) {
+        return this.makeGet('share/list', config);
+    },
+
+    getAllShareList() {
         return this.makeGet('share/list');
+    },
+
+    getKeyList() {
+        return this.makeGet('key/list');
+    },
+
+    editKeyLabel(id, label) {
+        return this.makePost('key/label', {
+            'key_id': id,
+            'label': label
+        });
     },
 
     getSharedFiles() {
@@ -140,6 +155,11 @@ const Api = {
 
     getFiles() {
         return this.makeGet('file/list');
+    },
+
+    getFilesForKey(key, isShare = 1) {
+        let query = ['key_id=' + key, 'all_customers=' + isShare];
+        return this.makeGet('file/list', query.join('&'));
     },
 
     getFileInfo(file) {

@@ -100,6 +100,20 @@ const actions = {
             }
         });
     },
+    getApiFilesForKey({commit, dispatch}, {key, isShare}) {
+        api.getFilesForKey(key, isShare).then(data => {
+            if (data.status === 'ERROR') {
+                setTimeout(() => {
+                    dispatch('getApiFilesForKey', {key, isShare});
+                    commit('UPDATE_FILES_ERROR_LOADING', true);
+                    console.log('retrying to get files');
+                }, 1000);
+            } else {
+                commit('UPDATE_FILE_LIST', data.result);
+                commit('UPDATE_FILES_ERROR_LOADING', false);
+            }
+        });
+    },
     createFile({commit, dispatch}, file) {
         if (!file) return false;
         let filePath = file.files[0].path.replace(/\\/g, '/');

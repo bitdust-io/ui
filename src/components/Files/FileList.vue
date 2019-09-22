@@ -6,13 +6,13 @@
         </label>
         <input v-model="search"
                placeholder="type a file name"
-               id="search" />
+               id="search"/>
 
         <div v-if="Files.filesErrorLoading"
              class="loading-wrapper">
             <icon name="loading"
                   class="rotating"
-                  size="lg" />
+                  size="lg"/>
             Loading files
         </div>
 
@@ -24,13 +24,14 @@
              v-if="search.length !== 0 && filteredList.length === 0">
             No files founded
         </div>
+
         <ul>
             <li v-for="(file, index) in filteredList"
                 :key="index">
-                <file-extension :file="file.path" />
+                <file-extension :file="file.path"/>
                 <span class="file-name"
                       @click="open(file.path)">{{file.name}}</span>
-                <file-detail :file="file" />
+                <file-detail :file="file"/>
             </li>
         </ul>
     </div>
@@ -49,6 +50,11 @@
                 isFilesLoading: true
             };
         },
+        props: {
+            setKey: {
+                type: String
+            }
+        },
         components: {
             FileDetail,
             FileExtension,
@@ -57,7 +63,8 @@
         methods: {
             ...mapActions([
                 'deleteFile',
-                'getApiFiles'
+                'getApiFiles',
+                'getApiFilesForKey'
             ]),
             setFileLoading(value) {
                 this.isFilesLoading = value;
@@ -82,6 +89,11 @@
         },
         created() {
             this.getApiFiles();
+        },
+        watch: {
+            setKey(key) {
+                key ? this.getApiFilesForKey({key}) : this.getApiFiles();
+            }
         }
     };
 </script>
