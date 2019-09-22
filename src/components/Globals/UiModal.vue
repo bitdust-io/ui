@@ -1,34 +1,25 @@
 <template>
     <transition name="modal">
-        <div
-            v-if="getModalShouldOpen"
-            class="modal"
-            :class="{
-                'modal-side': componentConfig.type === 'side',
-                'modal-center': componentConfig.type === 'center',
-                'modal-from-left': componentConfig.transitionFrom === 'left',
-                'modal-from-right': componentConfig.transitionFrom === 'right',
-                'modal-from-top': componentConfig.transitionFrom === 'top'
-            }">
+        <div v-if="getModalShouldOpen"
+             class="modal"
+             :class="{'modal-side': componentConfig.type === 'side',
+                      'modal-center': componentConfig.type === 'center',
+                      'modal-from-left': componentConfig.transitionFrom === 'left',
+                      'modal-from-right': componentConfig.transitionFrom === 'right',
+                      'modal-from-top': componentConfig.transitionFrom === 'top'}">
 
             <div class="backdrop" @click="closeModal"></div>
 
-            <div
-                @close="closeModal"
-                class="modal-container"
-                :class="[
-                    {'is-menu': componentConfig.isMobileMenu},
-                    componentConfig.size
-                ]">
-
-                <span
-                    @click="closeModal"
-                    v-if="componentConfig.showCloseButton"
-                    class="modal-close close-icon"
-                    :class="componentConfig.type">
+            <div @close="closeModal"
+                 class="modal-container"
+                 :class="[{'is-menu': componentConfig.isMobileMenu},componentConfig.size]">
+                <span @click="closeModal"
+                      v-if="componentConfig.showCloseButton"
+                      class="modal-close close-icon"
+                      :class="componentConfig.type">
                 </span>
                 <component :is="componentConfig.component"
-                           :extra-props="componentConfig.props"></component>
+                           :data="componentConfig.props"></component>
             </div>
         </div>
     </transition>
@@ -185,6 +176,7 @@
             .modal-container {
                 transform: translateX(-102%);
             }
+
             .backdrop {
                 opacity: 0;
             }
@@ -194,6 +186,7 @@
             .modal-container {
                 transform: translateX(100%);
             }
+
             .backdrop {
                 opacity: 1;
             }
@@ -203,6 +196,7 @@
             .modal-container {
                 transform: translateY(-100%);
             }
+
             .backdrop {
                 opacity: 1;
             }
