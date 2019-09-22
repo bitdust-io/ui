@@ -6,15 +6,15 @@
         </label>
         <input v-model="search"
                placeholder="type a file name"
-               id="search" />
+               id="search"/>
 
         <ul>
             <li v-for="(file, index) in filteredList"
                 :key="index">
-                <file-extension :file="file.path" />
+                <file-extension :file="file.path"/>
                 <span class="file-name"
                       @click="open(file.path)">{{file.name}}</span>
-                <file-detail :file="file" />
+                <file-detail :file="file"/>
             </li>
         </ul>
         <div v-if="isFileOpen">
@@ -35,6 +35,11 @@
                 search: ''
             };
         },
+        props: {
+            setKey: {
+                type: String
+            }
+        },
         components: {
             FileDetail,
             FileExtension
@@ -42,7 +47,8 @@
         methods: {
             ...mapActions([
                 'deleteFile',
-                'getApiSharedFiles'
+                'getApiSharedFiles',
+                'getApiFilesForKey'
             ]),
             open(file) {
                 this.$emit('open', file);
@@ -64,6 +70,11 @@
         },
         created() {
             this.getApiSharedFiles();
+        },
+        watch: {
+            setKey(key) {
+                key ? this.getApiFilesForKey({'key': key, 'isSHared': true}) : this.getApiSharedFiles();
+            }
         }
     };
 </script>
@@ -116,6 +127,7 @@
         white-space: nowrap;
         cursor: pointer;
         padding-right: 10px;
+
         &:hover {
             opacity: .6;
         }
