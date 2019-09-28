@@ -47,7 +47,8 @@
         data() {
             return {
                 search: '',
-                isFilesLoading: true
+                isFilesLoading: true,
+                openKey: undefined
             };
         },
         props: {
@@ -71,11 +72,15 @@
             },
             open(file) {
                 this.$emit('open', file);
+            },
+            getFilesFromApi(key) {
+                key ? this.getApiFilesForKey({key}) : this.getApiFiles();
             }
         },
         computed: {
             ...mapGetters([
-                'getFiles'
+                'getFiles',
+                'connectionStatus'
             ]),
             ...mapState(['Files']),
             filteredList() {
@@ -92,7 +97,13 @@
         },
         watch: {
             setKey(key) {
-                key ? this.getApiFilesForKey({key}) : this.getApiFiles();
+                this.openKey = key;
+                this.getFilesFromApi(key);
+            },
+            connectionStatus(res) {
+                if (res.status === 'OK') {
+                    this.getFilesFromApi(this.openKey);
+                }
             }
         }
     };

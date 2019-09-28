@@ -21,6 +21,10 @@
         background: $color-purple-1;
     }
 
+    &.warn {
+        background: $color-red;
+    }
+
     &.slim {
         border: 1px solid $color-gray-2;
         color: $color-purple-1;
