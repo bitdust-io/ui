@@ -49,6 +49,7 @@
         .link-list {
             list-style: none;
             display: inline-block;
+            width: 100%;
         }
 
         .link {
