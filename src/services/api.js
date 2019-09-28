@@ -126,8 +126,16 @@ const Api = {
         });
     },
 
-    createFileShareKey() {
-        return this.makePost('share/create');
+    createFileShareKey(label) {
+        return this.makePost('share/create', {
+            'label': label || ''
+        });
+    },
+
+    removeFileShareKey(id) {
+        return this.makeDelete('key/delete', {
+            'key_id': id
+        });
     },
 
     getShareList(config) {
