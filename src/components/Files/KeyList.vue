@@ -5,7 +5,9 @@
             class="key-item"
             :class="{'active': activeKey === key.key_id}">
 
-            <span @click="open(key)" class="edit">
+            <span @click="open(key)"
+                  class="edit"
+                  v-if="config.edit">
                 <font-awesome-icon icon="edit"/>
             </span>
 
@@ -17,13 +19,15 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
     import api from '../../services/api';
 
     export default {
         data() {
             return {
                 shareList: undefined,
-                activeKey: undefined
+                activeKey: undefined,
+
             };
         },
         props: {
@@ -34,7 +38,10 @@
                 type: String
             },
             config: {
-                type: String
+                type: Object
+            },
+            update: {
+                type: Number
             }
         },
         components: {},
@@ -43,17 +50,24 @@
                 this.$emit('open', key);
             },
             setKey(key) {
-                this.$emit('setKey', {key: key.key_id, isShare: this.config});
+                this.$emit('setKey', {key: key.key_id, isShare: this.config.isShare, label: key.label});
             },
             makeConfig() {
-                let result = this.config === 'share';
+                let result = this.config.isShare;
                 return result ? 'granted=1&mine=0&all_customers=1' : 'granted=0&mine=1';
+            },
+            async getKeys() {
+                const {result} = await api.getShareList(this.makeConfig());
+                this.shareList = result;
             }
         },
-        computed: {},
-        async created() {
-            const {result} = await api.getShareList(this.makeConfig());
-            this.shareList = result;
+        computed: {
+            ...mapGetters([
+                'connectionStatus'
+            ])
+        },
+        created() {
+            this.getKeys();
         },
         watch: {
             activeTab(tab) {
@@ -61,6 +75,12 @@
             },
             openKey(key) {
                 this.activeKey = key;
+            },
+            update() {
+                this.getKeys();
+            },
+            connectionStatus() {
+                this.getKeys();
             }
         }
     };
@@ -68,6 +88,10 @@
 
 <style scoped lang="scss">
     @import "../../assets/scss/includes.scss";
+
+    .user-keys {
+        width: 100%;
+    }
 
     li {
         width: 100%;
