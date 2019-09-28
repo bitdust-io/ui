@@ -2,7 +2,10 @@
     <div class="file-open">
         <div @click="stopPropagation($event)">
             <div class="flex">
-                <h1><font-awesome-icon icon="key"/> {{data.label}}</h1>
+                <h1>
+                    <font-awesome-icon icon="key"/>
+                    {{data.label}}
+                </h1>
             </div>
 
             <div class="edit-key">
@@ -12,6 +15,11 @@
                         Edit key name
                     </button>
                 </div>
+
+                <button @click="deleteKey"
+                        class="button warn is-small">
+                    delete key
+                </button>
 
                 <div v-if="isEditing">
 
@@ -60,9 +68,10 @@
             },
             cancel() {
                 this.isEditing = false;
+            },
+            deleteKey() {
+                this.$api.removeFileShareKey(this.data.key_id);
             }
-        },
-        mounted() {
         }
     };
 </script>
