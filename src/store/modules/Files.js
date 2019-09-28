@@ -20,9 +20,11 @@ const getters = {
     getFiles: state => state.filesList,
     getSharedFiles: state => state.sharedFilesList,
     currentFile: state => state.currentFile,
-    hasFilePath(path) {
-        if (!state.filesList) return [];
-        return state.filesList.filter(file => file.path === path);
+    hasFilePath: state => {
+        return path => {
+            if (!state.filesList) return [];
+            return state.filesList.filter(file => file.path === path);
+        };
     },
     isFileLocked: state => {
         return id => {
@@ -113,46 +115,6 @@ const actions = {
                 commit('UPDATE_FILES_ERROR_LOADING', false);
             }
         });
-    },
-    createFile({commit, dispatch}, file) {
-        if (!file) return false;
-        let filePath = file.files[0].path.replace(/\\/g, '/');
-        let fileName = filePath.match(/\/([^/]*)$/)[1];
-        // TODO Sanitize file name
-
-        if (getters.hasFilePath(fileName).length === 0) {
-            api.createFileShareKey().then(shareKeyData => {
-                if (!shareKeyData.result && shareKeyData.status !== 'OK') return false;
-                const keyId = shareKeyData.result[0].key_id;
-                api.createPath(fileName, keyId).then(pathData => {
-                    if (pathData.status === 'OK') {
-                        api.createFile(keyId + ':' + fileName, filePath).then(fileData => {
-                            if (fileData.status === 'OK') {
-                                console.log('file: ', fileName, 'Created');
-                            }
-                        }).catch(err => {
-                            console.log('error: ', err);
-                        });
-                        setTimeout(() => {
-                            dispatch('getApiFiles');
-                        }, 500);
-                    }
-                });
-            });
-        } else {
-            let currentFile = getters.hasFilePath(fileName)[0];
-            let remotePath = currentFile.key_id + ':' + currentFile.path;
-            api.createFile(remotePath, filePath).then(data => {
-                if (data.status === 'OK') {
-                    console.log('file: ', fileName, 'Created');
-                }
-            }).catch(err => {
-                console.log('error: ', err);
-            });
-            setTimeout(() => {
-                dispatch('getApiFiles');
-            }, 500);
-        }
     }
 };
 

@@ -2,7 +2,10 @@
     <grid-content>
         <div slot="menu">
 
-            <files-upload class="upload"/>
+            <file-upload class="upload"
+                         :open-key="openKey"
+                         :open-label="openLabel"
+            />
 
             <ul class="link-list">
                 <li :class="{'active': (activeTab ==='myFiles')}"
@@ -17,6 +20,7 @@
                         KEYS
                     </span>
                     <key-list @open="openKeyModal"
+                              :config="{isShare: false, edit:true}"
                               :active-tab="activeTab"
                               :open-key="openKey"
                               @setKey="setOpenKey"/>
@@ -34,7 +38,7 @@
                         KEYS
                     </span>
                     <key-list @open="openKeyModal"
-                              :config="'share'"
+                              :config="{isShare: true, edit:true}"
                               :active-tab="activeTab"
                               :open-key="openKey"
                               @setKey="setOpenKey"/>
@@ -57,7 +61,7 @@
     import keyList from '../components/Files/KeyList';
     import fileList from '../components/Files/FileList';
     import filesShared from '../components/Files/FilesShared';
-    import filesUpload from '../components/Files/FileUpload';
+    import fileUpload from '../components/Files/FileUpload';
     import fileOpen from '../components/Files/FileOpen';
     import keyOpen from '../components/Files/KeyOpen';
     import GridContent from '../components/Globals/GridContent';
@@ -68,13 +72,14 @@
         data() {
             return {
                 activeTab: 'myFiles',
-                openKey: undefined
+                openKey: undefined,
+                openLabel: undefined
             };
         },
         components: {
             fileList,
             filesShared,
-            filesUpload,
+            fileUpload,
             GridContent,
             keyList
         },
@@ -85,6 +90,7 @@
             setMenuActive(menu) {
                 this.activeTab = menu;
                 this.openKey = undefined;
+                this.openLabel = undefined;
             },
             openFileModal(file) {
                 ModalService.openModal({
@@ -104,6 +110,7 @@
             },
             setOpenKey(config) {
                 this.openKey = config.key;
+                this.openLabel = config.label;
                 this.activeTab = config.isShare ? 'myShares' : 'myFiles';
             }
         }
