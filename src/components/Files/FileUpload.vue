@@ -1,16 +1,15 @@
 <template>
-    <div class="dropbox">
-        <font-awesome-icon icon="cloud-upload-alt" />
+    <div class="dropbox"
+         @click="openCreateFileModal()">
+        <font-awesome-icon icon="cloud-upload-alt"/>
         UPLOAD
-        <input type="file"
-               :name="uploadFieldName"
-               @change="createFile($event.target)"
-               class="input-file">
     </div>
 </template>
 
 <script>
     import {mapActions} from 'vuex';
+    import ModalService from '@/services/modal';
+    import UploadFileOpen from './FileUploadOpen';
 
     export default {
         data() {
@@ -18,10 +17,26 @@
                 uploadFieldName: ''
             };
         },
+        props: {
+            openKey: {
+                type: String
+            },
+            openLabel: {
+                type: String
+            }
+        },
         methods: {
             ...mapActions([
                 'createFile'
-            ])
+            ]),
+            openCreateFileModal() {
+                ModalService.openModal({
+                    component: UploadFileOpen,
+                    type: 'center',
+                    transitionFrom: 'top',
+                    props: {openKey: this.openKey, openLabel: this.openLabel}
+                });
+            },
         }
     };
 </script>
