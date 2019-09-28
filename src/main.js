@@ -4,6 +4,7 @@ import router from './router';
 import store from './store/index';
 import application from './services/application';
 import './assets/scss/styles.scss';
+import api from './services/api';
 
 // Font Awesome Icons
 import {library} from '@fortawesome/fontawesome-svg-core';
@@ -15,6 +16,7 @@ library.add(fas, far);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;
+Vue.prototype.$api = api;
 
 /* eslint-disable no-new */
 new Vue({
@@ -25,3 +27,4 @@ new Vue({
     template: '<App/>',
     created: application.bootstrap()
 });
+
