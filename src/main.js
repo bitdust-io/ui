@@ -27,4 +27,3 @@ new Vue({
     template: '<App/>',
     created: application.bootstrap()
 });
-

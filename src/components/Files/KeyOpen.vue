@@ -19,6 +19,7 @@
                 <button @click="deleteKey"
                         class="button warn is-small">
                     delete key
+                    <span v-if="error">{{error}}</span>
                 </button>
 
                 <div v-if="isEditing">
@@ -46,7 +47,8 @@
         data() {
             return {
                 isEditing: false,
-                alias: undefined
+                alias: undefined,
+                error: undefined
             };
         },
         props: {
@@ -69,8 +71,9 @@
             cancel() {
                 this.isEditing = false;
             },
-            deleteKey() {
-                this.$api.removeFileShareKey(this.data.key_id);
+            async deleteKey() {
+                const {status} = await this.$api.removeFileShareKey(this.data.key_id);
+                status === 'OK' ? this.$emit('closeModal') : this.error = status;
             }
         }
     };

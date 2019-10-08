@@ -26,7 +26,7 @@
         data() {
             return {
                 shareList: undefined,
-                activeKey: undefined,
+                activeKey: undefined
 
             };
         },
