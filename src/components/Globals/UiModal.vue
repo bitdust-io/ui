@@ -19,6 +19,7 @@
                       :class="componentConfig.type">
                 </span>
                 <component :is="componentConfig.component"
+                           @closeModal="closeModal"
                            :data="componentConfig.props"></component>
             </div>
         </div>
