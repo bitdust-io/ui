@@ -69,7 +69,6 @@
         background-size: .65em auto, 100%;
     }
 
-
     .select:hover {
         border-color: #888;
     }
