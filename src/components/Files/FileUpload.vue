@@ -36,7 +36,7 @@
                     transitionFrom: 'top',
                     props: {openKey: this.openKey, openLabel: this.openLabel}
                 });
-            },
+            }
         }
     };
 </script>

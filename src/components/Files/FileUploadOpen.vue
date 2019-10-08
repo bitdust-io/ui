@@ -26,9 +26,11 @@
                 <h4 class="title">Create a new key:</h4>
                 <input v-model="keyLabelInput"
                        placeholder="key label">
-                <span @click="creatKey" class="add">
-                <font-awesome-icon icon="plus-circle"/>
-            </span>
+                <button @click="creatKey"
+                      class="add"
+                      :disabled="!keyLabelInput || keyLabelInput.length < 3">
+                    <font-awesome-icon icon="plus-circle"/>
+                </button>
             </div>
 
             <div class="dropbox"
@@ -96,7 +98,6 @@
 
 <style scoped lang="scss">
     @import "../../assets/scss/includes.scss";
-
 
     .title {
         font-size: 1rem;
@@ -182,16 +183,28 @@
 
     .create-key {
         @extend .block;
+        display: flex;
+        align-items: center;
 
         input {
+            width: 300px;
             padding: 4px;
             font-size: 1rem;
+            margin: 0 10px;
         }
 
         .add {
             color: $color-purple-1;
             margin: 0 10px;
             cursor: pointer;
+            font-size: 2rem;
+            border: none;
+            background: none;
+
+            &:disabled {
+                pointer-events: none;
+                opacity: .4;
+            }
         }
     }
 </style>
