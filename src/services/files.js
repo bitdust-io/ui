@@ -16,15 +16,15 @@ const FilesService = {
 
     async createPathAndUpload({getter, dispatch}, filePath, fileName, keyId) {
         try {
-            const {result} = await api.createPath(fileName, keyId);
-            if (result.status !== 'OK') return;
+            const response = await api.createPath(fileName, keyId);
+            if (response.status !== 'OK') return;
             const {status} = await api.createFile(keyId + ':' + fileName, filePath);
             if (status === 'OK') {
                 console.log('file: ', fileName, 'Created');
             }
             setTimeout(() => {
                 dispatch('getApiFilesForKey', keyId);
-            }, 500);
+            }, 200);
         } catch (e) {
             console.log('Error trying to create path', e);
         }
