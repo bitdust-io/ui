@@ -1,7 +1,6 @@
 <template>
     <div class="suppliers">
 
-
         <ul v-if="suppliers && suppliers.length > 0">
             <li v-for="(supplier, index) in suppliers"
                 :key="index">
