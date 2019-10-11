@@ -1,18 +1,18 @@
 <template>
     <div class="notifications">
         <div v-if="hasNewFile">
-            <span class="icon"></span>
             <p>
                 You have a new shared file: <strong>{{fileFrom}}</strong>
             </p>
-            <Icon name="close"
-                  class="close"
-                  @click="closeNotification()" />
+            <font-awesome-icon icon="times-circle"
+                               class="close"
+                               @click="closeNotification()"
+            />
         </div>
         <div v-if="newMessage.sender">
             <Icon name="chat"
                   class="chat"
-                  size="xs" />
+                  size="xs"/>
             <p>
                 Message received from:
             </p>
@@ -23,7 +23,7 @@
             <Icon name="close"
                   class="close"
                   size="xs"
-                  @click="closeMessageNotification()" />
+                  @click="closeMessageNotification()"/>
         </div>
     </div>
 </template>
@@ -142,7 +142,7 @@
                 padding: 3px;
                 margin: 0 0 0 20px;
                 cursor: pointer;
-                fill: $color-white;
+                font-size: 2rem;
             }
         }
     }
