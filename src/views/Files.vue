@@ -46,21 +46,15 @@
             </ul>
         </div>
         <div slot="main">
-            <div v-show="activeTab === 'myFiles'">
-                <file-list @open="openFileModal"
-                           :set-key="openKey"/>
-            </div>
-            <div v-show="activeTab === 'myShares'">
-                <files-shared @open="openFileModal"
-                              :set-key="openKey"/>
-            </div>
+            <file-list @open="openFileModal"
+                       :set-key="openKey"
+                       :active-tab="activeTab"/>
         </div>
     </grid-content>
 </template>
 <script>
     import keyList from '../components/Files/KeyList';
     import fileList from '../components/Files/FileList';
-    import filesShared from '../components/Files/FilesShared';
     import fileUpload from '../components/Files/FileUpload';
     import fileOpen from '../components/Files/FileOpen';
     import keyOpen from '../components/Files/KeyOpen';
@@ -78,7 +72,6 @@
         },
         components: {
             fileList,
-            filesShared,
             fileUpload,
             GridContent,
             keyList
