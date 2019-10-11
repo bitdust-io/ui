@@ -27,8 +27,8 @@
                 <input v-model="keyLabelInput"
                        placeholder="key label">
                 <button @click="creatKey"
-                      class="add"
-                      :disabled="!keyLabelInput || keyLabelInput.length < 3">
+                        class="add"
+                        :disabled="!keyLabelInput || keyLabelInput.length < 3">
                     <font-awesome-icon icon="plus-circle"/>
                 </button>
             </div>
