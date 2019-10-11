@@ -54,6 +54,9 @@
         props: {
             setKey: {
                 type: String
+            },
+            activeTab: {
+                type: String
             }
         },
         components: {
@@ -65,7 +68,8 @@
             ...mapActions([
                 'deleteFile',
                 'getApiFiles',
-                'getApiFilesForKey'
+                'getApiFilesForKey',
+                'getApiSharedFiles'
             ]),
             setFileLoading(value) {
                 this.isFilesLoading = value;
@@ -74,7 +78,10 @@
                 this.$emit('open', file);
             },
             getFilesFromApi(key) {
-                key ? this.getApiFilesForKey({key}) : this.getApiFiles();
+                key ? this.getApiFilesForKey({key}) : this.getAllFiles();
+            },
+            getAllFiles() {
+                this.activeTab === 'myShares' ? this.getApiSharedFiles() : this.getApiFiles();
             }
         },
         computed: {
@@ -93,9 +100,12 @@
             }
         },
         created() {
-            this.getApiFiles();
+            this.getAllFiles();
         },
         watch: {
+            activeTab() {
+                this.getFilesFromApi();
+            },
             setKey(key) {
                 this.openKey = key;
                 this.getFilesFromApi(key);

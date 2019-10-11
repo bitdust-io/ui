@@ -1,7 +1,5 @@
 import api from '../../services/api';
 
-const constants = {};
-
 const state = {
     filesList: [],
     sharedFilesList: [],
@@ -36,9 +34,6 @@ const getters = {
 };
 
 const mutations = {
-    UPDATE_SHARED_FILE_LIST(state, value) {
-        state.sharedFilesList = value;
-    },
     UPDATE_FILE_LIST(state, value) {
         state.filesList = value;
     },
@@ -85,7 +80,7 @@ const actions = {
     },
     getApiSharedFiles({commit}) {
         api.getSharedFiles().then(data => {
-            commit('UPDATE_SHARED_FILE_LIST', data.result);
+            commit('UPDATE_FILE_LIST', data.result);
         });
     },
     getApiFiles({commit, dispatch}) {
@@ -122,6 +117,5 @@ export default {
     state,
     getters,
     mutations,
-    actions,
-    constants
+    actions
 };
