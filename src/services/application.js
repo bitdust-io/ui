@@ -62,8 +62,11 @@ const Application = {
             } catch (e) {
                 console.log('error receiving event', e);
             }
-            this.eventsListen();
         }
+
+        setTimeout(() => {
+            this.eventsListen();
+        }, 100);
     },
 
     async messagesListen() {
