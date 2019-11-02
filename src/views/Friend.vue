@@ -128,10 +128,9 @@
         name: 'Friend',
         data() {
             return {
-                activeTab: 'myFriends',
                 isSearchOpen: false,
                 search: '',
-                searchResults: '',
+                searchResults: [],
                 observeSearchAlias: [],
                 addFriendResponse: '',
                 isLoading: false
@@ -164,6 +163,10 @@
             },
             closeSearch() {
                 this.isSearchOpen = false;
+                this.search = '';
+                this.observeSearchAlias = [];
+                this.searchResults = [];
+                this.addFriendResponse = '';
             },
             async searchUser() {
                 if (this.search.length < 3) return;
