@@ -78,9 +78,10 @@ const actions = {
             });
         }
     },
-    getApiSharedFiles({commit}) {
+    getApiSharedFiles({commit, getters}) {
+        const globalId = getters.getIdentity.global_id;
         api.getSharedFiles().then(data => {
-            commit('UPDATE_FILE_LIST', data.result);
+            commit('UPDATE_FILE_LIST', data.result.filter(f => f.customer !== globalId));
         });
     },
     getApiFiles({commit, dispatch}) {
