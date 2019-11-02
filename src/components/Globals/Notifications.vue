@@ -1,15 +1,30 @@
 <template>
     <div class="notifications">
-        <div v-if="hasNewFile">
+
+        <div v-if="downloadDone.status">
+            <font-awesome-icon icon="times-circle"
+                               class="close"
+                               @click="closeDownloadNotification()"
+            />
             <p>
-                You have a new shared file: <strong>{{fileFrom}}</strong>
+                The file you requested to download is saved on: {{downloadDone.data.output_location}}
             </p>
+        </div>
+
+        <div v-if="hasNewFile">
             <font-awesome-icon icon="times-circle"
                                class="close"
                                @click="closeNotification()"
             />
+            <p>
+                You have a new shared file: <strong>{{fileFrom}}</strong>
+            </p>
         </div>
         <div v-if="newMessage.sender">
+            <font-awesome-icon icon="times-circle"
+                               class="close"
+                               @click="closeMessageNotification()"
+            />
             <Icon name="chat"
                   class="chat"
                   size="xs"/>
@@ -20,10 +35,6 @@
                 <span v-if="!friendAdded" @click="addFriend(newMessage)">add as a friend</span>
                 <span v-if="friendAdded">;)</span>
             </span>
-            <Icon name="close"
-                  class="close"
-                  size="xs"
-                  @click="closeMessageNotification()"/>
         </div>
     </div>
 </template>
@@ -40,10 +51,17 @@
         data() {
             return {
                 SHARED_FILE: 'shared-list-files-received',
+                RESTORE_DONE: 'restore-done',
                 hasNewFile: false,
                 newMessage: {},
                 fileFrom: '',
-                friendAdded: false
+                friendAdded: false,
+                downloadDone: {
+                    status: false,
+                    data: {
+                        output_location: ''
+                    }
+                }
             };
         },
         methods: {
@@ -57,6 +75,9 @@
             closeMessageNotification() {
                 this.newMessage = {};
             },
+            closeDownloadNotification() {
+                this.downloadDone.status = false;
+            },
             addFriend(message) {
                 api.addFriend(message.sender).then(resp => {
                     if (resp.result[0] === 'new friend has been added') {
@@ -64,6 +85,10 @@
                         this.friendAdded = true;
                     }
                 });
+            },
+            playAlert() {
+                const audio = new Audio(process.env.BASE_URL + 'mp3/notification_download.mp3');
+                audio.play();
             }
         },
         computed: {
@@ -80,6 +105,12 @@
                     this.hasNewFile = true;
                     this.fileFrom = response.data.customer_idurl;
                     this.getApiSharedFiles();
+                    this.playAlert();
+                }
+                if (response.id === this.RESTORE_DONE) {
+                    this.downloadDone.status = true;
+                    this.downloadDone.data = response.data;
+                    this.playAlert();
                 }
             },
             getMessages(response) {
@@ -88,7 +119,10 @@
                 response.forEach(message => {
                     let _sender = message.sender.replace('master$', '');
                     newMessage = this.getFriends.find(friend => friend.global_id === _sender);
-                    if (!newMessage && (this.getIdentity.global_id !== _sender)) this.newMessage = message;
+                    if (!newMessage && (this.getIdentity.global_id !== _sender)) {
+                        this.newMessage = message;
+                        this.playAlert();
+                    }
                 });
             }
         }
@@ -140,7 +174,7 @@
 
             .close {
                 padding: 3px;
-                margin: 0 0 0 20px;
+                margin: 0 10px 0 0;
                 cursor: pointer;
                 font-size: 2rem;
             }
