@@ -269,7 +269,7 @@ const Api = {
 
 Api.constants = {
     PORT: '8180',
-    API_URL: 'https://localhost',
+    API_URL: 'http://localhost',
     API_VERSION: 'v1'
 };
 
