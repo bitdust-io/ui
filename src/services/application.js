@@ -4,6 +4,11 @@ import store from '../store/';
 import Router from '../router';
 
 let apiHealthNotResponding = 0;
+const wsUri = 'ws://localhost:8280/';
+const websocket = new WebSocket(wsUri);
+websocket.onopen = () => console.log('OPENED');
+websocket.onclose = () => console.log('CLOSED');
+websocket.onerror = (e) => console.log('ERROR', e);
 
 const Application = {
 
@@ -53,20 +58,8 @@ const Application = {
         }, 500);
     },
 
-    async eventsListen() {
-        if (store.state.Application.connectionStatus.status === 'OK') {
-            try {
-                const {result} = await Api.eventsListen();
-                console.log('Event:', result[0]);
-                store.dispatch('updateEvent', result[0]);
-            } catch (e) {
-                console.log('error receiving event', e);
-            }
-        }
-
-        setTimeout(() => {
-            this.eventsListen();
-        }, 100);
+    eventsListen() {
+        websocket.onmessage = (d) => store.dispatch('updateEvent', JSON.parse(d.data));
     },
 
     async messagesListen() {

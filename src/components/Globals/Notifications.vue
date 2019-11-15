@@ -101,13 +101,13 @@
         },
         watch: {
             getEvent(response) {
-                if (response.id === this.SHARED_FILE) {
+                if (response.event_id === this.SHARED_FILE) {
                     this.hasNewFile = true;
                     this.fileFrom = response.data.customer_idurl;
                     this.getApiSharedFiles();
                     this.playAlert();
                 }
-                if (response.id === this.RESTORE_DONE) {
+                if (response.event_id === this.RESTORE_DONE) {
                     this.downloadDone.status = true;
                     this.downloadDone.data = response.data;
                     this.playAlert();
