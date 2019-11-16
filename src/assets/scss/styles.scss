@@ -16,6 +16,8 @@ body {
     position: relative;
     font-size: 1.5rem;
     background: $color-gray-3;
+    min-height: 100vh;
+    flex-direction: column;
 }
 
 * {

@@ -2,7 +2,7 @@
     <div class="user-identity"
          :class="{active: getUser.value}"
          v-if="getUser">
-        <user-first-letter :name="getUser.value" />
+        <user-first-letter :name="getUser.value"/>
         <div class="user-name">{{getUser.value}}</div>
     </div>
 </template>
@@ -28,6 +28,7 @@
 
 <style scoped lang="scss">
     @import "../../assets/scss/colors";
+    @import "../../assets/scss/mixins";
 
     .user-identity {
         display: flex;
@@ -45,5 +46,10 @@
     .user-name {
         text-transform: capitalize;
         color: $color-white;
+        display: none;
+
+        @include breakpoint-up(sm) {
+            display: block;
+        }
     }
 </style>
