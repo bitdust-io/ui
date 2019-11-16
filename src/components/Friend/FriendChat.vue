@@ -179,6 +179,12 @@
         left: 300px;
         display: flex;
 
+        @include breakpoint-down(sm){
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+        }
+
         .chat-input {
             font-size: 1.1rem;
             border-radius: 8px;

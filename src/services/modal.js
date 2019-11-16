@@ -20,11 +20,15 @@ const ModalService = {
     makeDefaultValues() {
         return {
             transitionFrom: 'right',
-            size: 'lg',
+            size: this.makeDefaultModalSize(),
             type: 'side',
             isMobileMenu: false,
             showCloseButton: true
         };
+    },
+
+    makeDefaultModalSize() {
+        return window.innerWidth >= 768 ? 'lg' : 'sm';
     }
 };
 

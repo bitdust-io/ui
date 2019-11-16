@@ -1,21 +1,22 @@
 @import "./colors";
+@import "./mixins";
 
 @mixin segoe_ui {
-  font-family: Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  font-weight: 400;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
+    font-family: Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-weight: 400;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
 }
 
 @mixin metric {
-  font-family: Metric-Bold, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  font-weight: 400;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
+    font-family: Metric-Bold, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-weight: 400;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
 }

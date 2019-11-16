@@ -76,7 +76,7 @@
     };
 </script>
 <style scoped lang="scss">
-    @import "@/assets/scss/includes.scss";
+    @import "../../assets/scss/includes.scss";
 
     $modal-sm-width: 280px;
     $modal-md-width: 480px;
@@ -93,6 +93,7 @@
 
         .sm {
             width: $modal-sm-width;
+            padding: 0;
         }
 
         .md {
@@ -130,8 +131,6 @@
                 transform: none;
                 padding: 1em;
                 transition: transform 0.3s ease-out;
-                width: 600px;
-
             }
         }
 

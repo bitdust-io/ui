@@ -1,8 +1,8 @@
 <template>
     <div id="app">
-        <BitHeader />
-        <router-view />
-        <ui-modal />
+        <bit-header/>
+        <router-view/>
+        <ui-modal/>
     </div>
 </template>
 

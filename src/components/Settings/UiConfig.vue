@@ -76,10 +76,12 @@
 </script>
 
 <style lang="scss" scoped>
-    @import "@/assets/scss/includes.scss";
+    @import "../../assets/scss/includes.scss";
 
     .info {
-        display: flex;
+        @include breakpoint-up(sm){
+            display: flex;
+        }
 
         .label {
             padding: 5px 10px;

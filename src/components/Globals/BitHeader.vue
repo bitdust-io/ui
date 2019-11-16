@@ -1,9 +1,9 @@
 <template>
     <div>
-        <notifications />
+        <notifications/>
         <header :class="{'visible': visible}">
             <div class="logo">
-                <img src="../../assets/logo/bitdust-logo-white.svg" />
+                <img src="../../assets/logo/bitdust-logo-white.svg"/>
             </div>
 
             <div id="nav"
@@ -13,21 +13,20 @@
                              :to="item.path"
                              exact-active-class="active"
                              :class="{'active': childActive(item.path)}">
-                    <font-awesome-icon :icon="item.icon" />
+                    <font-awesome-icon :icon="item.icon"/>
                     {{ item.name }}
                 </router-link>
-
             </div>
 
             <div class="header-right">
-                <files-monitor />
-                <user-identity />
+                <files-monitor/>
+                <user-identity/>
                 <div class="connection-status"
                      :class="connectionStatus.status">
                 </div>
             </div>
         </header>
-        <Bubbles v-if="!visible" />
+        <bubbles v-if="!visible"/>
     </div>
 </template>
 
@@ -45,7 +44,7 @@
     };
 
     export default {
-        name: 'Header',
+        name: 'BitHeader',
         data() {
             return {
                 visible: false
@@ -92,7 +91,7 @@
             FilesMonitor
         },
         watch: {
-            '$route'(to, from) {
+            '$route'(to) {
                 this.visible = this.isVisible(to.name);
             }
         }
@@ -102,6 +101,7 @@
 <style lang="scss" scoped>
 
     @import "../../assets/scss/colors";
+    @import "../../assets/scss/mixins";
 
     header {
         height: 100px;
@@ -116,16 +116,26 @@
             margin-top: 0;
         }
 
-        .logo img {
-            width: 140px;
-            margin-left: 40px;
+        .logo {
+            display: none;
+
+            @include breakpoint-up(sm) {
+                display: block;
+            }
+
+            img {
+                width: 140px;
+                margin-left: 40px;
+            }
         }
 
         .header-right {
-            display: flex;
-            margin-left: auto;
-            align-items: center;
-            margin-right: 15px;
+            @include breakpoint-up(sm){
+                display: flex;
+                margin-left: auto;
+                align-items: center;
+                margin-right: 15px;
+            }
         }
 
         .connection-status {
@@ -157,7 +167,6 @@
 
     .menu {
         padding: 5px;
-        margin-left: 100px;
         display: flex;
 
         a {
@@ -167,7 +176,7 @@
             color: $color-white;
             text-decoration: none;
             padding: 5px;
-            margin: 2px 20px;
+            margin: 2px 10px;
             text-transform: uppercase;
             position: relative;
             z-index: 1;
@@ -193,6 +202,14 @@
             svg {
                 display: block;
                 margin: 10px auto;
+            }
+        }
+
+        @include breakpoint-up(sm) {
+            margin-left: 100px;
+
+            a {
+                margin: 2px 20px;
             }
         }
     }
