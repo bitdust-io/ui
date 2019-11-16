@@ -2,15 +2,16 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Loading from '../views/Loading';
 import CreateIdentity from '../views/CreateIdentity';
-import Files from '../views/Files';
 import RecoverIdentity from '../views/Recover-identity';
 import LoadingIdentity from '../views/Loading-identity';
 import Onboarding from '../views/Onboarding';
-import Friend from '../views/Friend';
 import Dead from '../views/Dead';
-import Settings from '../views/Settings';
 
 Vue.use(Router);
+
+function loadView(view) {
+    return () => import(/* webpackChunkName: "view-[request]" */ `@/views/${view}.vue`);
+}
 
 export default new Router({
     routes: [
@@ -46,17 +47,17 @@ export default new Router({
         {
             path: '/files',
             name: 'files',
-            component: Files
+            component: loadView('Files')
         },
         {
             path: '/friend/:id',
             name: 'friend',
-            component: Friend
+            component: loadView('Friend')
         },
         {
             path: '/settings',
             name: 'settings',
-            component: Settings,
+            component: loadView('Settings'),
             children: [
                 {
                     path: ':id',
