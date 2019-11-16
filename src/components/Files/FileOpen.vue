@@ -249,7 +249,10 @@
     }
 
     .buttons {
-        margin: 20px 10px;
+
+        @include breakpoint-up(sm) {
+            margin: 20px 10px;
+        }
 
         &.disabled * {
             opacity: .5;
@@ -270,7 +273,9 @@
     }
 
     .file-open {
-        padding: 20px;
+        @include breakpoint-up(sm) {
+            padding: 20px;
+        }
 
         h1 {
             font-size: 16px;

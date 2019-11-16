@@ -1,8 +1,8 @@
 <template>
     <label>
         <input
-            v-model="modelValue"
-            :name="name"
+                v-model="modelValue"
+                :name="name"
         >
         <button @click="onChange()"
                 class="button primary is-small">save
@@ -44,7 +44,11 @@
     input {
         padding: 4px;
         margin-right: 10px;
-        min-width: 300px;
+        min-width: 200px;
+
+        @include breakpoint-up(sm) {
+            min-width: 300px;
+        }
     }
 
 </style>

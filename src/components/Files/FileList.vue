@@ -1,5 +1,5 @@
 <template>
-    <div class="user-files">
+    <div class="files-list">
         <label for="search"
                class="search">
             Search
@@ -147,8 +147,10 @@
 
     ul {
         display: flex;
-        flex-flow: row wrap;
+        flex-flow: wrap;
         margin: 20px 0;
+        padding-right: 40px;
+        width: 90%;
     }
 
     input {

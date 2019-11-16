@@ -1,0 +1,93 @@
+$color-green-10: #f4fae3;
+$color-green-20: #c2e1c2;
+$color-green-30: #cd7;
+$color-green-50: #9c0;
+$color-green-70: #090;
+$color-green-90: #070;
+$color-blue-20: #dbecf9;
+$color-blue-30: #0af;
+$color-blue-40: #9cf;
+$color-blue-60: #09f;
+$color-blue-80: #07c;
+$color-blue-90: #059;
+$color-orange-20: #feeacc;
+$color-orange-40: #fb5;
+$color-orange-60: #f90;
+$color-orange-80: #e70;
+$color-gray-00: #fff;
+$color-gray-10: #f3f3f3;
+$color-gray-15: #f8f8f8;
+$color-gray-20: #e3e3e3;
+$color-gray-30: #d3d3d3;
+$color-gray-40: #b3b3b3;
+$color-gray-50: #939393;
+$color-gray-60: #737373;
+$color-gray-70: #535353;
+$color-gray-80: #333;
+$color-black: #000;
+
+// Fonts
+$font-size-extra-small: 11px;
+$font-size-small: 13px;
+$font-size-medium: 14px;
+$font-size-base: 16px;
+
+// Margins
+$margin: 8px;
+
+$breakpoints: (
+    extraSmall: 425px,
+    small: 768px,
+    medium: 992px,
+    large: 1200px,
+    extraLarge: 2000px
+);
+
+$base-font-sizes: (
+    default: (12px, 1.5),
+    small: (14px, 1.5),
+    medium: (14px, 1.5)
+);
+
+$base-16-font-sizes: (
+    default: (12px, 1.5),
+    small: (16px, 1.5),
+    medium: (16px, 1.5)
+);
+
+$h1-font-sizes: (
+    default: (24px, 1),
+    small: (32px, 1),
+    medium: (44px, 1.09)
+);
+
+$h2-font-sizes: (
+    default: (24px, 1),
+    small: (32px, 1),
+    medium: (32px, 1)
+);
+
+$h3-font-sizes: (
+    default: (24px, 1),
+    small: (24px, 1),
+    medium: (24px, 1)
+);
+
+$h4-font-sizes: (
+    default: (14px, 1.2),
+    small: (16px, 1.2),
+    medium: (16px, 1.2)
+);
+
+$h5-font-sizes: (
+    default: (14px, 1.2),
+    small: (14px, 1.2),
+    medium: (14px, 1.2),
+    large: (16px, 1.2)
+);
+
+// Custom
+$container-max-width: 1280px;
+$receipt-width: 380px;
+
+

@@ -33,13 +33,17 @@
 </script>
 
 <style lang="scss" scoped>
-    @import "@/assets/scss/includes.scss";
+    @import "../../assets/scss/includes.scss";
 
     .status {
         background: #ebebeb;
         padding: 10px;
         border-radius: 8px;
-        display: flex;
+
+
+        @include breakpoint-up(sm) {
+            display: flex;
+        }
 
         .active {
             background: $color-blue-1;

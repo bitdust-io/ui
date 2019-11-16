@@ -1,7 +1,8 @@
 <template>
     <div class="friend-messages">
 
-        <div class="messages">
+        <div class="messages"
+             id="messages">
 
             <div ref="message"
                  class="messages-wrapper"
@@ -78,8 +79,9 @@
                 }
             },
             scrollDown(isSmooth = false) {
+                const el = window.innerWidth >= 768 ? this.main : this.messages;
                 setTimeout(() => {
-                    this.main.scroll({
+                    el.scroll({
                         top: this.$refs.message.scrollHeight,
                         behavior: isSmooth ? 'smooth' : 'instant'
                     });
@@ -103,6 +105,7 @@
             }
         },
         mounted() {
+            this.messages = document.getElementById('messages');
             this.main = document.getElementById('main');
             this.main.classList.add('chat');
             this.loadChatHistory();
@@ -136,10 +139,22 @@
             z-index: 1;
             background: linear-gradient(to top, rgba(242, 242, 242, 0) 30%, rgba(242, 242, 242, 1) 100%);
         }
+
+        @include breakpoint-down(sm) {
+            &:before {
+                display: none;
+            }
+        }
     }
 
     .messages {
         padding: 20px 20px 0;
+
+        @include breakpoint-down(sm) {
+            height: 400px;
+            overflow-y: auto;
+            padding-bottom: 100px;
+        }
     }
 
     input {

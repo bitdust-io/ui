@@ -19,32 +19,43 @@
 </script>
 
 <style lang="scss" scoped>
-    @import "@/assets/scss/includes.scss";
+    @import "../../assets/scss/includes.scss";
 
     .container {
-        display: flex;
-        justify-content: space-between;
-        height: calc(100% - 100px);
-        padding-left: 40px;
+        width: 100%;
+        padding: 0 20px;
+
+        @include breakpoint-up(sm) {
+            display: flex;
+            justify-content: space-between;
+            height: calc(100% - 100px);
+        }
     }
 
     .main {
         flex: 1;
         height: 100%;
-        overflow-y: scroll;
+        overflow-y: auto;
         padding-bottom: 100px;
-        padding-left: 40px;
-        padding-top: 60px;
 
         &.chat {
             height: calc(100% - 80px);
             padding-bottom: 20px;
         }
+
+        @include breakpoint-up(sm) {
+            margin-left: 40px;
+            padding-top: 60px;
+        }
     }
 
     .menu {
-        width: 210px;
-        margin-top: 60px;
+        margin: 20px 0 0 0;
+
+        @include breakpoint-up(sm) {
+            width: 210px;
+            margin: 60px 0 0 40px;
+        }
 
         .link-list {
             list-style: none;
