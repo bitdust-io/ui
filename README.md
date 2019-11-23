@@ -1,13 +1,19 @@
-# bitdust-web
+# Welcome to BitDust IU
+
+This project requires the BitDust [core](https://github.com/bitdust-io/devel) to be running on the background.
+ 
+[![Build Status](https://travis-ci.com/bitdust-io/ui.svg?branch=master)](https://travis-ci.com/bitdust-io/ui)
 
 ## Project setup
+
+Install node dependencies
 ```
-npm install
+npm i || yarn
 ```
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+npm start
 ```
 
 ### Compiles and minifies for production
@@ -24,11 +30,3 @@ npm run test
 ```
 npm run lint
 ```
-
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
