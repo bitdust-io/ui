@@ -40,7 +40,7 @@
 </template>
 
 <script>
-    import {mapGetters, mapActions} from 'vuex';
+    import {mapActions, mapGetters} from 'vuex';
     import Icon from './Icon';
     import api from '../../services/api';
 
@@ -101,15 +101,16 @@
         },
         watch: {
             getEvent(response) {
-                if (response.event_id === this.SHARED_FILE) {
+                console.log(response);
+                if (response.payload.event_id === this.SHARED_FILE) {
                     this.hasNewFile = true;
                     this.fileFrom = response.data.customer_idurl;
                     this.getApiSharedFiles();
                     this.playAlert();
                 }
-                if (response.event_id === this.RESTORE_DONE) {
+                if (response.payload.event_id === this.RESTORE_DONE) {
                     this.downloadDone.status = true;
-                    this.downloadDone.data = response.data;
+                    this.downloadDone.data = response.payload.data;
                     this.playAlert();
                 }
             },
