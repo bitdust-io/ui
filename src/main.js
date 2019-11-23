@@ -10,16 +10,12 @@ import {library} from '@fortawesome/fontawesome-svg-core';
 import {fas} from '@fortawesome/free-solid-svg-icons';
 import {far} from '@fortawesome/free-regular-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
-import Buefy from 'buefy';
-import 'buefy/dist/buefy.css';
 
 library.add(fas, far);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;
 Vue.prototype.$api = api;
-
-Vue.use(Buefy);
 
 /* eslint-disable no-new */
 new Vue({

@@ -51,7 +51,7 @@
     export default {
         name: 'create-identity',
         created() {
-            document.getElementsByTagName('html')[0].classList.add('intro-background');
+            document.getElementsByTagName('body')[0].classList.add('intro-background');
         },
         components: {
             Icon
