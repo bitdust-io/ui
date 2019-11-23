@@ -1,98 +1,108 @@
 <template>
-    <div class="create-identity">
-        <h1 class="title">
-            Blockchain
-        </h1>
+    <grid-content>
+        <div slot="menu">
+            <div v-if="state" class="inner-container"
+                 :class="{'is-loading' : isLoading}">
 
-        <div v-if="state" class="container"
-             :class="{'is-loading' : isLoading}">
-
-            <div class="card">
-                <div class="card-content">
-                    <p class="subtitle">
-                        {{state.welcome_msg}}
-                    </p>
+                <div class="card">
+                    <div class="card-content">
+                        <p class="subtitle">
+                            {{state.welcome_msg}}
+                        </p>
+                    </div>
+                    <footer class="card-footer">
+                        <p class="card-footer-item">
+                            Contract balance:
+                        </p>
+                        <p class="card-footer-item">
+                            {{state._balance}}
+                        </p>
+                    </footer>
                 </div>
-                <footer class="card-footer">
-                    <p class="card-footer-item">
-                        Contract balance:
-                    </p>
-                    <p class="card-footer-item">
-                        {{state._balance}}
-                    </p>
-                </footer>
             </div>
         </div>
+        <div slot="main">
+            <div class="block-chain">
+                <h1 class="title">
+                    Blockchain
+                </h1>
 
-        <div v-if="wallet" class="container">
-            <div class="card">
-                <div class="card-content">
-                    <p class="title">
-                        <a :href="`https://viewblock.io/zilliqa/address/${wallet.address}?network=testnet`"
-                           target="_blank">
-                            {{wallet.address}}
-                        </a>
-                    </p>
-                    <p class="subtitle">
-                        {{wallet.key}}
-                    </p>
+                <div v-if="wallet" class="inner-container">
+                    <div class="card">
+                        <div class="card-content">
+                            <p class="title">
+                                <a :href="`https://viewblock.io/zilliqa/address/${wallet.address}?network=testnet`"
+                                   target="_blank">
+                                    {{wallet.address}}
+                                </a>
+                            </p>
+                            <p class="subtitle">
+                                {{wallet.key}}
+                            </p>
+                        </div>
+                        <footer class="card-footer">
+                            <p class="card-footer-item">
+                                Contract balance:
+                            </p>
+                            <p class="card-footer-item">
+                                {{wallet.result.balance}}
+                            </p>
+                        </footer>
+                    </div>
+
+                    <div class="inner-container">
+                        Change title
+                        <input v-model="name">
+
+                        <b-button type="is-primary"
+                                  @click="changeText"
+                                  :disabled="isLoading || !name">
+                            Save
+                        </b-button>
+
+                    </div>
                 </div>
-                <footer class="card-footer">
-                    <p class="card-footer-item">
-                        Contract balance:
-                    </p>
-                    <p class="card-footer-item">
-                        {{wallet.result.balance}}
-                    </p>
-                </footer>
-            </div>
 
-            <div class="container">
-                Change title
-                <input v-model="name">
+                <form class="form"
+                      v-bind:class="{'is-loading' : isLoading}">
 
-                <b-button type="is-info"
-                          @click="changeText"
-                          :disabled="isLoading">
-                    Save
-                </b-button>
+                    <div class="inner-container" v-if="!wallet">
+                        <input v-model="privateKey"
+                               name="private-key"
+                               placeholder="Type your private key">
 
+                        <div v-if="error"
+                             class="error">
+                            <p>{{errorMessage}}</p>
+                            <p>Please restart Bitdust and try again</p>
+                        </div>
+
+                        <b-button type="is-primary"
+                                  @click="openWallet"
+                                  :disabled="!isInputValid || isLoading">
+                            Open wallet
+                        </b-button>
+
+                    </div>
+
+                    <icon name="loading"
+                          class="rotating"
+                          size="md"/>
+                </form>
             </div>
         </div>
-
-        <form class="form"
-              v-bind:class="{'is-loading' : isLoading}">
-
-            <div class="container" v-if="!wallet">
-                <input v-model="privateKey"
-                       name="identity"
-                       placeholder="Type your private key">
-
-                <div v-if="error"
-                     class="error">
-                    <p>{{errorMessage}}</p>
-                    <p>Please restart Bitdust and try again</p>
-                </div>
-
-                <b-button type="is-info"
-                          @click="openWallet"
-                          :disabled="!isInputValid || isLoading">
-                    Open wallet
-                </b-button>
-
-            </div>
-
-            <icon name="loading"
-                  class="rotating"
-                  size="md"/>
-        </form>
-    </div>
+    </grid-content>
 </template>
 
 <script>
+    import Buefy from 'buefy';
     import Icon from '@/components/Globals/Icon';
     import {mapActions} from 'vuex';
     import Zillica from '../services/zilliqa';
+    import Vue from 'vue';
+    import GridContent from '../components/Globals/GridContent';
+
+    Vue.use(Buefy);
 
     export default {
         name: 'create-identity',
@@ -105,13 +115,14 @@
             this.state = await this.zilliqa.getContractState(contract);
         },
         components: {
+            GridContent,
             Icon
         },
         data() {
             return {
                 state: undefined,
                 wallet: undefined,
-                privateKey: '',
+                privateKey: '64a96805901e23f646b32f3a758a783e3e735f4bed6958c2efc65c46c1541241',
                 name: '',
                 error: '',
                 errorMessage: '',
@@ -153,6 +164,7 @@
 </script>
 
 <style scoped lang="scss">
+    @import "~buefy/src/scss/buefy-build";
     @import "../assets/scss/includes.scss";
 
     h1 {
@@ -160,7 +172,7 @@
         margin: 80px 0 40px;
     }
 
-    .container {
+    .inner-container {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -193,7 +205,7 @@
         max-width: 580px;
         height: 60px;
         margin: 20px 0;
-        font-size: 1.4rem;
+        font-size: .8rem;
 
         &::placeholder {
             color: $color-gray-2;
