@@ -59,7 +59,7 @@ class ZillicaService extends Zilliqa {
         console.log('Your account address is:');
         console.log(address);
         const {result} = await this.zilliqa.blockchain.getBalance(address);
-        return {key, address,result};
+        return {key, address, result};
     }
 }
 
