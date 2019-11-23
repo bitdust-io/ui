@@ -40,7 +40,8 @@
     const icons = {
         files: 'folder-open',
         friend: 'users',
-        settings: 'cogs'
+        settings: 'cogs',
+        blockchain: 'book'
     };
 
     export default {
@@ -79,7 +80,8 @@
                     'files',
                     'friend',
                     'settings',
-                    'setting'
+                    'setting',
+                    'blockchain'
                 ];
                 return visibleRouters.indexOf(name) > -1;
             }
