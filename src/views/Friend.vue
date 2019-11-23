@@ -1,7 +1,6 @@
 <template>
     <grid-content>
         <div slot="menu">
-
             <h2 @click="openSearch"
                 class="button primary">
                 <font-awesome-icon icon="search"/>

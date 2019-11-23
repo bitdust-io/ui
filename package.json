@@ -20,7 +20,6 @@
         "@zilliqa-js/crypto": "latest",
         "@zilliqa-js/util": "latest",
         "@zilliqa-js/zilliqa": "^0.8.4",
-        "bn.js": "latest",
         "buefy": "^0.8.8",
         "color-hash": "^1.0.3",
         "svg-inline-loader": "^0.8.0",
