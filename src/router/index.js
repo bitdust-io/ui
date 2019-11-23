@@ -6,6 +6,7 @@ import RecoverIdentity from '../views/Recover-identity';
 import LoadingIdentity from '../views/Loading-identity';
 import Onboarding from '../views/Onboarding';
 import Dead from '../views/Dead';
+import Blockchain from '../views/Blockchain';
 
 Vue.use(Router);
 
@@ -64,6 +65,11 @@ export default new Router({
                     name: 'setting'
                 }
             ]
+        },
+        {
+            path: '/blockchain',
+            name: 'blockchain',
+            component: Blockchain
         },
         {
             path: '/dead',
