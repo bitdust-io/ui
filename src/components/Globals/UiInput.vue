@@ -1,8 +1,8 @@
 <template>
     <label>
         <input
-                v-model="modelValue"
-                :name="name"
+            v-model="modelValue"
+            :name="name"
         >
         <button @click="onChange()"
                 class="button primary is-small">save

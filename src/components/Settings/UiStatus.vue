@@ -40,7 +40,6 @@
         padding: 10px;
         border-radius: 8px;
 
-
         @include breakpoint-up(sm) {
             display: flex;
         }
