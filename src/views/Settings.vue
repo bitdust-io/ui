@@ -98,7 +98,7 @@
 
 <script>
     import Api from '../services/api';
-    import {mapActions, mapState, mapGetters} from 'vuex';
+    import {mapActions, mapGetters, mapState} from 'vuex';
     import UiConfig from '../components/Settings/UiConfig';
     import UiStatus from '../components/Settings/UiStatus';
     import Suppliers from '../components/Settings/Suppliers';
@@ -132,6 +132,7 @@
         created() {
             this.updateLists();
             this.currentKey = 'services';
+            document.getElementsByTagName('html')[0].classList.remove('intro-background');
         },
         methods: {
             ...mapActions([
@@ -181,7 +182,6 @@
             margin: 10px 0;
             display: block;
             list-style: none;
-
         }
 
         .main {
