@@ -26,7 +26,7 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../../assets/scss/colors";
+    @import "../../assets/scss/config";
 
     .avatar {
         width: 40px;

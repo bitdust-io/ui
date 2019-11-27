@@ -1,3 +1,15 @@
+$color-purple-1: #964CAE;
+$color-purple-2: #B49ABC;
+$color-blue-1: #008FBA;
+$color-blue-2: #649DAE;
+$color-gray-1: #5E5E5E;
+$color-gray-2: #B3B3B3;
+$color-gray-3: #F2F2F2;
+$color-gray-4: #ebebeb;
+$color-green: #A2E918;
+$color-white: #FFFFFF;
+$color-red: #FF3333;
+
 $color-green-10: #f4fae3;
 $color-green-20: #c2e1c2;
 $color-green-30: #cd7;
@@ -53,6 +65,12 @@ $base-16-font-sizes: (
     default: (12px, 1.5),
     small: (16px, 1.5),
     medium: (16px, 1.5)
+);
+
+$xx-font-sizes: (
+    default: (3rem, 1),
+    small: (4rem, 1),
+    medium: (6rem, 1.09)
 );
 
 $h1-font-sizes: (
