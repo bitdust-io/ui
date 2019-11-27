@@ -140,12 +140,16 @@
 
     .onboarding {
         display: block;
-        width: 600px;
-        margin: 60px auto;
+        margin: 60px 40px;
         background: $color-white;
         text-align: center;
         padding: 40px 0;
         color: $color-gray-1;
+
+        @include breakpoint-up(sm) {
+            width: 600px;
+            margin: auto;
+        }
 
         .description {
             font-size: 1rem;
