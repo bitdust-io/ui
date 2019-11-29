@@ -1,39 +1,45 @@
 <template>
-    <div class="create-identity">
-        <h1 class="title">
-            Welcome to BitDust
-        </h1>
+    <div class="create-identity container default-padding">
 
         <form class="form"
-              v-bind:class="{'is-loading' : isLoading}">
+              :class="{'is-loading' : isLoading}">
 
-            <div>
-                <h2 class="header">
-                    Create a username to get started
-                </h2>
+            <h1 class="title primary has-text-primary">
+                Welcome to BitDust
+            </h1>
 
-                <input v-model="identityName"
-                       name="identity"
-                       placeholder="Type your username">
+            <b-field label="Create a username to get started"
+                     :type="{'is-success': isInputValid}"
+                     message="Only lowercase letters and numbers, min 3 and max 20 characters">
 
-                <p class="note">
-                    Note: only lowercase letters and numbers, min 3 and max 20 characters
-                </p>
+                <b-input name="identity"
+                         v-model="identityName"
+                         value="Type your username"
+                         maxlength="20"
+                         size="is-large"
+                         minlength="3"/>
+            </b-field>
 
-                <div v-if="error"
-                     class="error">
-                    <p>{{errorMessage}}</p>
-                    <p>Please restart Bitdust and try again</p>
-                </div>
+            <div v-if="error"
+                 class="error">
+                <p>{{errorMessage}}</p>
+                <p>Please restart Bitdust and try again</p>
+            </div>
 
-                <button class="button primary"
-                        @click="createIdentity"
-                        :disabled="!isInputValid || isLoading">Create user
-                </button>
+            <div class="buttons">
+                <b-button type="is-success"
+                          size="is-large"
+                          @click="createIdentity"
+                          :disabled="!isInputValid || isLoading">
+                    START
+                </b-button>
 
-                <router-link to="/recover-identity"
-                             class="text-link">Recover identity?
-                </router-link>
+                <b-button rounded
+                          type="is-light">
+                    <router-link to="/recover-identity">Recover identity?
+                    </router-link>
+                </b-button>
+
             </div>
 
             <icon name="loading"
@@ -105,19 +111,13 @@
     @import "../assets/scss/includes.scss";
 
     h1 {
-        color: $color-gray-1;
-        margin: 80px 0 40px;
-    }
-
-    h2 {
-        color: $color-gray-1;
+        @include font-size($xx-font-sizes);
     }
 
     .form {
         text-align: center;
 
         &.is-loading {
-
             pointer-events: none;
 
             div {
@@ -130,34 +130,14 @@
         }
     }
 
-    input {
-        background: $color-white;
-        border: 1px solid $color-gray-2;
-        box-shadow: 0 4px 13px 0 rgba(0, 0, 0, 0.05);
-        text-align: center;
-        width: 100%;
-        max-width: 580px;
-        height: 60px;
-        margin: 20px 0;
-        font-size: 1.4rem;
+    .buttons {
+        margin-top: 60px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
 
-        &::placeholder {
-            color: $color-gray-2;
-        }
-    }
-
-    .button {
-        font-size: 2.2rem;
-        display: block;
-        width: 420px;
-        height: 65px;
-        margin: 4rem auto 2rem;
-        transition: all 1s ease;
-
-        &:disabled {
-            filter: grayscale(1);
-            opacity: .7;
-            cursor: not-allowed;
+        .button {
+            margin-bottom: 20px;
         }
     }
 

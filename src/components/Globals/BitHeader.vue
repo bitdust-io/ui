@@ -102,7 +102,7 @@
 
 <style lang="scss" scoped>
 
-    @import "../../assets/scss/colors";
+    @import "../../assets/scss/config";
     @import "../../assets/scss/mixins";
 
     header {

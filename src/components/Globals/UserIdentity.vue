@@ -27,7 +27,7 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../../assets/scss/colors";
+    @import "../../assets/scss/config";
     @import "../../assets/scss/mixins";
 
     .user-identity {

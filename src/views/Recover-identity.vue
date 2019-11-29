@@ -1,7 +1,7 @@
 <template>
-    <div class="recover-identity">
+    <div class="recover-identity container default-padding">
 
-        <h1 class="page-title">
+        <h1 class="title primary has-text-primary">
             Recover your identity
         </h1>
 
@@ -18,6 +18,15 @@
                    type="file"
                    name="file"
                    id="file"/>
+
+            <div class="buttons">
+                <b-button rounded
+                          type="is-light">
+                    <router-link to="/create-identity">
+                        Return
+                    </router-link>
+                </b-button>
+            </div>
         </form>
     </div>
 </template>
@@ -36,17 +45,7 @@
                 isLoading: false
             };
         },
-        computed: {
-            isKeyValid() {
-                return this.validatePrivateKey(this.privateKey);
-            }
-        },
-
         methods: {
-            validatePrivateKey(value) {
-                // TODO Add proper key regex validation
-                return value.length > 10 && value.indexOf('END RSA PRIVATE KEY') > -1;
-            },
             restoreIdentity(event) {
                 event.preventDefault();
                 if (event.target.files && event.target.files[0]) {
@@ -88,58 +87,8 @@
 <style scoped lang="scss">
     @import "../assets/scss/includes.scss";
 
-    .recover-identity {
-        align-items: center;
-        justify-content: center;
-    }
-
-    .page-title {
-        color: $color-gray-1;
-        margin: 80px 0 40px;
-    }
-
-    .page-subtitle {
-        font-size: 1.5rem;
-        margin: 1.5rem auto;
-    }
-
     .form {
         text-align: center;
-    }
-
-    .content {
-        margin: auto;
-    }
-
-    .ui-label {
-        display: block;
-    }
-
-    .ui-input {
-        display: block;
-        font-size: 0.9rem;
-        width: 100%;
-        max-width: 580px;
-        height: 100px;
-        margin: 1.5rem auto 1rem;
-        padding: 4px;
-    }
-
-    .button {
-
-        &:disabled {
-            filter: grayscale(1);
-            opacity: .7;
-            cursor: not-allowed;
-        }
-
-        &.primary {
-            font-size: 2.2rem;
-            width: 100%;
-            max-width: 420px;
-            height: 65px;
-            margin: 2.5rem auto 2rem;
-        }
     }
 
     .ui-input-recover {
@@ -151,29 +100,17 @@
         z-index: -1;
     }
 
-    .ui-input-recover {
-        width: 100%;
-        max-width: 580px;
-        height: 60px;
-        margin: 1rem auto 0;
-        display: block;
-    }
-
-    p {
-        font-size: 0.9rem;
-    }
-
     .ui-input-recover-label {
         width: 100%;
         max-width: 500px;
-        height: 60px;
+        height: 120px;
         display: block;
-        padding: 11px 20px 20px;
-        margin: 0 auto;
+        padding: 31px 20px 20px;
+        margin: 60px auto 0;
         cursor: pointer;
         border: 0;
         border-radius: 2px;
-        background-color: #FFFFFF;
+        background-color: $color-white;
         box-shadow: 0 0.3rem 1rem 0 rgba(0, 0, 0, 0.05);
         -webkit-font-smoothing: antialiased;
         font-stretch: normal;
@@ -194,8 +131,9 @@
             height: 60px;
             background-color: #76be28;
             border-radius: 5rem;
-            top: 0;
-            right: -80px;
+            top: -30px;
+            left: 50%;
+            margin-left: -30px;
             color: #F4F7FE;
             font-size: 2.8rem;
             line-height: 50px;
@@ -209,6 +147,13 @@
 
     .error {
         color: $color-purple-1;
+    }
+
+    .buttons {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        margin-top: 40px;
     }
 
 </style>
