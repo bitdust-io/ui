@@ -1,5 +1,5 @@
 <template>
-    <div class="loading-identity default-padding">
+    <div class="default-padding container">
         <div class="loading">
             <div class="logo-wrapper">
                 <icon name="logo" class="logo"/>
@@ -8,7 +8,7 @@
                       size="xl"/>
             </div>
             <h1 class="title primary has-text-primary">
-                Creating user</h1>
+                Loading identity</h1>
         </div>
     </div>
 </template>

@@ -10,9 +10,10 @@
                     Your key was saved on:
                     {{ isDownload }}
                 </p>
-                <button @click="backupKey"
-                        class="button primary is-small">Click here to download
-                </button>
+                <b-button type="is-primary"
+                          @click="backupKey()">
+                    Click here to download
+                </b-button>
             </div>
         </div>
         <div class="navigation"
@@ -33,22 +34,27 @@
             </a>
         </div>
         <div v-if="currentStep === 0">
-            <span class="button primary"
-                  @click="navigateToNextStep()">
+
+            <b-button type="is-primary"
+                      @click="navigateToNextStep()">
                 Lets go!
-            </span>
+            </b-button>
+
         </div>
-        <div class="navigation last"
+        <div class="navigation buttons"
              v-if="!isNextStepEnabled">
-            <span class="button primary" @click="skipOnboardingSteps()">
+
+            <b-button type="is-primary"
+                      @click="skipOnboardingSteps()">
                 Let’s upload!
-            </span>
+            </b-button>
+
             <a class="previous"
-               :disabled="isPreviousStepEnabled"
                @click="navigateToPreviousStep()">
                 <span class="arrow arrow-left"></span>
                 <span>Previous</span>
             </a>
+
         </div>
     </div>
 </template>
@@ -107,9 +113,6 @@
             ]),
             isNextStepEnabled() {
                 return this.currentStep !== this.steps.length - 1;
-            },
-            isPreviousStepEnabled() {
-                return this.currentStep !== 0;
             }
         },
         methods: {
@@ -171,17 +174,6 @@
         @include metric;
     }
 
-    .button {
-        display: inline-block;
-        margin: 20px auto;
-        max-width: 300px;
-
-        .download & {
-            padding: 16px;
-            font-size: 1.2rem;
-        }
-    }
-
     .download {
         p {
             font-size: 1rem;
@@ -202,20 +194,20 @@
         font-size: 1rem;
         color: $color-purple-1;
 
-        &.last {
+        &.buttons {
             display: flex;
             flex-direction: column;
-            justify-content: center;
         }
 
         a {
             cursor: pointer;
             font-weight: bold;
+            color: $color-purple-1;
 
             &:hover {
                 span {
                     border-color: $color-purple-1;
-                    color: $color-purple-1;
+                    color: $color-purple-2;
                     font-weight: bold;
                 }
             }
