@@ -1,5 +1,5 @@
 <template>
-    <div class="default-padding">
+    <div class="default-padding container">
         <div class="loading">
             <div class="logo-wrapper">
                 <icon name="logo" class="logo"/>

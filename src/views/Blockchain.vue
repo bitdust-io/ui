@@ -111,7 +111,7 @@
         },
         async created() {
             document.getElementsByTagName('html')[0].classList.add('intro-background');
-            const contract = await this.zilliqa.getContract('zil1gv2s54hhr04q9gdk3mwgva8cvpmqrnytqvyung');
+            const contract = await this.zilliqa.getContract('zil1w75jm0pg4hf78udx3ut2qr8uw2gy0hlvjjw8k2');
             this.state = await this.zilliqa.getContractState(contract);
         },
         components: {
