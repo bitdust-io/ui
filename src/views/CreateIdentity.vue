@@ -10,7 +10,7 @@
 
             <b-field label="Create a username to get started"
                      :type="{'is-success': isInputValid}"
-                     message="Only lowercase letters and numbers, min 3 and max 20 characters">
+                     message="Min 3 and max 20 characters.<br> Only letters, numbers, dash's and underscores (starting with a letter)">
 
                 <b-input name="identity"
                          v-model="identityName"
@@ -78,7 +78,7 @@
         methods: {
             ...mapActions(['updateIdentity']),
             validateUserName(value) {
-                const REGEX = /^[a-z0-9]{3,20}$/;
+                const REGEX = /^[a-z]{1}[a-z0-9-_]{2,19}$/;
                 return REGEX.test(value);
             },
             createIdentity(e) {
