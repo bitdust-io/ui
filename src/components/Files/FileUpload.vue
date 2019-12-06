@@ -9,7 +9,7 @@
 <script>
     import {mapActions} from 'vuex';
     import ModalService from '@/services/modal';
-    import UploadFileOpen from './FileUploadOpen';
+    import UploadFileOpen from './FileUploadModal';
 
     export default {
         data() {

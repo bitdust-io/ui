@@ -21,6 +21,7 @@
                 </div>
             </div>
         </div>
+
         <div slot="main">
             <div class="block-chain">
                 <h1 class="title">
@@ -111,7 +112,7 @@
         },
         async created() {
             document.getElementsByTagName('html')[0].classList.add('intro-background');
-            const contract = await this.zilliqa.getContract('zil1w75jm0pg4hf78udx3ut2qr8uw2gy0hlvjjw8k2');
+            const contract = await this.zilliqa.getContract('zil1ltwh0xqh4ajm99yc5ve3q86mwctw3eaxsg9fmf');
             this.state = await this.zilliqa.getContractState(contract);
         },
         components: {
