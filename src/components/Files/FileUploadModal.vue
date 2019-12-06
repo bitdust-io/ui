@@ -11,7 +11,8 @@
                 Loading...
             </div>
         </div>
-        <div class="upload" v-if="!isUploaded">
+
+        <div class="upload-box" v-if="!isUploaded">
             <div class="select-key">
                 <h4 class="title">Select a key</h4>
                 <key-list :open-key="openKey"

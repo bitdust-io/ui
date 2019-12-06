@@ -1,6 +1,6 @@
 <template>
 
-    <div class="container">
+    <div class="grid-container">
         <div class="menu">
             <slot name="menu"/>
         </div>
@@ -21,7 +21,7 @@
 <style lang="scss" scoped>
     @import "../../assets/scss/includes.scss";
 
-    .container {
+    .grid-container {
         width: 100%;
         padding: 0 20px;
 

@@ -104,7 +104,7 @@
                 console.log(response);
                 if (response.payload.event_id === this.SHARED_FILE) {
                     this.hasNewFile = true;
-                    this.fileFrom = response.data.customer_idurl;
+                    this.fileFrom = response.payload.data.customer_idurl;
                     this.getApiSharedFiles();
                     this.playAlert();
                 }

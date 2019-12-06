@@ -1,7 +1,7 @@
 <template>
     <transition name="modal">
         <div v-if="getModalShouldOpen"
-             class="modal"
+             class="ui-modal"
              :class="{'modal-side': componentConfig.type === 'side',
                       'modal-center': componentConfig.type === 'center',
                       'modal-from-left': componentConfig.transitionFrom === 'left',
@@ -83,7 +83,7 @@
     $modal-lg-width: 600px;
     $modal-center-height: 100px;
 
-    .modal {
+    .ui-modal {
         height: 100%;
         left: 0;
         position: fixed;
