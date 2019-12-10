@@ -16,7 +16,6 @@
                             <p class="user">
                                 {{message.doc.sender.glob_id.replace('master$', '').replace(/\@(.*)/g, '')}}
                             </p>
-
                             <p class="user-message">{{message.doc.payload.data.message}}</p>
                         </div>
                         <p class="message-time">
@@ -34,9 +33,7 @@
                             <p class="user">
                                 {{message.sender.replace('master$', '').replace(/\@(.*)/g, '')}}
                             </p>
-
                             <p class="user-message">{{message.data.message}}</p>
-
                         </div>
 
                         <p class="message-time">

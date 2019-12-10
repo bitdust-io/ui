@@ -1,7 +1,6 @@
 <template>
     <grid-content>
         <div slot="menu">
-
             <div class="buttons">
                 <b-button @click="openSearch"
                           size="is-medium"
