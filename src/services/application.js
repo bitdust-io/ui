@@ -65,9 +65,9 @@ const Application = {
     async messagesListen() {
         if (store.state.Application.connectionStatus.status === 'OK') {
             try {
-                const currentMessage = await Message.getMessages();
-                console.log(currentMessage);
-                store.dispatch('updateMessages', currentMessage);
+                const {result} = await Message.getMessages();
+                if (!result) return;
+                store.dispatch('updateMessages', result);
             } catch (e) {
                 console.log('error receiving message');
             }

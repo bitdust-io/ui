@@ -17,7 +17,7 @@
                                 {{message.doc.sender.glob_id.replace('master$', '').replace(/\@(.*)/g, '')}}
                             </p>
 
-                            <p class="message">{{message.doc.payload.data.message}}</p>
+                            <p class="user-message">{{message.doc.payload.data.message}}</p>
                         </div>
                         <p class="message-time">
                             {{new Date(message.doc.payload.time*1000).toLocaleString()}}
@@ -35,7 +35,7 @@
                                 {{message.sender.replace('master$', '').replace(/\@(.*)/g, '')}}
                             </p>
 
-                            <p class="message">{{message.data.message}}</p>
+                            <p class="user-message">{{message.data.message}}</p>
 
                         </div>
 
@@ -50,7 +50,7 @@
 </template>
 
 <script>
-    import {mapGetters, mapActions} from 'vuex';
+    import {mapActions, mapGetters} from 'vuex';
     import Api from '../../services/api';
 
     export default {
@@ -186,7 +186,7 @@
             margin-bottom: 6px;
         }
 
-        .message {
+        .user-message {
             word-wrap: break-word;
             white-space: pre-line;
             width: 90%;

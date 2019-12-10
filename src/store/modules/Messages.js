@@ -1,17 +1,19 @@
 const constants = {};
 
 const state = {
-    messages: []
+    messages: [],
+    lastMessage: undefined
 };
 
 const getters = {
-    getMessages: state => state.messages
+    getMessages: state => state.messages,
+    getLastMessage: state => state.lastMessage
 };
 
 const mutations = {
-    updateMessages(state, message) {
-        if (!message.result || !message.result.length) return;
-        state.messages.push(message.result[0]);
+    updateMessages(state, payload) {
+        state.messages.push(payload[0]);
+        state.lastMessage = payload[0];
     },
     resetMessages(state) {
         state.messages = [];

@@ -1,11 +1,16 @@
 <template>
     <grid-content>
         <div slot="menu">
-            <h2 @click="openSearch"
-                class="button primary">
-                <font-awesome-icon icon="search"/>
-                Search friends
-            </h2>
+
+            <div class="buttons">
+                <b-button @click="openSearch"
+                          size="is-medium"
+                          rounded
+                          type="is-primary">
+                    <font-awesome-icon icon="search"/>
+                    Search friends
+                </b-button>
+            </div>
 
             <ul class="link-list">
                 <li v-for="(friend, index) in getFriends"
@@ -118,7 +123,7 @@
 </template>
 
 <script>
-    import {mapGetters, mapActions} from 'vuex';
+    import {mapActions, mapGetters} from 'vuex';
     import api from '../services/api';
     import FriendChat from '../components/Friend/FriendChat';
     import GridContent from '../components/Globals/GridContent';
@@ -224,12 +229,6 @@
         }
     }
 
-    .button {
-        font-size: 1rem;
-        padding: 0;
-        margin-bottom: 20px;
-    }
-
     .search {
         z-index: 10;
         position: fixed;
@@ -238,7 +237,11 @@
         right: 0;
         bottom: 0;
         background: rgba(255, 255, 255, .95);
-        padding: 50px;
+        padding: 20px;
+
+        @include breakpoint-up(sm) {
+            padding: 50px;
+        }
 
         .inner-container {
             position: relative;

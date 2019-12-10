@@ -20,8 +20,7 @@
                       :rows="lines">
             </textarea>
             <button @click="sendMessage"
-                    class="send"
-            >
+                    class="send">
                 Send
             </button>
         </div>
@@ -179,7 +178,7 @@
         left: 300px;
         display: flex;
 
-        @include breakpoint-down(sm){
+        @include breakpoint-down(sm) {
             position: fixed;
             bottom: 10px;
             left: 10px;

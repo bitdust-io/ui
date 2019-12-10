@@ -1,6 +1,5 @@
 <template>
     <div class="notifications">
-
         <div v-if="downloadDone.status">
             <font-awesome-icon icon="times-circle"
                                class="close"
@@ -89,19 +88,32 @@
             playAlert() {
                 const audio = new Audio(process.env.BASE_URL + 'mp3/notification_download.mp3');
                 audio.play();
+            },
+            messageReceived(message) {
+                this.playAlert();
+                this.$buefy.snackbar.open({
+                    message: `Message received from: ${message.sender.replace('master$', '')}`,
+                    type: 'is-primary',
+                    position: 'is-top-right',
+                    actionText: 'Add as friend',
+                    indefinite: true,
+                    onAction: () => {
+                        this.addFriend(message);
+                        console.log('friend added');
+                    }
+                });
             }
         },
         computed: {
             ...mapGetters([
                 'getEvent',
-                'getMessages',
+                'getLastMessage',
                 'getFriends',
                 'getIdentity'
             ])
         },
         watch: {
             getEvent(response) {
-                console.log(response);
                 if (response.payload.event_id === this.SHARED_FILE) {
                     this.hasNewFile = true;
                     this.fileFrom = response.payload.data.customer_idurl;
@@ -114,17 +126,14 @@
                     this.playAlert();
                 }
             },
-            getMessages(response) {
+            getLastMessage(response) {
                 if (!response) return;
                 let newMessage;
-                response.forEach(message => {
-                    let _sender = message.sender.replace('master$', '');
-                    newMessage = this.getFriends.find(friend => friend.global_id === _sender);
-                    if (!newMessage && (this.getIdentity.global_id !== _sender)) {
-                        this.newMessage = message;
-                        this.playAlert();
-                    }
-                });
+                let sender = response.sender.replace('master$', '');
+                newMessage = this.getFriends.find(friend => friend.global_id === sender);
+                if (!newMessage && (this.getIdentity.global_id !== sender)) {
+                    this.messageReceived(response);
+                }
             }
         }
     };

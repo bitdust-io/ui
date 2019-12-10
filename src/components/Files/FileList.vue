@@ -29,7 +29,7 @@
             <li v-for="(file, index) in filteredList"
                 :key="index">
                 <file-extension :file="file.path"/>
-                <span class="file-name"
+                <span class="filename"
                       @click="open(file.path)">{{file.name}}</span>
                 <file-detail :file="file"/>
             </li>
@@ -180,7 +180,7 @@
         justify-content: space-around;
     }
 
-    .file-name {
+    .filename {
         overflow: hidden;
         line-height: 22px;
         max-width: 70%;

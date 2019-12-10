@@ -9,7 +9,7 @@
                     <font-awesome-icon class="icon" icon="cloud-download-alt" />
                     Download
                 </li>
-                <li @click="deleteFile(file)" class="delete">
+                <li @click="deleteFile(file)" class="delete-file">
                     <font-awesome-icon icon="trash-alt" />
                     Delete
                 </li>
@@ -138,7 +138,7 @@
         background-position: center left;
     }
 
-    .delete {
+    .delete-file {
         color: $color-red;
     }
 </style>
