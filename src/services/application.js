@@ -49,7 +49,7 @@ const Application = {
             apiHealthNotResponding += 1;
         }
 
-        if (apiHealthNotResponding > 5) {
+        if (apiHealthNotResponding > 5 && Router.currentRoute.name !== 'dead') {
             Router.push('/dead');
         }
 
