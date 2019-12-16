@@ -15,7 +15,7 @@
             <ul class="link-list">
                 <li v-for="(friend, index) in getFriends"
                     :key="index"
-                    :class="{'online': friend.contact_state === 'CONNECTED'}">
+                    :class="{'online': friend.contact_state !== 'OFFLINE'}">
                     <router-link class="link"
                                  active-class="active"
                                  :to="{ name: 'friend', params: { id: friend.username }}">

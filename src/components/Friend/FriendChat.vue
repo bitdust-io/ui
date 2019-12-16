@@ -9,7 +9,7 @@
         <friend-messages :current-friend="currentFriend"/>
 
         <div class="message-sender"
-             v-if="currentFriend.contact_state === 'CONNECTED'">
+             v-if="currentFriend.contact_state !== 'OFFLINE'">
 
             <textarea v-model="userMessage"
                       placeholder="Type here..."
@@ -106,7 +106,7 @@
                 }
             },
             focusOnInput() {
-                if (this.$refs.chat && this.currentFriend.contact_state === 'CONNECTED') {
+                if (this.$refs.chat && this.currentFriend.contact_state !== 'OFFLINE') {
                     this.$nextTick(() => {
                         this.$refs.chat.focus();
                     });
