@@ -1,19 +1,19 @@
 <template>
     <div class="hello">
-        <h3>User</h3>
-        <UserDetails/>
+        <h1>{{ user }}</h1>
     </div>
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from 'vue-property-decorator';
-    import UserDetails from '@/components/UserDetails.vue';
+    import {Component, Vue} from 'vue-property-decorator';
+    import {namespace} from 'vuex-class';
+    import {IdentityResultInterface} from '@/types/apiTypes';
 
-    @Component({
-        components: {UserDetails}
-    })
+    const applicationModule = namespace('application');
+
+    @Component
     export default class HelloWorld extends Vue {
-        @Prop() private msg!: string;
+        @applicationModule.State user!: IdentityResultInterface;
     }
 </script>
 
