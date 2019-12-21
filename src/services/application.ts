@@ -8,35 +8,36 @@ const Application = {
 
     bootstrap() {
         this.keepHeath();
+        this.messagesListen();
     },
 
     async keepHeath() {
         try {
             const {status} = await api.processHealth();
-            await store.dispatch('application/updateHealthStatus', status);
+            await store.dispatch('applicationStore/updateHealthStatus', status);
 
             if (status === 'OK') {
-                if (!store.state.application.identity.name) {
+                if (!store.state.applicationStore.identity.name) {
                     try {
-                        const {result} = await api.getIdentity();
-                        await store.dispatch('application/updateIdentity', result[0]);
-                        await store.dispatch('application/updateUserFromApi');
+                        const [identity, user] = await Promise.all([api.getIdentity(), api.getUser()]);
+                        await store.dispatch('applicationStore/updateIdentity', identity.result[0]);
+                        await store.commit('applicationStore/updateUser', user.result[0]);
                     } catch (e) {
-                        await store.dispatch('updateIdentity', api.constants.ERROR);
+                        await store.dispatch('applicationStore/updateIdentity', api.constants.ERROR);
                     }
                 } else {
                     try {
                         const networkStatus = await api.networkConnected();
-                        await store.dispatch('updateConnectionStatus', networkStatus);
+                        await store.dispatch('applicationStore/updateConnectionStatus', networkStatus);
                     } catch (e) {
-                        await store.dispatch('updateConnectionStatus', api.constants.ERROR);
+                        await store.dispatch('applicationStore/updateConnectionStatus', api.constants.ERROR);
                     }
                 }
             }
 
             apiHealthNotResponding = 0;
         } catch (e) {
-            await store.dispatch('application/updateHealthStatus', api.constants.ERROR);
+            await store.dispatch('applicationStore/updateHealthStatus', api.constants.ERROR);
             console.log('Error trying to connect health check');
             apiHealthNotResponding += 1;
         }
@@ -48,6 +49,23 @@ const Application = {
         setTimeout(() => {
             this.keepHeath();
         }, 1000);
+    },
+
+    async messagesListen() {
+        if (store.state.Application.connectionStatus.status === 'OK') {
+            try {
+                const {result} = await api.getMessages();
+                if (!result) return;
+                debugger;
+                store.dispatch('chat/updateMessages', result);
+            } catch (e) {
+                console.log('error receiving message');
+            }
+        }
+
+        setTimeout(() => {
+            this.messagesListen();
+        }, 200);
     }
 };
 

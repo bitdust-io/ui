@@ -26,7 +26,7 @@ const mutations: MutationTree<ApplicationStateInterface> = {
     updateIdentity(state, v) {
         state.identity = v;
     },
-    updateUserFromApi(state, v) {
+    updateUser(state, v) {
         state.user = v;
     }
 };
@@ -43,7 +43,7 @@ const actions: ActionTree<ApplicationStateInterface, any> = {
     },
     async updateUserFromApi({commit}) {
         const {result} = await api.getUser();
-        commit('updateUserFromApi', result[0]);
+        commit('updateUser', result[0]);
     }
 };
 

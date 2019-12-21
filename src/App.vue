@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+<!--        <UiHeader/>-->
         <router-view/>
     </div>
 </template>
@@ -26,3 +27,15 @@
         }
     }
 </style>
+<script>
+    import Vue from 'vue';
+    import {Component} from 'vue-property-decorator';
+    import UiHeader from '@/components/UiHeader';
+
+    @Component({
+        components: {UiHeader}
+    })
+    export default class App extends Vue {
+        isActive = true;
+    }
+</script>

@@ -12,6 +12,12 @@ export interface ApiTypes {
     networkConnected(): Promise<any>;
 
     getUser(): Promise<any>;
+
+    getFriends(): Promise<any>;
+
+    sendMessage(data: any): Promise<any>;
+
+    getMessages(): Promise<any>;
 }
 
 export interface HealthInterface {

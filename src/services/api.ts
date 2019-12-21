@@ -1,4 +1,5 @@
 import {ApiTypes, HealthInterface, IdentityInterface} from '@/types/apiTypes';
+import {FriendInterface} from '@/types/chatTypes';
 
 const Api: ApiTypes = {
 
@@ -8,6 +9,26 @@ const Api: ApiTypes = {
         API_VERSION: 'v1',
         OK: 'OK',
         ERROR: 'ERROR'
+    },
+
+    sendMessage(data: any) {
+        return fetch(this.makeApiEndpoint('message/send'), {
+            method: 'POST',
+            body: JSON.stringify({
+                'global_id': data.user.global_id,
+                'data': {
+                    'message': data.message
+                }
+            })
+        }).then(res => res.json());
+    },
+
+    getMessages() {
+        return this.makeGet('message/receive/electron_ui_consumer');
+    },
+
+    getFriends(): Promise<Array<FriendInterface>> {
+        return this.makeGet('friend/list');
     },
 
     getUser() {
