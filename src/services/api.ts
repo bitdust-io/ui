@@ -1,4 +1,4 @@
-import {ApiTypes, HealthInterface, IdentityInterface} from '@/types/apiTypes';
+import {ApiTypes, HealthInterface, IdentityInterface, MessageInterface} from '@/types/apiTypes';
 import {FriendInterface} from '@/types/chatTypes';
 
 const Api: ApiTypes = {
@@ -11,16 +11,13 @@ const Api: ApiTypes = {
         ERROR: 'ERROR'
     },
 
-    sendMessage(data: any) {
-        return fetch(this.makeApiEndpoint('message/send'), {
-            method: 'POST',
-            body: JSON.stringify({
-                'global_id': data.user.global_id,
-                'data': {
-                    'message': data.message
-                }
-            })
-        }).then(res => res.json());
+    sendMessage(data: MessageInterface) {
+        return this.makePost('message/send', {
+            'global_id': data.user.global_id,
+            'data': {
+                'message': data.message
+            }
+        });
     },
 
     getMessages() {
@@ -45,6 +42,13 @@ const Api: ApiTypes = {
 
     networkConnected(): Promise<any> {
         return this.makeGet('network/connected');
+    },
+
+    async makePost(service: string, data: any, params?: string) {
+        return fetch(this.makeApiEndpoint(service, params), {
+            method: 'POST',
+            body: JSON.stringify(data)
+        }).then(res => res.json());
     },
 
     makeGet(service: string, params?: string): Promise<any> {

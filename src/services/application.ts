@@ -22,13 +22,17 @@ const Application = {
                         const [identity, user] = await Promise.all([api.getIdentity(), api.getUser()]);
                         await store.dispatch('applicationStore/updateIdentity', identity.result[0]);
                         await store.commit('applicationStore/updateUser', user.result[0]);
+                        await store.dispatch('chatStore/getFriends');
                     } catch (e) {
                         await store.dispatch('applicationStore/updateIdentity', api.constants.ERROR);
+                        if (router.currentRoute.name !== 'create-identity') {
+                            await router.push('/create-identity');
+                        }
                     }
                 } else {
                     try {
-                        const networkStatus = await api.networkConnected();
-                        await store.dispatch('applicationStore/updateConnectionStatus', networkStatus);
+                        const {status} = await api.networkConnected();
+                        await store.dispatch('applicationStore/updateConnectionStatus', status);
                     } catch (e) {
                         await store.dispatch('applicationStore/updateConnectionStatus', api.constants.ERROR);
                     }
@@ -52,14 +56,14 @@ const Application = {
     },
 
     async messagesListen() {
-        if (store.state.Application.connectionStatus.status === 'OK') {
+        if (store.state.applicationStore.connectionStatus === 'OK') {
             try {
                 const {result} = await api.getMessages();
-                if (!result) return;
-                debugger;
-                store.dispatch('chat/updateMessages', result);
+                if (result) {
+                    await store.dispatch('chatStore/updateMessages', result[0]);
+                }
             } catch (e) {
-                console.log('error receiving message');
+                console.log('Error receiving message');
             }
         }
 

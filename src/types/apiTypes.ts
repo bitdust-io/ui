@@ -15,9 +15,11 @@ export interface ApiTypes {
 
     getFriends(): Promise<any>;
 
-    sendMessage(data: any): Promise<any>;
+    sendMessage(data: MessageInterface): Promise<any>;
 
     getMessages(): Promise<any>;
+
+    makePost(service: string, data: any, params?: any): Promise<any>;
 }
 
 export interface HealthInterface {
@@ -59,4 +61,12 @@ export interface ApiConstantsInterface {
     API_VERSION: string;
     OK: string;
     ERROR: string;
+}
+
+export interface MessageInterface {
+    user: {
+        // eslint-disable-next-line camelcase
+        global_id: string;
+    };
+    message: string;
 }

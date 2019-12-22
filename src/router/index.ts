@@ -3,7 +3,8 @@ import VueRouter from 'vue-router';
 import Loading from '@/views/Loading.vue';
 import Chat from '@/views/Chat.vue';
 import Dead from '@/views/Dead.vue';
-import ChatMessages from '@/components/ChatMessages.vue';
+import ChatMessages from '@/views/ChatMessages.vue';
+import CreateIdentity from '@/views/CreateIdentity.vue';
 
 Vue.use(VueRouter);
 
@@ -19,8 +20,8 @@ const routes = [
     },
     {
         path: '/create-identity',
-        name: 'createIdentity',
-        component: Loading
+        name: 'create-identity',
+        component: CreateIdentity
     },
     {
         path: '/loading-identity',
@@ -31,13 +32,6 @@ const routes = [
         path: '/chat/',
         name: 'chat',
         component: Chat
-        // children: [
-        //     {
-        //         path: ':id',
-        //         name: 'chat-messages',
-        //         component: ChatMessages
-        //     }
-        // ]
     },
     {
         path: '/chat/:id',

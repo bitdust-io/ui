@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>BitDust is trying to reconnect</h1>
+        <h3>Create identity</h3>
     </div>
 </template>
 
@@ -11,11 +11,12 @@
     const applicationModule = namespace('applicationStore');
     @Component
     export default class Loading extends Vue {
-        @applicationModule.State connectionStatus!: any;
+        @applicationModule.Getter connectionStatus!: any;
+        @applicationModule.Getter getIdentity!: any;
 
         @Watch('connectionStatus')
         onPropertyChanged(value: any) {
-            if (value.status === 'OK') this.$router.push('/chat');
+            // if (value.status === 'OK') this.$router.push('/chat');
         }
     }
 </script>

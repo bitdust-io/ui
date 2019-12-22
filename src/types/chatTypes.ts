@@ -11,9 +11,9 @@ export interface ChatContentInterface {
 export interface FriendInterface {
     alias: string;
     // eslint-disable-next-line camelcase
-    contact_stat: string;
+    contact_state: string;
     // eslint-disable-next-line camelcase
-    contact_statu: string;
+    contact_status: string;
     // eslint-disable-next-line camelcase
     global_id: string;
     idhost: string;

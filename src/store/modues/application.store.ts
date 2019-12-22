@@ -10,11 +10,7 @@ export const state: ApplicationStateInterface = {
     user: <IdentityResultInterface>{}
 };
 
-const getters: GetterTree<ApplicationStateInterface, any> = {
-    healthStatus: state => state.healthStatus,
-    connectionStatus: state => state.connectionStatus,
-    getIdentity: state => state.identity
-};
+const getters: GetterTree<ApplicationStateInterface, any> = {};
 
 const mutations: MutationTree<ApplicationStateInterface> = {
     updateHealthStatus(state, v) {

@@ -18,10 +18,10 @@
             </p>
         </a>
 
-        <router-link class="panel-block is-primary"
+        <router-link class="panel-block"
                      v-for="friend in friendsResult"
                      :key="friend.global_id"
-                     :to="{name:'chat-messages', params:{id:friend.alias}}">
+                     :to="{name:'chat-messages', params:{id:friend.global_id}}">
             <span class="panel-icon">
                 <FirstLetter :name="friend.alias" size="18"/>
             </span>
