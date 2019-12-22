@@ -2,6 +2,18 @@ import {ActionTree, GetterTree, Module, MutationTree} from 'vuex';
 import {ChatStateInterface} from '@/types/chatTypes';
 import api from '@/services/api';
 
+function convertMessage(m: any, rootState: any) {
+    const authorIsMe = rootState.applicationStore.identity.global_id === m.sender.replace('master$', '');
+    return {
+        author: authorIsMe ? 'me' : m.sender.replace('master$', ''),
+        name: m.sender.replace('master$', ''),
+        type: m.data.type,
+        data: {
+            [m.data.type]: m.data.message
+        }
+    };
+}
+
 export const state: ChatStateInterface = {
     messages: [],
     friends: []
@@ -19,8 +31,9 @@ const mutations: MutationTree<ChatStateInterface> = {
 };
 
 const actions: ActionTree<ChatStateInterface, any> = {
-    updateMessages({commit}, v) {
-        commit('updateMessages', v);
+    updateMessages({commit, rootState}, v) {
+        const message = convertMessage(v, rootState);
+        commit('updateMessages', message);
     },
     async getFriends({commit}) {
         const {result} = await api.getFriends();

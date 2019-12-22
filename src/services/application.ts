@@ -52,7 +52,7 @@ const Application = {
 
         setTimeout(() => {
             this.keepHeath();
-        }, 1000);
+        }, 200);
     },
 
     async messagesListen() {
@@ -60,10 +60,10 @@ const Application = {
             try {
                 const {result} = await api.getMessages();
                 if (result) {
-                    await store.dispatch('chatStore/updateMessages', result[0]);
+                    store.dispatch('chatStore/updateMessages', result[0]);
                 }
             } catch (e) {
-                console.log('Error receiving message');
+                console.log('Error receiving message', e);
             }
         }
 

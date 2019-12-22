@@ -4,8 +4,23 @@ export interface ChatStateInterface {
 }
 
 export interface ChatContentInterface {
+    author: string;
+    type: string;
+    data: {
+        type?: string;
+        text: string
+    }
+}
+
+export interface ApiChatContentInterface {
+    data: any,
     message: string;
+    dir: string;
+    // eslint-disable-next-line camelcase
+    message_id: string;
+    recipient: string;
     sender: string;
+    time: string
 }
 
 export interface FriendInterface {

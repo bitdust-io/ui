@@ -1,13 +1,11 @@
 <template>
-    <div>
-        <FriendsList/>
-    </div>
+    <FriendsList/>
 </template>
 
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
-    import UserDetails from '@/components/UserDetails.vue';
-    import FriendsList from '@/components/FriendsList.vue';
+    import UserDetails from '@/components/Global/UserDetails.vue';
+    import FriendsList from '@/components/Chat/FriendsList.vue';
 
     @Component({
         components: {

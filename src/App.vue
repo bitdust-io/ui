@@ -30,7 +30,7 @@
 <script>
     import Vue from 'vue';
     import {Component} from 'vue-property-decorator';
-    import UiHeader from '@/components/UiHeader';
+    import UiHeader from '@/components/Global/UiHeader';
 
     @Component({
         components: {UiHeader}

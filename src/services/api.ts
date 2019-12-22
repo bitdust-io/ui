@@ -12,12 +12,7 @@ const Api: ApiTypes = {
     },
 
     sendMessage(data: MessageInterface) {
-        return this.makePost('message/send', {
-            'global_id': data.user.global_id,
-            'data': {
-                'message': data.message
-            }
-        });
+        return this.makePost('message/send', data);
     },
 
     getMessages() {

@@ -64,9 +64,10 @@ export interface ApiConstantsInterface {
 }
 
 export interface MessageInterface {
-    user: {
-        // eslint-disable-next-line camelcase
-        global_id: string;
-    };
-    message: string;
+    // eslint-disable-next-line camelcase
+    global_id: string;
+    data: {
+        message: string;
+        type: string;
+    }
 }

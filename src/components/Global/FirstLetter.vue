@@ -26,7 +26,7 @@
                 width: this.size + 'px',
                 height: this.size + 'px',
                 'background-color': this.color(),
-                'margin-right': this.size / 2 + 'px',
+                'margin-right': this.size / 3 + 'px',
                 'font-size': this.size / 2 + 'px'
             };
         }
@@ -38,7 +38,7 @@
     }
 </script>
 <style scoped lang="scss">
-    @import "../assets/scss/config";
+    @import "../../assets/scss/config";
 
     .letter {
         width: 100%;

@@ -1,5 +1,8 @@
 <template>
-    <div class="is-flex mg-10">
+    <div class="is-flex mg-20">
+        <FirstLetter :name="user.value"
+                     size="20"
+                     class="first-letter"/>
         <h1>{{ user.value }}</h1>
     </div>
 </template>
@@ -8,10 +11,12 @@
     import {Component, Vue} from 'vue-property-decorator';
     import {namespace} from 'vuex-class';
     import {IdentityInterface, IdentityResultInterface} from '@/types/apiTypes';
+    import FirstLetter from '@/components/Global/FirstLetter.vue';
 
     const applicationModule = namespace('applicationStore');
-
-    @Component
+    @Component({
+        components: {FirstLetter}
+    })
     export default class UserDetails extends Vue {
         @applicationModule.State user!: IdentityResultInterface;
         @applicationModule.State identity!: IdentityInterface;
