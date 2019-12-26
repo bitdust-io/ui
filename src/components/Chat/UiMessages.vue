@@ -1,8 +1,8 @@
 <template>
     <div>
-        {{messages}}
-
         <beautiful-chat :participants="participants"
+                        :showLauncher="false"
+                        :showCloseButtom="false"
                         :editable="false"
                         :titleImageUrl="titleImageUrl"
                         :onMessageWasSent="onMessageWasSent"
@@ -43,7 +43,7 @@
 
             <template v-slot:user-avatar="{user}">
                 <div>
-                    <FirstLetter :name="user.id"
+                    <FirstLetter :name="user.name"
                                  size="20"
                                  class="first-letter"/>
                 </div>
