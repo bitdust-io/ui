@@ -21,29 +21,12 @@
                         @onType="handleOnType">
 
             <template v-slot:header class="buttons">
-                <nav class="buttons">
-                    <b-button rounded
-                              to="/chat"
-                              tag="router-link"
-                              icon-left="chevron-left"/>
-
-                    <div class="is-flex first-letter">
-                        <FirstLetter :name="$route.params.id"
-                                     size="34"
-                                     class="first-letter"/>
-
-                        <p v-if="friend">
-                            {{ friend.username }}
-                        </p>
-                    </div>
-                    <b-button rounded
-                              icon-left="cog"/>
-                </nav>
+                <UiMessagesHeader :friend="friend"/>
             </template>
 
             <template v-slot:user-avatar="{user}">
                 <div>
-                    <FirstLetter :name="user.name"
+                    <FirstLetter :name="getUserId(user)"
                                  size="20"
                                  class="first-letter"/>
                 </div>
@@ -63,10 +46,11 @@
     import {IdentityResultInterface} from '@/types/apiTypes';
     import {FriendInterface} from '@/types/chatTypes';
     import api from '@/services/api';
+    import UiMessagesHeader from '@/components/Chat/UiMessagesHeader.vue';
 
     Vue.use(Chat);
     @Component({
-        components: {FirstLetter}
+        components: {UiMessagesHeader, FirstLetter}
     })
     export default class ChatMessages extends Vue {
         @Prop() private friend!: FriendInterface;
@@ -157,19 +141,9 @@
         handleOnType() {
             console.log('Emit typing event');
         }
+
+        getUserId(user: any) {
+            return user.id === 'me' ? user.name : user.id;
+        }
     }
 </script>
-
-<style lang="scss" scoped>
-    .buttons {
-        justify-content: space-between;
-        display: flex;
-        width: 100%;
-        align-items: center;
-    }
-
-    .first-letter {
-        align-items: center;
-    }
-
-</style>

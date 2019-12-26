@@ -51,9 +51,5 @@
         display: flex;
         align-items: center;
         justify-content: center;
-
-        &:hover {
-            border-radius: 0;
-        }
     }
 </style>
