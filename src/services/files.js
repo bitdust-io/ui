@@ -32,7 +32,12 @@ const FilesService = {
 
     createFile({commit, dispatch, getters}, file, keyId) {
         if (!file) return false;
-        let filePath = file.files[0].path.replace(/\\/g, '/');
+        let receivedFilePath = file.files[0].path;
+        if (!receivedFilePath) {
+            receivedFilePath = decodeURIComponent(file.files[0].name);
+        }
+        console.log(receivedFilePath);
+        let filePath = receivedFilePath.replace(/\\/g, '/');
         let fileName = filePath.match(/\/([^/]*)$/)[1];
         // TODO Sanitize file name
 

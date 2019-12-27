@@ -51,6 +51,9 @@
                 if (event.target.files && event.target.files[0]) {
                     let file = event.target.files[0].path;
                     if (!file) {
+                        file = decodeURIComponent(event.target.files[0].name);
+                    }
+                    if (!file) {
                         this.error = true;
                         this.errorMessage = 'Your uploaded identity is not valid';
                         return;
