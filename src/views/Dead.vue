@@ -11,11 +11,11 @@
     const applicationModule = namespace('applicationStore');
     @Component
     export default class Loading extends Vue {
-        @applicationModule.State connectionStatus!: any;
+        @applicationModule.Getter connectionStatus!: any;
 
         @Watch('connectionStatus')
         onPropertyChanged(value: any) {
-            if (value.status === 'OK') this.$router.push('/chat');
+            if (value === 'OK') this.$router.push('/chat');
         }
     }
 </script>

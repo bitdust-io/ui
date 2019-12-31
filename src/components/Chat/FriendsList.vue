@@ -59,7 +59,7 @@
         }
 
         searchUser() {
-            // TODO Call search useer
+            // TODO Call search user
         }
 
         get friendsResult() {
@@ -80,4 +80,8 @@
 </script>
 
 <style lang="scss" scoped>
+
+    .panel-tabs {
+        box-shadow: 0 1px 4px rgba(0, 0, 0, .2);
+    }
 </style>

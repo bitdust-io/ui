@@ -14,7 +14,7 @@
                         :open="openChat"
                         :showEmoji="true"
                         :showFile="false"
-                        :showTypingIndicator="showTypingIndicator"
+                        :showTypingIndicator="''"
                         :colors="colors"
                         :alwaysScrollToBottom="true"
                         :messageStyling="messageStyling"
@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import Chat from 'vue-beautiful-chat';
     import CloseIcon from 'vue-beautiful-chat/src/assets/close-icon.png';
     import OpenIcon from 'vue-beautiful-chat/src/assets/logo-no-bg.svg';
@@ -55,9 +55,9 @@
     export default class ChatMessages extends Vue {
         @Prop() private friend!: FriendInterface;
         @Prop() private identity!: IdentityResultInterface;
-        @Prop() private messages!: any;
+        @Prop() private message!: any;
+        @Prop() public history!: any;
 
-        messageList = this.messages;
         icons = {
             open: {
                 img: OpenIcon,
@@ -88,10 +88,9 @@
             }
         ];
 
-        titleImageUrl = 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png';
+        titleImageUrl = '';
         newMessagesCount = 0;
         isChatOpen = true;
-        showTypingIndicator = '';
         colors = {
             header: {
                 bg: '#fff',
@@ -117,6 +116,11 @@
             }
         };
         messageStyling = true;
+        messageList: any;
+
+        created() {
+            this.messageList = this.history;
+        }
 
         onMessageWasSent(message: any) {
             const data = {
@@ -145,5 +149,16 @@
         getUserId(user: any) {
             return user.id === 'me' ? user.name : user.id;
         }
+
+        @Watch('message')
+        onPropertyChanged(value: any) {
+            this.messageList.push(value);
+        }
     }
 </script>
+
+<style lang="scss" scoped>
+    /deep/ .sc-header {
+        min-height: 70px;
+    }
+</style>

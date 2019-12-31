@@ -1,4 +1,4 @@
-import {ApiTypes, HealthInterface, IdentityInterface, MessageInterface} from '@/types/apiTypes';
+import {ApiTypes, HealthInterface, IdentityInterface, MessageInterface, RequestParams} from '@/types/apiTypes';
 import {FriendInterface} from '@/types/chatTypes';
 
 const Api: ApiTypes = {
@@ -9,6 +9,11 @@ const Api: ApiTypes = {
         API_VERSION: 'v1',
         OK: 'OK',
         ERROR: 'ERROR'
+    },
+
+    getChatHistoryForUser(userGlobalId) {
+        let query = [{key: 'id', value: userGlobalId}];
+        return this.makeGet('message/history', query);
     },
 
     sendMessage(data: MessageInterface) {
@@ -39,23 +44,22 @@ const Api: ApiTypes = {
         return this.makeGet('network/connected');
     },
 
-    async makePost(service: string, data: any, params?: string) {
+    async makePost(service: string, data: any, params?: Array<RequestParams>) {
         return fetch(this.makeApiEndpoint(service, params), {
             method: 'POST',
             body: JSON.stringify(data)
         }).then(res => res.json());
     },
 
-    makeGet(service: string, params?: string): Promise<any> {
+    makeGet(service: string, params?: Array<any>): Promise<any> {
         return fetch(this.makeApiEndpoint(service, params)).then(r => r.json());
     },
 
-    makeApiEndpoint(service: string, params?: string): string {
+    makeApiEndpoint(service: string, params?: Array<RequestParams>): string {
         const baseUrl = this.constants.API_URL + ':' + this.constants.PORT + '/' + service + '/' + this.constants.API_VERSION;
         const apiUrl = new URL(baseUrl);
         if (params) {
-            // TODO Create params
-            apiUrl.searchParams.append(params, params);
+            params.forEach(p => apiUrl.searchParams.append(p.key, p.value));
         }
         return apiUrl.href;
     }

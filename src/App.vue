@@ -1,41 +1,19 @@
 <template>
     <div id="app">
-<!--        <UiHeader/>-->
-        <router-view/>
+        <router-view v-if="identity.global_id"/>
     </div>
 </template>
 
-<style lang="scss">
-    #app {
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-align: center;
-        color: #2c3e50;
-    }
-
-    #nav {
-        padding: 30px;
-
-        a {
-            font-weight: bold;
-            color: #2c3e50;
-
-            &.router-link-exact-active {
-                color: #42b983;
-            }
-        }
-    }
-</style>
-<script>
+<script lang="ts">
     import Vue from 'vue';
     import {Component} from 'vue-property-decorator';
-    import UiHeader from '@/components/Global/UiHeader';
+    import {IdentityResultInterface} from '@/types/apiTypes';
+    import {namespace} from 'vuex-class';
 
-    @Component({
-        components: {UiHeader}
-    })
+    const applicationModule = namespace('applicationStore');
+
+    @Component
     export default class App extends Vue {
-        isActive = true;
+        @applicationModule.State identity!: IdentityResultInterface;
     }
 </script>

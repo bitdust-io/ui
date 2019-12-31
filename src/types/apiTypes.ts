@@ -3,9 +3,9 @@ export interface ApiTypes {
 
     processHealth(): Promise<HealthInterface>;
 
-    makeGet(service: string, params?: string): Promise<any>;
+    makeGet(service: string, params?: Array<any>): Promise<any>;
 
-    makeApiEndpoint(service: string, params?: string): string;
+    makeApiEndpoint(service: string, params?: Array<RequestParams>): string;
 
     getIdentity(): Promise<IdentityInterface>;
 
@@ -20,6 +20,13 @@ export interface ApiTypes {
     getMessages(): Promise<any>;
 
     makePost(service: string, data: any, params?: any): Promise<any>;
+
+    getChatHistoryForUser(params: any): Promise<any>;
+}
+
+export interface RequestParams {
+    key: string;
+    value: string;
 }
 
 export interface HealthInterface {

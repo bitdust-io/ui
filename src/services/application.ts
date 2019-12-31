@@ -3,12 +3,17 @@ import store from '@/store';
 import router from '@/router';
 
 let apiHealthNotResponding = 0;
+const wsUri = 'ws://localhost:8280/';
+const websocket = new WebSocket(wsUri);
+websocket.onopen = () => Application.startSockets();
+websocket.onclose = () => console.log('CLOSED');
+websocket.onerror = (e) => console.log('ERROR', e);
+websocket.onmessage = (m) => Application.onMessage(m);
 
 const Application = {
 
     bootstrap() {
         this.keepHeath();
-        this.messagesListen();
     },
 
     async keepHeath() {
@@ -55,21 +60,39 @@ const Application = {
         }, 200);
     },
 
-    async messagesListen() {
-        if (store.state.applicationStore.connectionStatus === 'OK') {
-            try {
-                const {result} = await api.getMessages();
-                if (result) {
-                    store.dispatch('chatStore/updateMessages', result[0]);
-                }
-            } catch (e) {
-                console.log('Error receiving message', e);
-            }
-        }
+    // async messagesListen() {
+    //     if (store.state.applicationStore.connectionStatus === 'OK') {
+    //         try {
+    //             const {result} = await api.getMessages();
+    //             if (result) {
+    //                 store.dispatch('chatStore/updateMessages', result[0]);
+    //             }
+    //         } catch (e) {
+    //             console.log('Error receiving message', e);
+    //         }
+    //     }
+    //
+    //     setTimeout(() => {
+    //         this.messagesListen();
+    //     }, 200);
+    // },
 
-        setTimeout(() => {
-            this.messagesListen();
-        }, 200);
+    onMessage(message: MessageEvent): void {
+        const data = JSON.parse(message.data);
+        switch (data.type) {
+            case 'private_message':
+                store.dispatch('chatStore/updateMessages', data.payload);
+                break;
+            default:
+                console.log(message);
+        }
+    },
+
+    startSockets() {
+        console.log('Socket is open');
+        // websocket.send('{"command": "api_call", "method": "message_history", "kwargs": {"user": "severino@p2p-id.ru"}, "call_id": "2”}');
+        // websocket.send('{"command": "api_call", "method": "message_history", "kwargs": {"user": "severino@p2p-id.ru"}, "call_id": "123"}');
+        // websocket.send('{"command": "api_call", "method": “friend_list", "kwargs": {}, "call_id": “1234”}');
     }
 };
 

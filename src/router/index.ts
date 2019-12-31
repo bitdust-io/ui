@@ -5,6 +5,7 @@ import Chat from '@/views/Chat.vue';
 import Dead from '@/views/Dead.vue';
 import ChatMessages from '@/views/ChatMessages.vue';
 import CreateIdentity from '@/views/CreateIdentity.vue';
+import FriendsList from '@/components/Chat/FriendsList.vue';
 
 Vue.use(VueRouter);
 
@@ -30,13 +31,25 @@ const routes = [
     },
     {
         path: '/chat/',
-        name: 'chat',
-        component: Chat
-    },
-    {
-        path: '/chat/:id',
-        name: 'chat-messages',
-        component: ChatMessages
+        component: Chat,
+        children: [
+            {
+                path: '/',
+                name: 'chat',
+                component: FriendsList,
+                meta: {
+                    transition: 'slide-left'
+                }
+            },
+            {
+                path: ':id',
+                name: 'chat-messages',
+                component: ChatMessages,
+                meta: {
+                    transition: 'slide-right'
+                }
+            }
+        ]
     },
     {
         path: '/dead',
