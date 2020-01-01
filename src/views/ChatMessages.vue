@@ -38,6 +38,7 @@
         async created() {
             const {result} = await apiService.getChatHistoryForUser(this.$route.params.id);
             this.isLoaded = true;
+            if (!result) return true;
             this.history = result.map((r: any) => {
                 return convertMessage(r.doc, this.identity.global_id);
             }).reverse();

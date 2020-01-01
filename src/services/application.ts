@@ -60,23 +60,6 @@ const Application = {
         }, 200);
     },
 
-    // async messagesListen() {
-    //     if (store.state.applicationStore.connectionStatus === 'OK') {
-    //         try {
-    //             const {result} = await api.getMessages();
-    //             if (result) {
-    //                 store.dispatch('chatStore/updateMessages', result[0]);
-    //             }
-    //         } catch (e) {
-    //             console.log('Error receiving message', e);
-    //         }
-    //     }
-    //
-    //     setTimeout(() => {
-    //         this.messagesListen();
-    //     }, 200);
-    // },
-
     onMessage(message: MessageEvent): void {
         const data = JSON.parse(message.data);
         switch (data.type) {
