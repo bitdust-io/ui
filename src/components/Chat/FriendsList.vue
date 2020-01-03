@@ -1,6 +1,5 @@
 <template>
     <section class="panel">
-
         <p class="panel-tabs">
             <UserDetails/>
         </p>
@@ -28,29 +27,25 @@
             {{friend.username}}
         </router-link>
 
-        <div v-if="triggerSearch">
-            No friends founded
-        </div>
-
+        <FriendSearch v-if="triggerSearch" :search="search" @clearSearch="clearSearch"/>
     </section>
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import {Component, Vue} from 'vue-property-decorator';
     import UserDetails from '@/components/Global/UserDetails.vue';
     import {namespace} from 'vuex-class';
     import {FriendInterface} from '@/types/chatTypes';
     import FirstLetter from '@/components/Global/FirstLetter.vue';
+    import FriendSearch from '@/components/Chat/FriendSearch.vue';
 
     const chatModule = namespace('chatStore');
+
     @Component({
-        components: {FirstLetter, UserDetails}
+        components: {FriendSearch, FirstLetter, UserDetails}
     })
     export default class FriendsList extends Vue {
         search = '';
-
-        @Prop() private msg!: string;
-
         @chatModule.Action getFriends: any;
         @chatModule.State friends!: FriendInterface[];
 
@@ -58,13 +53,13 @@
             this.getFriends();
         }
 
-        searchUser() {
-            // TODO Call search user
+        clearSearch() {
+            this.search = '';
         }
 
         get friendsResult() {
             return this.friends.filter((f) => {
-                return f.username.toString()
+                return f.username
                     .toLowerCase()
                     .indexOf(this.search.toLowerCase()) >= 0;
             });
@@ -72,7 +67,6 @@
 
         get triggerSearch() {
             if (this.friendsResult.length === 0 && this.search) {
-                this.searchUser();
                 return true;
             }
         }
@@ -80,7 +74,6 @@
 </script>
 
 <style lang="scss" scoped>
-
     .panel-tabs {
         box-shadow: 0 1px 4px rgba(0, 0, 0, .2);
     }

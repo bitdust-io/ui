@@ -14,7 +14,6 @@
                     </div>
 
                     <div class="content">
-                        {{friend.global_id}}
                         <div class="buttons">
                             <b-button type="is-danger" @click="removeFriend">
                                 remove friend
@@ -50,6 +49,7 @@
     import {Component, Prop, Vue} from 'vue-property-decorator';
     import FirstLetter from '@/components/Global/FirstLetter.vue';
     import {FriendInterface} from '@/types/chatTypes';
+    import ApiService from '@/services/api.service';
 
     @Component({
         components: {FirstLetter}
@@ -63,10 +63,8 @@
                 message: 'Are you sure ?',
                 type: 'is-danger',
                 onConfirm: () => {
-                    // debugger;
-                },
-                onCancel: () => {
-                    // debugger;
+                    ApiService.removeFriend(this.friend.global_id);
+                    this.$router.push('/chat');
                 }
             });
         }

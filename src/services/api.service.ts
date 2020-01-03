@@ -1,7 +1,7 @@
 import {ApiTypes, HealthInterface, IdentityInterface, MessageInterface, RequestParams} from '@/types/apiTypes';
 import {FriendInterface} from '@/types/chatTypes';
 
-const Api: ApiTypes = {
+const ApiService: ApiTypes = {
 
     constants: {
         PORT: '8180',
@@ -11,7 +11,29 @@ const Api: ApiTypes = {
         ERROR: 'ERROR'
     },
 
-    getChatHistoryForUser(userGlobalId) {
+    createIdentity(username) {
+        return this.makePost('identity/create', {
+            'username': username
+        });
+    },
+
+    removeFriend(id) {
+        return this.makeDelete('friend/remove', {
+            'global_id': id
+        });
+    },
+
+    addFriend(id: string) {
+        return this.makePost('friend/add', {
+            'idurl': id
+        });
+    },
+
+    searchUser(user: string) {
+        return this.makeGet('user/search/' + user);
+    },
+
+    getChatHistoryForUser(userGlobalId: string) {
         let query = [{key: 'id', value: userGlobalId}];
         return this.makeGet('message/history', query);
     },
@@ -28,7 +50,7 @@ const Api: ApiTypes = {
         return this.makeGet('friend/list');
     },
 
-    getUser() {
+    getUserPersonalDetails() {
         return this.makeGet('config/get/personal/nickname');
     },
 
@@ -55,6 +77,13 @@ const Api: ApiTypes = {
         return fetch(this.makeApiEndpoint(service, params)).then(r => r.json());
     },
 
+    makeDelete(service: string, data: any, params?: Array<any>): Promise<any> {
+        return fetch(this.makeApiEndpoint(service, params), {
+            method: 'DELETE',
+            body: JSON.stringify(data)
+        }).then(r => r.json());
+    },
+
     makeApiEndpoint(service: string, params?: Array<RequestParams>): string {
         const baseUrl = this.constants.API_URL + ':' + this.constants.PORT + '/' + service + '/' + this.constants.API_VERSION;
         const apiUrl = new URL(baseUrl);
@@ -65,4 +94,4 @@ const Api: ApiTypes = {
     }
 };
 
-export default Api;
+export default ApiService;

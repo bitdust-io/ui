@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <router-view v-if="identity.global_id"/>
+        <router-view/>
     </div>
 </template>
 

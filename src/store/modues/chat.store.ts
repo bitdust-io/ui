@@ -1,6 +1,6 @@
 import {ActionTree, GetterTree, Module, MutationTree} from 'vuex';
 import {ChatContentInterface, ChatStateInterface} from '@/types/chatTypes';
-import api from '@/services/api';
+import api from '@/services/api.service';
 
 export function convertMessage(m: any, globalId: string) {
     const authorIsMe = globalId === m.sender.glob_id.replace('master$', '');

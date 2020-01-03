@@ -31,12 +31,8 @@
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     @import "../assets/scss/config";
-
-    #app, html, body {
-        height: 100%;
-    }
 
     .loading {
         display: flex;
@@ -44,13 +40,12 @@
         justify-content: center;
         height: 100%;
         flex-direction: column;
-        color: $color-gray-20;
+        background-image: linear-gradient(-120deg, $color-blue-1 0%, $color-purple 100%);
     }
 
     .wave-fill {
         height: 180px;
         width: 180px;
-        background-image: linear-gradient(-120deg, $color-blue-1 0%, $color-purple 100%);
         -webkit-mask-image: url('../assets/images/logo-pictogram-white.png');
         -webkit-mask-size: contain;
     }
@@ -74,15 +69,15 @@
 
     @keyframes wave {
         from {
-            background-position: 0px 0px;
+            background-position: 0 0;
         }
         to {
-            background-position: 1000px 0px;
+            background-position: 1000px 0;
         }
     }
 
     .water {
-        animation: water 10s ease;
+        animation: water 8s ease;
     }
 
     @keyframes water {

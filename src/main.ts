@@ -2,7 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import application from '@/services/application';
+import application from '@/services/application.service';
 import '@/assets/scss/styles.scss';
 // Font Awesome Icons
 import {library} from '@fortawesome/fontawesome-svg-core';

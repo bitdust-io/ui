@@ -5,13 +5,15 @@ export interface ApiTypes {
 
     makeGet(service: string, params?: Array<any>): Promise<any>;
 
+    makeDelete(service: string, data: any): Promise<any>;
+
     makeApiEndpoint(service: string, params?: Array<RequestParams>): string;
 
     getIdentity(): Promise<IdentityInterface>;
 
     networkConnected(): Promise<any>;
 
-    getUser(): Promise<any>;
+    getUserPersonalDetails(): Promise<any>;
 
     getFriends(): Promise<any>;
 
@@ -21,7 +23,15 @@ export interface ApiTypes {
 
     makePost(service: string, data: any, params?: any): Promise<any>;
 
-    getChatHistoryForUser(params: any): Promise<any>;
+    getChatHistoryForUser(userGlobalId: string): Promise<any>;
+
+    searchUser(user: string): Promise<any>;
+
+    addFriend(id: string): Promise<any>;
+
+    removeFriend(id: string): Promise<any>;
+
+    createIdentity(username: string): Promise<any>;
 }
 
 export interface RequestParams {

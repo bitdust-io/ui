@@ -1,7 +1,7 @@
 import {ActionTree, GetterTree, Module, MutationTree} from 'vuex';
 import {ApplicationStateInterface} from '@/types/applicationTypes';
 import {IdentityResultInterface} from '@/types/apiTypes';
-import api from '@/services/api';
+import api from '@/services/api.service';
 
 export const state: ApplicationStateInterface = {
     healthStatus: '',
@@ -42,7 +42,7 @@ const actions: ActionTree<ApplicationStateInterface, any> = {
         commit('updateIdentity', v);
     },
     async updateUserFromApi({commit}) {
-        const {result} = await api.getUser();
+        const {result} = await api.getUserPersonalDetails();
         commit('updateUser', result[0]);
     }
 };

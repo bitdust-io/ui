@@ -2,7 +2,7 @@
     <div>
         <beautiful-chat :participants="participants"
                         :showLauncher="false"
-                        :showCloseButtom="false"
+                        :showCloseButton="false"
                         :editable="false"
                         :titleImageUrl="titleImageUrl"
                         :onMessageWasSent="onMessageWasSent"
@@ -45,7 +45,7 @@
     import FirstLetter from '@/components/Global/FirstLetter.vue';
     import {IdentityResultInterface} from '@/types/apiTypes';
     import {FriendInterface} from '@/types/chatTypes';
-    import api from '@/services/api';
+    import api from '@/services/api.service';
     import UiMessagesHeader from '@/components/Chat/UiMessagesHeader.vue';
 
     Vue.use(Chat);
@@ -122,7 +122,7 @@
             this.messageList = this.history;
         }
 
-        onMessageWasSent(message: any) {
+        async onMessageWasSent(message: any) {
             const data = {
                 global_id: this.friend.global_id,
                 data: {
@@ -130,7 +130,10 @@
                     type: message.type
                 }
             };
-            api.sendMessage(data);
+            const resp = await api.sendMessage(data);
+            if (resp.status === 'ERROR') {
+                this.$buefy.toast.open(resp.errors[0]);
+            }
         }
 
         openChat() {

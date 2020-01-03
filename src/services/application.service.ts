@@ -1,21 +1,27 @@
-import api from './api';
+import api from './api.service';
 import store from '@/store';
 import router from '@/router';
 
 let apiHealthNotResponding = 0;
 const wsUri = 'ws://localhost:8280/';
 const websocket = new WebSocket(wsUri);
-websocket.onopen = () => Application.startSockets();
+websocket.onopen = () => ApplicationService.startSockets();
 websocket.onclose = () => console.log('CLOSED');
 websocket.onerror = (e) => console.log('ERROR', e);
-websocket.onmessage = (m) => Application.onMessage(m);
+websocket.onmessage = (m) => ApplicationService.onMessage(m);
 
-const Application = {
+const ApplicationService = {
 
     bootstrap() {
         this.keepHeath();
     },
 
+    async handleMissingIdentity() {
+        await store.dispatch('applicationStore/updateIdentity', api.constants.ERROR);
+        if (router.currentRoute.name !== 'create-identity') {
+            await router.push('/create-identity');
+        }
+    },
     async keepHeath() {
         try {
             const {status} = await api.processHealth();
@@ -24,15 +30,15 @@ const Application = {
             if (status === 'OK') {
                 if (!store.state.applicationStore.identity.name) {
                     try {
-                        const [identity, user] = await Promise.all([api.getIdentity(), api.getUser()]);
+                        const [identity, user] = await Promise.all([api.getIdentity(), api.getUserPersonalDetails()]);
+                        if (identity.status === 'ERROR') {
+                            this.handleMissingIdentity();
+                        }
                         await store.dispatch('applicationStore/updateIdentity', identity.result[0]);
                         await store.commit('applicationStore/updateUser', user.result[0]);
                         await store.dispatch('chatStore/getFriends');
                     } catch (e) {
-                        await store.dispatch('applicationStore/updateIdentity', api.constants.ERROR);
-                        if (router.currentRoute.name !== 'create-identity') {
-                            await router.push('/create-identity');
-                        }
+                        this.handleMissingIdentity();
                     }
                 } else {
                     try {
@@ -51,17 +57,18 @@ const Application = {
             apiHealthNotResponding += 1;
         }
 
-        if (apiHealthNotResponding > 5 && router.currentRoute.name !== 'dead') {
+        if (apiHealthNotResponding > 10 && router.currentRoute.name !== 'dead') {
             await router.push('/dead');
         }
 
         setTimeout(() => {
             this.keepHeath();
-        }, 200);
+        }, 500);
     },
 
     onMessage(message: MessageEvent): void {
         const data = JSON.parse(message.data);
+        console.log(data);
         switch (data.type) {
             case 'private_message':
                 store.dispatch('chatStore/updateMessages', data.payload);
@@ -75,8 +82,8 @@ const Application = {
         console.log('Socket is open');
         // websocket.send('{"command": "api_call", "method": "message_history", "kwargs": {"user": "severino@p2p-id.ru"}, "call_id": "2”}');
         // websocket.send('{"command": "api_call", "method": "message_history", "kwargs": {"user": "severino@p2p-id.ru"}, "call_id": "123"}');
-        // websocket.send('{"command": "api_call", "method": “friend_list", "kwargs": {}, "call_id": “1234”}');
+        // websocket.send('{"command": "api_call", "method": "friend_list", "call_id": "friends_list"}');
     }
 };
 
-export default Application;
+export default ApplicationService;

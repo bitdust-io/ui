@@ -16,7 +16,7 @@
     import FirstLetter from '@/components/Global/FirstLetter.vue';
     import UiMessages from '@/components/Chat/UiMessages.vue';
     import {IdentityResultInterface} from '@/types/apiTypes';
-    import apiService from '@/services/api';
+    import apiService from '@/services/api.service';
     import {convertMessage} from '@/store/modues/chat.store';
 
     const chatModule = namespace('chatStore');
