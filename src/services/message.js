@@ -8,6 +8,7 @@ const Message = {
             body: JSON.stringify({
                 'global_id': data.user.global_id,
                 'data': {
+                    'type': 'text',
                     'message': data.message
                 }
             })
