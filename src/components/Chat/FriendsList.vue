@@ -1,7 +1,7 @@
 <template>
     <section class="panel">
         <p class="panel-tabs">
-            <UserDetails/>
+            <UserDetails />
         </p>
 
         <a class="panel-block">
@@ -12,22 +12,26 @@
                        placeholder="Search"
                        v-model="search">
                 <span class="icon is-left">
-                    <font-awesome-icon icon="search"/>
+                    <font-awesome-icon icon="search" />
                 </span>
             </p>
         </a>
 
         <router-link class="panel-block"
                      v-for="friend in friendsResult"
+                     :class="friend.contact_state"
                      :key="friend.global_id"
                      :to="{name:'chat-messages', params:{id:friend.global_id}}">
             <span class="panel-icon">
-                <FirstLetter :name="friend.global_id" size="18"/>
+                <FirstLetter :name="friend.global_id" size="18" />
             </span>
             {{friend.username}}
+            <span class="offline">
+                {{friend.contact_state}}
+            </span>
         </router-link>
 
-        <FriendSearch v-if="triggerSearch" :search="search" @clearSearch="clearSearch"/>
+        <FriendSearch v-if="triggerSearch" :search="search" @clearSearch="clearSearch" />
     </section>
 </template>
 
@@ -55,6 +59,7 @@
 
         clearSearch() {
             this.search = '';
+            this.$store.dispatch('chatStore/getFriends');
         }
 
         get friendsResult() {
@@ -76,5 +81,16 @@
 <style lang="scss" scoped>
     .panel-tabs {
         box-shadow: 0 1px 4px rgba(0, 0, 0, .2);
+    }
+
+    .OFFLINE {
+        filter: grayscale(100%);
+    }
+
+    .offline {
+        margin-left: 10px;
+        text-transform: lowercase;
+        font-size: 12px;
+        opacity: .5;
     }
 </style>

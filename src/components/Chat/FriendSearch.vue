@@ -1,6 +1,10 @@
 <template>
     <div>
-        <b-loading :is-full-page="true" :active.sync="isLoading"></b-loading>
+        <b-loading
+            :is-full-page="true"
+            :active.sync="isLoading"
+            :can-cancel="true"
+        />
         <div class="mg-15">
 
             <div class="buttons mg-top-20">
@@ -13,17 +17,17 @@
             <div class="control mg-bottom-20" v-if="noResults">
                 <div class="tags has-addons are-medium">
                     <span class="tag is-dark">"{{search}}" was not found</span>
-                    <span class="tag is-delete" @click="clearSearch"/>
+                    <span class="tag is-delete" @click="clearSearch" />
                 </div>
             </div>
 
             <div v-if="searchResult.global_id" class="list">
                 <div class="list-item">
                     <p>
-                        <FirstLetter :name="searchResult.global_id" size="30"/>
+                        <FirstLetter :name="searchResult.global_id" size="30" />
                         {{searchResult.nickname}}
                     </p>
-                    <b-button icon-left="plus" @click="addFriend"/>
+                    <b-button icon-left="plus" @click="addFriend" />
                 </div>
             </div>
 
@@ -49,7 +53,7 @@
 
         async searchFriend() {
             this.isLoading = true;
-            const {result} = await ApiService.searchUser(this.search);
+            const {result} = await ApiService.searchUser(this.search.toLowerCase());
             this.noResults = result[0].result !== 'exist';
             if (!this.noResults) {
                 this.searchResult = result[0];

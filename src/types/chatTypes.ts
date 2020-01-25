@@ -1,7 +1,7 @@
 export interface ChatStateInterface {
     messages: Array<ChatContentInterface>;
     message: ChatContentInterface;
-    friends: Array<FriendInterface>
+    friends: Array<FriendInterface>;
 }
 
 export interface ChatContentInterface {
