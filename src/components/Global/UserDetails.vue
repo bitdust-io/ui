@@ -3,7 +3,7 @@
         <FirstLetter :name="user.value"
                      size="20"
                      class="first-letter"/>
-        <h1>{{ user.value }}</h1>
+        <h1>{{ identity.global_id }}</h1>
     </div>
 </template>
 

@@ -8,7 +8,7 @@
                             <FirstLetter :name="friend.global_id" size="50"/>
                         </div>
                         <div class="media-content">
-                            <p class="title is-4">{{friend.username}}</p>
+                            <p class="title is-4">{{friend.global_id}}</p>
                             <p class="subtitle is-6">{{friend.contact_state}}</p>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                          class="first-letter"/>
 
             <p v-if="friend">
-                {{ friend.username }}
+                {{ friend.global_id }}
             </p>
         </div>
         <b-button rounded

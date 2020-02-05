@@ -25,7 +25,7 @@
             <span class="panel-icon">
                 <FirstLetter :name="friend.global_id" size="18" />
             </span>
-            {{friend.username}}
+            {{friend.global_id}}
             <span class="offline">
                 {{friend.contact_state}}
             </span>
