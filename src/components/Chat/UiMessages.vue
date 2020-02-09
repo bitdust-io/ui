@@ -1,34 +1,35 @@
 <template>
     <div>
-        <beautiful-chat :participants="participants"
-                        :showLauncher="false"
-                        :showCloseButton="false"
-                        :editable="false"
-                        :titleImageUrl="titleImageUrl"
-                        :onMessageWasSent="onMessageWasSent"
-                        :messageList="messageList"
-                        :newMessagesCount="newMessagesCount"
-                        :isOpen="isChatOpen"
-                        :close="closeChat"
-                        :icons="icons"
-                        :open="openChat"
-                        :showEmoji="true"
-                        :showFile="false"
-                        :showTypingIndicator="''"
-                        :colors="colors"
-                        :alwaysScrollToBottom="true"
-                        :messageStyling="messageStyling"
-                        @onType="handleOnType">
+        <beautiful-chat
+            :participants="participants"
+            :showLauncher="false"
+            :showCloseButton="false"
+            :editable="false"
+            :titleImageUrl="titleImageUrl"
+            :onMessageWasSent="onMessageWasSent"
+            :messageList="messageList"
+            :newMessagesCount="newMessagesCount"
+            :isOpen="isChatOpen"
+            :close="closeChat"
+            :icons="icons"
+            :open="openChat"
+            :showEmoji="true"
+            :showFile="false"
+            :showTypingIndicator="''"
+            :colors="colors"
+            :alwaysScrollToBottom="true"
+            :messageStyling="messageStyling"
+            @onType="handleOnType">
 
             <template v-slot:header class="buttons">
-                <UiMessagesHeader :friend="friend"/>
+                <UiMessagesHeader :friend="friend" />
             </template>
 
             <template v-slot:user-avatar="{user}">
                 <div>
                     <FirstLetter :name="getUserId(user)"
                                  size="20"
-                                 class="first-letter"/>
+                                 class="first-letter" />
                 </div>
             </template>
         </beautiful-chat>

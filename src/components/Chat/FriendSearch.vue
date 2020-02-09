@@ -62,8 +62,10 @@
         }
 
         async addFriend() {
-            const {result} = await ApiService.addFriend(this.searchResult.global_id);
-            this.$buefy.toast.open(result[0]);
+            const {status, message} = await ApiService.addFriend(this.searchResult.global_id);
+            if (status === 'OK') {
+                this.$buefy.toast.open(message);
+            }
             this.clearSearch();
         }
 
