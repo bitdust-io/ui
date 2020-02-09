@@ -4,7 +4,7 @@
                     :friend="friendDetails"
                     :identity="identity"
                     :message="message"
-                    :history="history"/>
+                    :history="history" />
     </div>
 </template>
 
@@ -37,11 +37,12 @@
 
         async created() {
             const {result} = await apiService.getChatHistoryForUser(this.$route.params.id);
+            if (result) {
+                this.history = result.map((r: any) => {
+                    return convertMessage(r.doc, this.identity.global_id);
+                }).reverse();
+            }
             this.isLoaded = true;
-            if (!result) return true;
-            this.history = result.map((r: any) => {
-                return convertMessage(r.doc, this.identity.global_id);
-            }).reverse();
         }
     }
 </script>

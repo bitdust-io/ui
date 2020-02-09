@@ -1,6 +1,7 @@
 <template>
     <div>
         <beautiful-chat
+            v-if="show"
             :participants="participants"
             :showLauncher="false"
             :showCloseButton="false"
@@ -118,9 +119,11 @@
         };
         messageStyling = true;
         messageList: any;
+        show = false;
 
         created() {
             this.messageList = this.history;
+            setTimeout(() => (this.show = true), 300);
         }
 
         async onMessageWasSent(message: any) {
