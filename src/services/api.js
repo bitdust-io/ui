@@ -245,6 +245,7 @@ const Api = {
     makePut(config, body) {
         return fetch(this.makeApiEndpoint(config), {
             method: 'PUT',
+            headers: {'Content-Type': 'application/json', 'X-Custom-Header': window.API_SECRET},
             body: JSON.stringify(body)
         }).then(res => res.json());
     },
@@ -252,6 +253,7 @@ const Api = {
     makeDelete(config, body) {
         return fetch(this.makeApiEndpoint(config), {
             method: 'DELETE',
+            headers: {'Content-Type': 'application/json', 'X-Custom-Header': window.API_SECRET},
             body: JSON.stringify(body)
         }).then(res => res.json());
     },
@@ -259,12 +261,19 @@ const Api = {
     makePost(config, body) {
         return fetch(this.makeApiEndpoint(config), {
             method: 'POST',
+            headers: {'Content-Type': 'application/json', 'X-Custom-Header': window.API_SECRET},
             body: JSON.stringify(body)
         }).then(res => res.json());
     },
 
     makeGet(config, query) {
-        return fetch(this.makeApiEndpoint(config, query)).then(res => res.json());
+        const myHeaders = new Headers();
+        myHeaders.append('api_secret', window.API_SECRET);
+        const myRequest = new Request(this.makeApiEndpoint(config, query), {
+            method: 'GET',
+            headers: myHeaders
+        });
+        return fetch(myRequest).then(res => res.json());
     }
 };
 

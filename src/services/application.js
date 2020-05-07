@@ -4,7 +4,7 @@ import store from '../store/';
 import Router from '../router';
 
 let apiHealthNotResponding = 0;
-const wsUri = 'ws://localhost:8280/';
+const wsUri = 'ws://127.0.0.1:8280/?api_secret=' + window.API_SECRET;
 const websocket = new WebSocket(wsUri);
 websocket.onopen = () => console.log('OPENED');
 websocket.onclose = () => console.log('CLOSED');
@@ -45,7 +45,7 @@ const Application = {
             apiHealthNotResponding = 0;
         } catch (e) {
             store.dispatch('updateHealthStatus', {status: 'ERROR'});
-            console.log('Error trying to connect health check');
+            console.log('Error trying to connect health check', e);
             apiHealthNotResponding += 1;
         }
 
