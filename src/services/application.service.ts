@@ -28,7 +28,7 @@ const ApplicationService = {
             await store.dispatch('applicationStore/updateHealthStatus', status);
 
             if (status === 'OK') {
-                if (!store.state.applicationStore.identity.name) {
+                if (!store.state.applicationStore.identity || !store.state.applicationStore.identity.name) {
                     try {
                         const [identity, user] = await Promise.all([api.getIdentity(), api.getUserPersonalDetails()]);
                         if (identity.status === 'ERROR') {
@@ -53,7 +53,7 @@ const ApplicationService = {
             apiHealthNotResponding = 0;
         } catch (e) {
             await store.dispatch('applicationStore/updateHealthStatus', api.constants.ERROR);
-            console.log('Error trying to connect health check');
+            console.log('Error trying to connect health check ' + e);
             apiHealthNotResponding += 1;
         }
 
