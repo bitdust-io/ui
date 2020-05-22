@@ -7,12 +7,11 @@ import LoadingIdentity from '../views/Loading-identity';
 import Onboarding from '../views/Onboarding';
 import Dead from '../views/Dead';
 import Blockchain from '../views/Blockchain';
+import Files from '../views/Files';
+import Friend from '../views/Friend';
+import Settings from '../views/Settings';
 
 Vue.use(Router);
-
-function loadView(view) {
-    return () => import(/* webpackChunkName: "view-[request]" */ `@/views/${view}.vue`);
-}
 
 export default new Router({
     routes: [
@@ -48,17 +47,17 @@ export default new Router({
         {
             path: '/files',
             name: 'files',
-            component: loadView('Files')
+            component: Files
         },
         {
             path: '/friend/:id',
             name: 'friend',
-            component: loadView('Friend')
+            component: Friend
         },
         {
             path: '/settings',
             name: 'settings',
-            component: loadView('Settings'),
+            component: Settings,
             children: [
                 {
                     path: ':id',

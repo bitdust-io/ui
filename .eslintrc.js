@@ -22,12 +22,9 @@ module.exports = {
             baseIndent: 1
         }],
         'space-before-function-paren': [
-            'error', {anonymous: 'ignore', named: 'never'}
+            'error', { anonymous: 'ignore', named: 'never' }
         ],
         'generator-star-spacing': 0,
         'object-curly-spacing': [0, 'always']
-    },
-    parserOptions: {
-        parser: 'babel-eslint'
     }
 };
