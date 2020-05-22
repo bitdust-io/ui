@@ -43,7 +43,7 @@ const Api = {
     },
 
     async identityBackup() {
-        let {result} = await this.getPath();
+        let { result } = await this.getPath();
         return this.makePost('identity/backup', {
             'destination_path': result[0].value + 'bitdust-private-key.txt'
         });
@@ -128,12 +128,13 @@ const Api = {
 
     createFileShareKey(label) {
         return this.makePost('share/create', {
-            'label': label || ''
+            'label': label || '',
+            'key_size': 2048
         });
     },
 
     removeFileShareKey(id) {
-        return this.makeDelete('key/delete', {
+        return this.makeDelete('key/erase', {
             'key_id': id
         });
     },

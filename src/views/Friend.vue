@@ -7,7 +7,7 @@
                           size="is-medium"
                           rounded
                           type="is-primary">
-                    <font-awesome-icon icon="search"/>
+                    <font-awesome-icon icon="search" />
                     Search friends
                 </b-button>
             </div>
@@ -25,7 +25,7 @@
             </ul>
 
             <p class="info">
-                <font-awesome-icon icon="info-circle"/>
+                <font-awesome-icon icon="info-circle" />
                 You can only send messages to a friend that is online.
             </p>
 
@@ -34,7 +34,7 @@
         <div slot="main">
 
             <friend-chat :current-friend="getCurrentFriend"
-                         v-if="getCurrentFriend"/>
+                         v-if="getCurrentFriend" />
             <div v-else>
                 Select a friend to chat !
             </div>
@@ -46,7 +46,7 @@
 
                     <span class="close-main"
                           @click="closeSearch">
-                        <font-awesome-icon icon="times"/>
+                        <font-awesome-icon icon="times" />
                     </span>
 
                     <label for="search">
@@ -58,7 +58,7 @@
                                ref="searchInput"
                                v-on:keydown.enter="searchUser"
                                placeholder="Type your friend name"
-                               id="search"/>
+                               id="search" />
 
                         <button :class="{'is-loading': isLoading}"
                                 :disabled="this.search.length < 3 || isLoading"
@@ -66,7 +66,7 @@
                                 @click="searchUser">
                             <font-awesome-icon v-if="isLoading"
                                                icon="spinner"
-                                               class="loading rotating"/>
+                                               class="loading rotating" />
                             <span>Search</span>
                         </button>
                     </div>
@@ -75,7 +75,7 @@
                          class="add-friend-response">
 
                         <span @click="addFriendResponse = null">
-                            <font-awesome-icon icon="times"/>
+                            <font-awesome-icon icon="times" />
                         </span>
 
                         {{addFriendResponse.result[0]}}
@@ -88,7 +88,7 @@
                                 <div class="item"
                                      @click="addFriend(result.idurl)">
                                     <font-awesome-icon icon="user-plus"
-                                                       class="icon"/>
+                                                       class="icon" />
                                     <p>{{result.nickname}}</p>
                                 </div>
                             </div>
@@ -109,7 +109,7 @@
                                 <div class="item"
                                      @click="addFriend(result.idurl)">
                                     <font-awesome-icon icon="user-plus"
-                                                       class="icon"/>
+                                                       class="icon" />
                                     <p>{{result.nickname}}</p>
                                 </div>
                             </li>
@@ -123,7 +123,7 @@
 </template>
 
 <script>
-    import {mapActions, mapGetters} from 'vuex';
+    import { mapActions, mapGetters } from 'vuex';
     import api from '../services/api';
     import FriendChat from '../components/Friend/FriendChat';
     import GridContent from '../components/Globals/GridContent';
@@ -176,10 +176,10 @@
                 if (this.search.length < 3) return;
                 this.isLoading = true;
                 try {
-                    const {result} = await api.searchUser(this.search);
-                    this.searchResults = result;
-                    if (result[0].result === 'exist') {
-                        this.observeSearchResult(result[0].nickname);
+                    const { result } = await api.searchUser(this.search);
+                    this.searchResults.push(result);
+                    if (result === 'exist') {
+                        this.observeSearchResult(result.nickname);
                     } else {
                         this.observeSearchAlias = [];
                     }
@@ -203,7 +203,7 @@
         created() {
             this.getApiFriends();
             if (!this.getCurrentFriend && this.getLastFriend) {
-                this.$router.push({name: 'friend', params: {id: this.getLastFriend.username}});
+                this.$router.push({ name: 'friend', params: { id: this.getLastFriend.username } });
             }
             document.getElementsByTagName('html')[0].classList.remove('intro-background');
         },
