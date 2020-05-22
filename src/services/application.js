@@ -27,7 +27,7 @@ const Application = {
                 if (!store.state.Application.identity.name) {
                     try {
                         const identityStatus = await Api.getIdentity();
-                        store.dispatch('updateIdentity', identityStatus.result[0]);
+                        store.dispatch('updateIdentity', identityStatus.result);
                         store.dispatch('updateUserFromApi');
                     } catch (e) {
                         store.dispatch('updateIdentity', {status: 'ERROR'});
