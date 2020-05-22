@@ -34,7 +34,7 @@ const ApplicationService = {
                         if (identity.status === 'ERROR') {
                             this.handleMissingIdentity();
                         }
-                        await store.dispatch('applicationStore/updateIdentity', identity.result[0]);
+                        await store.dispatch('applicationStore/updateIdentity', identity.result);
                         await store.commit('applicationStore/updateUser', user.result[0]);
                         await store.dispatch('chatStore/getFriends');
                     } catch (e) {

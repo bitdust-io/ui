@@ -54,16 +54,18 @@
         async searchFriend() {
             this.isLoading = true;
             const {result} = await ApiService.searchUser(this.search.toLowerCase());
-            this.noResults = result[0].result !== 'exist';
+            this.noResults = result.result !== 'exist';
             if (!this.noResults) {
-                this.searchResult = result[0];
+                this.searchResult = result;
             }
             this.isLoading = false;
         }
 
         async addFriend() {
-            const {result} = await ApiService.addFriend(this.searchResult.global_id);
-            this.$buefy.toast.open(result[0]);
+            const {status, message} = await ApiService.addFriend(this.searchResult.global_id);
+            if (status === 'OK') {
+                this.$buefy.toast.open(message);
+            }
             this.clearSearch();
         }
 
