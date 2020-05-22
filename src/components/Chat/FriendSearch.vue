@@ -54,9 +54,9 @@
         async searchFriend() {
             this.isLoading = true;
             const {result} = await ApiService.searchUser(this.search.toLowerCase());
-            this.noResults = result[0].result !== 'exist';
+            this.noResults = result.result !== 'exist';
             if (!this.noResults) {
-                this.searchResult = result[0];
+                this.searchResult = result;
             }
             this.isLoading = false;
         }
