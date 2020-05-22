@@ -6,11 +6,11 @@ const FilesService = {
         if (!label) {
             const shareKeyData = await api.createFileShareKey();
             if (shareKeyData.status !== 'OK') return false;
-            return shareKeyData.result[0].key_id;
+            return shareKeyData.result.key_id;
         } else {
             const {result} = await api.createFileShareKey(label);
-            console.log('Key was created', result[0]);
-            return result[0];
+            console.log('Key was created', result);
+            return result;
         }
     },
 
