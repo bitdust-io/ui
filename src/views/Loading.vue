@@ -37,10 +37,10 @@
         },
         watch: {
             getIdentity(identity) {
-                if (identity.status === 'ERROR') this.$router.push('/create-identity');
+                if (!identity || identity.status === 'ERROR') this.$router.push('/create-identity');
             },
             connectionStatus(response) {
-                if (response.status === 'OK') this.$router.push('/files');
+                if (response && response.status === 'OK') this.$router.push('/files');
             }
         }
     };
