@@ -24,7 +24,7 @@ const Application = {
             store.dispatch('updateHealthStatus', status);
 
             if (status === 'OK') {
-                if (!store.state.Application.identity.name) {
+                if (!store.state.Application.identity || !store.state.Application.identity.name) {
                     try {
                         const identityStatus = await Api.getIdentity();
                         store.dispatch('updateIdentity', identityStatus.result);
