@@ -4,7 +4,12 @@ import store from '../store/';
 import Router from '../router';
 
 let apiHealthNotResponding = 0;
-const wsUri = 'ws://127.0.0.1:8280/?api_secret=' + window.API_SECRET;
+let wsUri = '';
+if (window.API_SECRET) {
+    wsUri = 'ws://127.0.0.1:8280/?api_secret=' + window.API_SECRET;
+} else {
+    wsUri = 'ws://127.0.0.1:8280/';
+}
 const websocket = new WebSocket(wsUri);
 websocket.onopen = () => console.log('OPENED');
 websocket.onclose = () => console.log('CLOSED');
