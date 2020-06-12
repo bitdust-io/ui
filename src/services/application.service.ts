@@ -71,8 +71,10 @@ const ApplicationService = {
         const data = JSON.parse(message.data);
         console.log(JSON.stringify(data, null, 0));
         switch (data.type) {
-            case 'private_message':
-                store.dispatch('chatStore/updateMessages', data.payload);
+            case 'stream_message':
+                if (data.payload.payload.data.msg_type === 'private_message') {
+                    store.dispatch('chatStore/updateMessages', data.payload);
+                }
                 break;
             // default:
                 // console.log(message);
