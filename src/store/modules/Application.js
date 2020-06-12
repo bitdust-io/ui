@@ -30,6 +30,7 @@ const mutations = {
         state.user = value;
     },
     updateEvent(state, value) {
+        console.log(JSON.stringify(value, null, 0));
         state.event = value;
     }
 };
