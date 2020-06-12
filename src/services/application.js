@@ -74,7 +74,7 @@ const Application = {
                 if (!result) return;
                 store.dispatch('updateMessages', result);
             } catch (e) {
-                console.log('error receiving message');
+                console.log('error receiving message', e);
             }
         }
 

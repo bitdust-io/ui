@@ -44,8 +44,8 @@ class ZillicaService extends Zilliqa {
                 }
             );
             console.log(callTx);
-        } catch {
-            console.log('failed');
+        } catch (e) {
+            console.log('failed', e);
         }
 
         const resp = await this.contract.getState(this.contract);
