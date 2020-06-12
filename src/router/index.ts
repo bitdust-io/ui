@@ -6,6 +6,7 @@ import Dead from '@/views/Dead.vue';
 import ChatMessages from '@/views/ChatMessages.vue';
 import CreateIdentity from '@/views/CreateIdentity.vue';
 import FriendsList from '@/components/Chat/FriendsList.vue';
+import Settings from '@/views/Settings.vue';
 
 Vue.use(VueRouter);
 
@@ -48,6 +49,17 @@ const routes = [
                 meta: {
                     transition: 'slide-right'
                 }
+            }
+        ]
+    },
+    {
+        path: '/settings',
+        name: 'settings',
+        component: Settings,
+        children: [
+            {
+                path: ':id',
+                name: 'setting'
             }
         ]
     },

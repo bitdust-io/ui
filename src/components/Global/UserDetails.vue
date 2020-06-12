@@ -1,5 +1,5 @@
 <template>
-    <div class="is-flex mg-20" v-if="user.value">
+    <div class="is-flex" v-if="user.value">
         <FirstLetter :name="user.value"
                      size="20"
                      class="first-letter"/>

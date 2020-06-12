@@ -26,7 +26,6 @@ const ApplicationService = {
         try {
             const {status} = await api.processHealth();
             await store.dispatch('applicationStore/updateHealthStatus', status);
-
             if (status === 'OK') {
                 if (!store.state.applicationStore.identity || !store.state.applicationStore.identity.name) {
                     try {
@@ -34,10 +33,11 @@ const ApplicationService = {
                         if (identity.status === 'ERROR') {
                             this.handleMissingIdentity();
                         }
-                        await store.dispatch('applicationStore/updateIdentity', identity.result[0]);
+                        await store.dispatch('applicationStore/updateIdentity', identity.result);
                         await store.commit('applicationStore/updateUser', user.result[0]);
                         await store.dispatch('chatStore/getFriends');
                     } catch (e) {
+                        console.log('getIdentity', e);
                         this.handleMissingIdentity();
                     }
                 } else {
@@ -45,6 +45,7 @@ const ApplicationService = {
                         const {status} = await api.networkConnected();
                         await store.dispatch('applicationStore/updateConnectionStatus', status);
                     } catch (e) {
+                        console.log('networkConnected', e);
                         await store.dispatch('applicationStore/updateConnectionStatus', api.constants.ERROR);
                     }
                 }
@@ -68,13 +69,13 @@ const ApplicationService = {
 
     onMessage(message: MessageEvent): void {
         const data = JSON.parse(message.data);
-        console.log(data);
+        console.log(JSON.stringify(data, null, 0));
         switch (data.type) {
             case 'private_message':
                 store.dispatch('chatStore/updateMessages', data.payload);
                 break;
-            default:
-                console.log(message);
+            // default:
+                // console.log(message);
         }
     },
 

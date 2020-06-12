@@ -32,6 +32,12 @@ export interface ApiTypes {
     removeFriend(id: string): Promise<any>;
 
     createIdentity(username: string): Promise<any>;
+
+    getConfigKeys(): Promise<any>;
+
+    getConfigList(): Promise<any>;
+
+    getServiceList(): Promise<any>;
 }
 
 export interface RequestParams {
