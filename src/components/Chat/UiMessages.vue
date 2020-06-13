@@ -167,5 +167,17 @@
 <style lang="scss" scoped>
     /deep/ .sc-header {
         min-height: 70px;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+    }
+    /deep/ .sc-chat-window {
+        top: 53px;
+        left: 0px;
+        right: 0px;
+        border-radius: 0px;
+        width: initial;
+    }
+    /deep/ .sc-message {
+        width: initial;
     }
 </style>

@@ -1,9 +1,5 @@
 <template>
     <section class="panel">
-        <p class="panel-tabs">
-            <UserDetails />
-        </p>
-
         <a class="panel-block">
             <p class="control has-icons-left">
                 <span class="icon is-right">
@@ -32,6 +28,7 @@
         </router-link>
 
         <FriendSearch v-if="triggerSearch" :search="search" @clearSearch="clearSearch" />
+
     </section>
 </template>
 

@@ -50,7 +50,7 @@ const ApiService: ApiTypes = {
         return this.makeGet('friend/list');
     },
 
-    getUserPersonalDetails() {
+    getUserPersonalDetails(): Promise<any> {
         return this.makeGet('config/get/personal/nickname');
     },
 
@@ -64,6 +64,18 @@ const ApiService: ApiTypes = {
 
     networkConnected(): Promise<any> {
         return this.makeGet('network/connected');
+    },
+
+    getConfigList(): Promise<any> {
+        return this.makeGet('config/list');
+    },
+
+    getConfigKeys(): Promise<any> {
+        return this.makeGet('key/list');
+    },
+
+    getServiceList(): Promise<any> {
+        return this.makeGet('service/list', [{'config': 1}]);
     },
 
     async makePost(service: string, data: any, params?: Array<RequestParams>) {
