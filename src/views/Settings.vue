@@ -2,7 +2,7 @@
     <grid-content>
         <div slot="main">
             <div v-if="currentKey ==='suppliers'">
-                <suppliers/>
+                <suppliers />
             </div>
             <ul class="settings-list"
                 v-if="currentKey !=='services'">
@@ -11,7 +11,7 @@
                     :key="index">
 
                     <ui-config :item="item"
-                               @onChange="onChange"/>
+                               @onChange="onChange" />
                 </li>
             </ul>
             <ul v-else
@@ -24,14 +24,14 @@
                         {{item.name.replace(/service_|_/g, ' ')}}
                     </h2>
 
-                    <ui-status :status="item"/>
+                    <ui-status :status="item" />
 
                     <div v-for="config in item.configs"
                          :key="config.key"
                          class="config">
 
                         <ui-config :item="config"
-                                   @onChange="onChange"/>
+                                   @onChange="onChange" />
                     </div>
 
                     <div class="depends-on">
@@ -87,15 +87,10 @@
 
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
-    import {namespace} from 'vuex-class';
-    import Api from '@/services/api.service';
-    import {mapActions, mapGetters, mapState} from 'vuex';
     import UiConfig from '@/components/Settings/UiConfig.vue';
     import UiStatus from '@/components/Settings/UiStatus.vue';
     import Suppliers from '@/components/Settings/Suppliers.vue';
     import GridContent from '@/components/Global/GridContent.vue';
-
-    const applicationModule = namespace('applicationStore');
 
     @Component({
         components: {UiConfig, UiStatus, Suppliers, GridContent}
@@ -104,26 +99,21 @@
         name = 'Settings';
         currentKey = 'services';
 
-        // @applicationModule.State identity!: IdentityResultInterface;
-
         updateLists() {
-            // this.updateConfigList();
-            // this.updateServiceList();
+            this.$store.dispatch('settingsStore/updateConfigList');
+            this.$store.dispatch('settingsStore/updateServiceList');
         }
 
         async created() {
             this.updateLists();
             this.currentKey = 'services';
-            // document.getElementsByTagName('html')[0].classList.remove('intro-background');
         }
 
         get listAllServices() {
-            // do not know how to pass list of services from the API call here...
-            return [];
+            return this.$store.state.settingsStore.serviceList;
         }
 
         get listAllKeys() {
-            // TODO: ....
             return [];
         }
     };
