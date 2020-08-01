@@ -6,7 +6,7 @@
                                @click="closeDownloadNotification()"
             />
             <p>
-                The file you requested to download is saved on: {{downloadDone.data.output_location}}
+                The file you requested to download is saved on: {{ downloadDone.data.output_location }}
             </p>
         </div>
 
@@ -16,7 +16,7 @@
                                @click="closeNotification()"
             />
             <p>
-                You have a new shared file: <strong>{{fileFrom}}</strong>
+                You have a new shared file: <strong>{{ fileFrom }}</strong>
             </p>
         </div>
         <div v-if="newMessage.sender">
@@ -26,11 +26,11 @@
             />
             <Icon name="chat"
                   class="chat"
-                  size="xs"/>
+                  size="xs" />
             <p>
                 Message received from:
             </p>
-            <span class="add-friend">{{newMessage.sender}}
+            <span class="add-friend">{{ newMessage.sender }}
                 <span v-if="!friendAdded" @click="addFriend(newMessage)">add as a friend</span>
                 <span v-if="friendAdded">;)</span>
             </span>
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-    import {mapActions, mapGetters} from 'vuex';
+    import { mapActions, mapGetters } from 'vuex';
     import Icon from './Icon';
     import api from '../../services/api';
 

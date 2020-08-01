@@ -12,8 +12,8 @@ const getters = {
 
 const mutations = {
     updateMessages(state, payload) {
-        state.messages.push(payload[0]);
-        state.lastMessage = payload[0];
+        state.messages.push(payload);
+        state.lastMessage = payload;
     },
     resetMessages(state) {
         state.messages = [];
