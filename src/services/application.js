@@ -1,5 +1,4 @@
 import Api from './api';
-import Message from './message';
 import store from '../store/';
 import Router from '../router';
 
@@ -19,13 +18,12 @@ const Application = {
 
     bootstrap() {
         this.keepHeath();
-        this.messagesListen();
         this.eventsListen();
     },
 
     async keepHeath() {
         try {
-            const {status} = await Api.processHealth();
+            const { status } = await Api.processHealth();
             store.dispatch('updateHealthStatus', status);
 
             if (status === 'OK') {
@@ -35,21 +33,21 @@ const Application = {
                         store.dispatch('updateIdentity', identityStatus.result);
                         store.dispatch('updateUserFromApi');
                     } catch (e) {
-                        store.dispatch('updateIdentity', {status: 'ERROR'});
+                        store.dispatch('updateIdentity', { status: 'ERROR' });
                     }
                 } else {
                     try {
                         const networkStatus = await Api.networkConnected();
                         store.dispatch('updateConnectionStatus', networkStatus);
                     } catch (e) {
-                        store.dispatch('updateConnectionStatus', {status: 'ERROR'});
+                        store.dispatch('updateConnectionStatus', { status: 'ERROR' });
                     }
                 }
             }
 
             apiHealthNotResponding = 0;
         } catch (e) {
-            store.dispatch('updateHealthStatus', {status: 'ERROR'});
+            store.dispatch('updateHealthStatus', { status: 'ERROR' });
             console.log('Error trying to connect health check', e);
             apiHealthNotResponding += 1;
         }
@@ -64,23 +62,26 @@ const Application = {
     },
 
     eventsListen() {
-        websocket.onmessage = (d) => store.dispatch('updateEvent', JSON.parse(d.data));
+        websocket.onmessage = (d) => this.onMessage(d);
     },
 
-    async messagesListen() {
-        if (store.state.Application.connectionStatus.status === 'OK') {
-            try {
-                const {result} = await Message.getMessages();
-                if (!result) return;
-                store.dispatch('updateMessages', result);
-            } catch (e) {
-                console.log('error receiving message', e);
-            }
+    onMessage(message) {
+        const data = JSON.parse(message.data);
+        console.log(JSON.stringify(data, null, 0));
+        store.dispatch('updateEvent', data);
+        switch (data.type) {
+            case 'stream_message':
+                if (data.payload.payload.data.msg_type === 'private_message') {
+                    const message = {
+                        data: data.payload.payload.data,
+                        recipient: data.payload.recipient.glob_id,
+                        sender: data.payload.sender.glob_id,
+                        time: data.payload.payload.time
+                    };
+                    store.dispatch('updateMessages', message);
+                }
+                break;
         }
-
-        setTimeout(() => {
-            this.messagesListen();
-        }, 100);
     }
 };
 
