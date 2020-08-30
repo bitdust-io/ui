@@ -79,7 +79,7 @@
             },
             addFriend(message) {
                 api.addFriend(message.sender).then(resp => {
-                    if (resp.result[0] === 'new friend has been added') {
+                    if (resp.status === 'OK') {
                         this.getApiFriends();
                         this.friendAdded = true;
                     }
